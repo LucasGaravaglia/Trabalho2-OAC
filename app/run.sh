@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java riscs_architecture.Main
+java risc_architecture.Main
