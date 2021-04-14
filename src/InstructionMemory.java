@@ -1,4 +1,4 @@
-package risc_architecture;
+package src;
 
 public class InstructionMemory {
     private String[] instructions;

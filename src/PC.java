@@ -1,4 +1,4 @@
-package risc_architecture;
+package src;
 
 public class PC {
     private String value;
