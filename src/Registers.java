@@ -30,26 +30,26 @@ public class Registers {
         return this.adressOfWriteRegister;
     } 
    
-    public void setAdressOfReadRegisterA(String value){
-        if(value.length() == 5){
-            this.adressOfReadRegisterA = value;
+    public void setAdressOfReadRegisterA(String value_5_bits){
+        if(value_5_bits.length() == 5){
+            this.adressOfReadRegisterA = value_5_bits;
         }
     }    
 
-    public void setAdressOfReadRegisterB(String value){
-        if(value.length() == 5){
-            this.adressOfReadRegisterB = value;
+    public void setAdressOfReadRegisterB(String value_5_bits){
+        if(value_5_bits.length() == 5){
+            this.adressOfReadRegisterB = value_5_bits;
         }
     }
 
-    public void setAdressOfWriteRegister(String value){
-        if(value.length() == 5){
-            this.adressOfWriteRegister = value;
+    public void setAdressOfWriteRegister(String value_5_bits){
+        if(value_5_bits.length() == 5){
+            this.adressOfWriteRegister = value_5_bits;
         }
     }
 
-    public void setWriteValue(String value){
-        this.writeValue = value;
+    public void setWriteValue(String value_32_bits){
+        this.writeValue = value_32_bits;
     }
 
     public String getWriteValue(){
