@@ -6,7 +6,7 @@ public class InstructionMemory {
     InstructionMemory(String[] instructions){
         this.instructions = instructions;
     }
-
+    //Comment
     public String getInstruction(int adress){
         return this.instructions[adress];
     }
