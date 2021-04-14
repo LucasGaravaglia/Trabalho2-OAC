@@ -1,12 +1,11 @@
 package src;
-import src.hardware.*;
+import src.hardware.memory.*;
+import src.hardware.memory.InstructionMemory;
 import src.utils.*;
 
 public class Main {
 	public static void main(String[] args) {
-		String[] instructions = {"Uma", "duas", "tress"};
-		InstructionMemory haha = new InstructionMemory(instructions);
-		System.out.println(haha.toString());
-		System.out.print(Binary.BITS_32_ZERO);
+		String oi = "00000000000000001111111111111111";
+		System.out.println(oi.substring(15));
 	}	
 }

@@ -2,7 +2,8 @@ package src.utils;
 
 public class Binary {
     public static final String BITS_32_ZERO =  "00000000000000000000000000000000";
-    public static final String BITS_5_ZERO =  "00000000000000000000000000000000";
+    public static final String BITS_5_ZERO =   "00000000000000000000000000000000";
+    public static final String BITS_32_ALL_1 = "11111111111111111111111111111111";
 
     public static Integer getDecimalValue(String bits){
         return Integer.parseInt(bits, 2);
