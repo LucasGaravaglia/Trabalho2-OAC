@@ -1,3 +1,2 @@
 #!/bin/sh
-
-javac src/*.java
+javac -d bin src/*.java 

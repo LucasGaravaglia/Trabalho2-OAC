@@ -1,4 +1,4 @@
-package src;
+package src.hardware.memory;
 
 public class PC {
     private String value;

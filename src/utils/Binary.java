@@ -1,4 +1,4 @@
-package src;
+package src.utils;
 
 public class Binary {
     public static final String BITS_32_ZERO =  "00000000000000000000000000000000";

@@ -1,7 +1,12 @@
 package src;
+import src.hardware.*;
+import src.utils.*;
 
 public class Main {
 	public static void main(String[] args) {
-    	System.out.println(Integer.parseInt("11111111111111111111111111111111", 2));
+		String[] instructions = {"Uma", "duas", "tress"};
+		InstructionMemory haha = new InstructionMemory(instructions);
+		System.out.println(haha.toString());
+		System.out.print(Binary.BITS_32_ZERO);
 	}	
 }

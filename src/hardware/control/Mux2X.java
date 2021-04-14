@@ -1,4 +1,4 @@
-package src;
+package src.hardware.control;
 
 public class Mux2X {
     private String value1;
