@@ -8,6 +8,6 @@ public class InstructionMemory {
     }
 
     public String getInstruction(int adress){
-        return this.InstructionMemory[adress];
+        return this.instructions[adress];
     }
 }
