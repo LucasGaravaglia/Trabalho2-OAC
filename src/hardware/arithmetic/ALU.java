@@ -64,11 +64,29 @@ public class ALU {
     }
 
     /**
-     * Function that determines the operation to be executed by ALU
-     * @param value that control the behavior of the ALU
+     * Function that determines the operation, execute that operation and generate the outputs and flags
+     * @param value String with length of 4, that control the behavior of the ALU
      */
     public void setALUControl(String value){
         this.control = value;
+
+        if(this.control == "0010"){//add
+            this.result = Binary.addBinary_32_bits(this.data1, this.data2);
+        }else if(this.control == "0110"){//sub
+            this.result = Binary.subBinary_32_bits(this.data1, this.data2);
+        }else if(this.control == "0000"){//and
+            this.result = Binary.andBinary_32_bits(this.data1, this.data2);
+        }else if(this.control == "0001"){//or
+            this.result = Binary.orBinary_32_bits(this.data1, this.data2);
+        }else {
+            this.result = Binary.BITS_32_ZERO;
+        }
+        
+        if(this.result == Binary.BITS_32_ZERO){
+            this.zeroFlag = 1;
+        }else{
+            this.zeroFlag = 0;
+        }
     }
 
     /**
@@ -88,27 +106,10 @@ public class ALU {
     }
 
     /**
-     * Function that execute que selected operation and generate the outputs and flags
+     * Function 
      * @return the result of the ALU given the inputs and the control
      */
-    public String getResult(){
-        if(this.control == "0010"){//add
-            this.result = Binary.addBinary_32_btis(this.data1, this.data2);
-        }else if(this.control == "0110"){//sub
-            this.result = Binary.subBinary_32_btis(this.data1, this.data2);
-        }else if(this.control == "0000"){//and
-            this.result = Binary.andBinary_32_btis(this.data1, this.data2);
-        }else if(this.control == "0001"){//or
-            this.result = Binary.orBinary_32_btis(this.data1, this.data2);
-        }else {
-            this.result = Binary.BITS_32_ZERO;
-        }
-        
-        if(this.result == Binary.BITS_32_ZERO){
-            this.zeroFlag = 1;
-        }else{
-            this.zeroFlag = 0;
-        }
+    public String getResult(){        
         return this.result;
     }
 }

@@ -48,7 +48,7 @@ public class Mux2X {
     }
 
     /**
-     * Funtion tha set the bit of the mux
+     * Function tha set the bit of the mux
      * @param value 0 or 1
      */
     public void setBit(int value){
@@ -58,7 +58,7 @@ public class Mux2X {
     }
 
     /**
-     * Function to obtain the resulto of the mux based in the given inputs
+     * Function to obtain the result of the mux based in the given inputs
      * @return a 32 bit result
      */
     public String getResult(){

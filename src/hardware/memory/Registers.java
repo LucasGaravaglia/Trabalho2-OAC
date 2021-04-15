@@ -5,9 +5,9 @@ import src.utils.*;
  * @author Levi
  */
 public class Registers {
-    private String adressOfReadRegisterA;
-    private String adressOfReadRegisterB;
-    private String adressOfWriteRegister;
+    private String addressOfReadRegisterA;
+    private String addressOfReadRegisterB;
+    private String addressOfWriteRegister;
     private String writeValue;
     private String[] registers;
 
@@ -17,57 +17,57 @@ public class Registers {
         for(String reg : this.registers){
             reg = Binary.BITS_32_ZERO;
         }
-        this.adressOfReadRegisterA = Binary.BITS_5_ZERO;
-        this.adressOfReadRegisterB = Binary.BITS_5_ZERO;
-        this.adressOfWriteRegister = Binary.BITS_5_ZERO;
+        this.addressOfReadRegisterA = Binary.BITS_5_ZERO;
+        this.addressOfReadRegisterB = Binary.BITS_5_ZERO;
+        this.addressOfWriteRegister = Binary.BITS_5_ZERO;
         this.writeValue = Binary.BITS_32_ZERO;
     }
 
-    public String getAdressOfReadRegisterA (){
-        return this.adressOfReadRegisterA;
+    public String getAddressOfReadRegisterA (){
+        return this.addressOfReadRegisterA;
     }         
 
-    public String getAdressOfReadRegisterB (){
-        return this.adressOfReadRegisterB;
+    public String getAddressOfReadRegisterB (){
+        return this.addressOfReadRegisterB;
     }     
 
-    public String getAdressOfWriteRegister (){
-        return this.adressOfWriteRegister;
+    public String getAddressOfWriteRegister (){
+        return this.addressOfWriteRegister;
     } 
    
     /**
      * 
-     * @param adress_5_bits adress of register to be readed
+     * @param address_5_bits address of register to be read
      */
-    public void setAdressOfReadRegisterA(String adress_5_bits){
-        if(adress_5_bits.length() == 5){
-            this.adressOfReadRegisterA = adress_5_bits;
+    public void setAddressOfReadRegisterA(String address_5_bits){
+        if(address_5_bits.length() == 5){
+            this.addressOfReadRegisterA = address_5_bits;
         }
     }    
 
     /**
      * 
-     * @param adress_5_bits adress of register to be readed
+     * @param address_5_bits adress of register to be readed
      */
-    public void setAdressOfReadRegisterB(String adress_5_bits){
-        if(adress_5_bits.length() == 5){
-            this.adressOfReadRegisterB = adress_5_bits;
+    public void setAdressOfReadRegisterB(String address_5_bits){
+        if(address_5_bits.length() == 5){
+            this.addressOfReadRegisterB = address_5_bits;
         }
     }
 
     /**
      * 
-     * @param adress_5_bits adress of register to be writed
+     * @param address_5_bits address of register to be write
      */
-    public void setAdressOfWriteRegister(String adress_5_bits){
-        if(adress_5_bits.length() == 5){
-            this.adressOfWriteRegister = adress_5_bits;
+    public void setAddressOfWriteRegister(String address_5_bits){
+        if(address_5_bits.length() == 5){
+            this.addressOfWriteRegister = address_5_bits;
         }
     }
 
     /**
      * 
-     * @param value_32_bits value to be storaged in the write register
+     * @param value_32_bits value to be stored in the write register
      */
     public void setWriteValue(String value_32_bits){
         this.writeValue = value_32_bits;
@@ -75,7 +75,7 @@ public class Registers {
 
     /**
      * 
-     * @return value to be writed in the register
+     * @return value to be write in the register
      */
     public String getWriteValue(){
         return this.writeValue;
@@ -85,16 +85,16 @@ public class Registers {
      * Function responsible for write the value on the write register
      */
     public void writeRegister(){
-        this.registers[Integer.parseInt(this.adressOfWriteRegister, 2)] = this.writeValue;
+        this.registers[Integer.parseInt(this.addressOfWriteRegister, 2)] = this.writeValue;
     }
 
     /**
-     * Function tha read an value from register given this adress
-     * @param adress_5_bits adress of register to be read
+     * Function tha read an value from register given this address
+     * @param address_5_bits address of register to be read
      * @return value of the register
      */
-    public String readRegister(String adress_5_bits){
-        return this.registers[Integer.parseInt(adress_5_bits, 2)];
+    public String readRegister(String address_5_bits){
+        return this.registers[Integer.parseInt(address_5_bits, 2)];
     }
 
     /**
@@ -102,7 +102,7 @@ public class Registers {
      * @return a 32 bits value (String)
      */
     public String getData1(){
-        return this.readRegister(this.adressOfReadRegisterA);
+        return this.readRegister(this.addressOfReadRegisterA);
     }
 
      /**
@@ -110,6 +110,6 @@ public class Registers {
      * @return a 32 bits value (String)
      */
     public String getData2(){
-        return this.readRegister(this.adressOfReadRegisterB);
+        return this.readRegister(this.addressOfReadRegisterB);
     }
 }
