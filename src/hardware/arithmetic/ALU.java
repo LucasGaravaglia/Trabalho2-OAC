@@ -3,7 +3,7 @@ package src.hardware.arithmetic;
 import src.utils.*;
 
 /**
- * Levi
+ * @author
  */
 public class ALU {
     private String data1;
