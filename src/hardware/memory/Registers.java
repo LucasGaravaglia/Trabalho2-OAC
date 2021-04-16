@@ -11,8 +11,6 @@ public class Registers {
     private String writeValue;
     private String[] registers;
     private String RegWrite;
-    private String outA;
-    private String outB;
 
     /**
      * Constructor
@@ -25,8 +23,6 @@ public class Registers {
         this.addressOfReadRegisterA = Binary.BITS_5_ZERO;
         this.addressOfReadRegisterB = Binary.BITS_5_ZERO;
         this.addressOfWriteRegister = Binary.BITS_5_ZERO;
-        this.outA = Binary.BITS_5_ZERO;
-        this.outB = Binary.BITS_5_ZERO;
         this.writeValue = Binary.BITS_32_ZERO;
         this.RegWrite = "0";
     }

@@ -7,21 +7,21 @@ import src.utils.*;
 public class Mux2X {
     private String value1;
     private String value2;
-    private int bit;
+    private String bit;
 
     public Mux2X(){
         this.value1 = Binary.BITS_32_ZERO;
         this.value2 = Binary.BITS_32_ZERO;
-        this.bit = 0;
+        this.bit = "0";
     }
 
     /**
      * Function that set the first input of the mux
-     * @param value_32_bits
+     * @param value String with length of 32
      */
-    public void setValue1(String value_32_bits){
-        if(value_32_bits.length() == 32){
-            this.value1 = value_32_bits;
+    public void setValue1(String value){
+        if(value.length() == 32){
+            this.value1 = value;
         }else{
             this.value1 = Binary.BITS_32_ZERO;
         }
@@ -29,11 +29,11 @@ public class Mux2X {
 
     /**
      * Function that set the second input of the mux
-     * @param value_32_bits
+     * @param value String with length of 32
      */
-    public void setValue2(String value_32_bits){
-        if(value_32_bits.length() == 32){
-            this.value2 = value_32_bits;
+    public void setValue2(String value){
+        if(value.length() == 32){
+            this.value2 = value;
         }else{
             this.value2 = Binary.BITS_32_ZERO;
         }
@@ -41,18 +41,18 @@ public class Mux2X {
 
     /**
      * Function that returns the mux set bit
-     * @return the currect bit setted in the mux
+     * @return the current bit in the mux, "0" or "1"
      */
-    public int getBit(){
+    public String getBit(){
         return this.bit;
     }
 
     /**
      * Function tha set the bit of the mux
-     * @param value 0 or 1
+     * @param value String "0" or "1"
      */
-    public void setBit(int value){
-        if(value == 0 || value == 1){
+    public void setBit(String value){
+        if(value.compareTo("1") == 0 || value.compareTo("0") == 0){
             this.bit = value;
         }        
     }
@@ -62,7 +62,7 @@ public class Mux2X {
      * @return a 32 bit result
      */
     public String getResult(){
-        if(this.bit == 1){
+        if(this.bit.compareTo("1") == 0){
             return this.value2;
         }
         return this.value1;

@@ -8,7 +8,7 @@ public class TypesConversion {
      * @return Boolean
      */
     public static Boolean getLogicValueFromChar(char value){
-        if(value == '1'){
+        if(value.compareTo("1") == 0){
             return true;
         }
         return false;
@@ -20,7 +20,7 @@ public class TypesConversion {
      * @return Boolean
      */
     public static Boolean getLogicValueFromString(String value){
-        if(value == "1"){
+        if(value.compareTo("1") == 0){
             return true;
         }
         return false;

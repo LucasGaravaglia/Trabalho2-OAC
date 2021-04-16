@@ -8,8 +8,8 @@ public class DataMemory {
     private String[] memory;
     private String address;
     private String valueToWrite;
-    private int MemWrite;
-    private int MemRead;
+    private String MemWrite;
+    private String MemRead;
     private String dataRead;
 
     /**
@@ -17,13 +17,13 @@ public class DataMemory {
      */
     public DataMemory(){
         this.memory = new String[Defines.DATA_MEMORY_SIZE];
-        for(String x: this.memory){
-            x = Binary.BITS_32_ZERO;
+        for(int i = 0; i < this.memory.length; i++){
+            this.memory[i] = Binary.BITS_32_ZERO;
         }
         this.address = "0";
         this.valueToWrite = "0";
-        this.MemWrite = 0;
-        this.MemRead = 0;
+        this.MemWrite = "0";
+        this.MemRead = "0";
         this.dataRead = Binary.BITS_32_ZERO;
     }
 
@@ -75,29 +75,47 @@ public class DataMemory {
     }
 
     /**
-     * Function that set the bit that determines if the memory will be written 
-     * @param bit 1 or 0
+     * Function that perform the memory write internally 
      */
-    public void setMemWrite(int bit){
-        if(bit == 1){
-            this.MemWrite = bit;
+    private void writeMemory(){
+        if(this.MemWrite.compareTo("1") == 0){
             memory[Integer.parseInt(this.address, 2)] = this.valueToWrite;
+        }
+    }
+
+    /**
+     * Function that set the bit that determines if the memory will be written 
+     * @param bit String "1" or "0"
+     */
+    public void setMemWrite(String bit){
+        if(bit.compareTo("1") == 0){
+            this.MemWrite = bit;
+            this.writeMemory();
         }else{
-            this.MemWrite = 0;
+            this.MemWrite = "0";
+        }
+    }
+
+    /**
+     * Function that read data from memory internally 
+     */
+    private void readMemory(){
+        if(this.MemRead.compareTo("1") == 0){
+            int memoryAddress = (int) Long.parseLong(this.address, 2);
+            this.dataRead = this.memory[memoryAddress];
         }
     }
 
     /**
      * Function that set the bit that determines if the memory will be read 
-     * @param bit 1 or 0
+     * @param bit String "0" or "1"
      */
-    public void setMemRead(int bit){
-        if(bit == 1){
+    public void setMemRead(String bit){
+        if(bit.compareTo("1") == 0){
             this.MemRead = bit;
-            int memoryAddress = (int) Long.parseLong(this.address, 2);
-            this.dataRead = this.memory[memoryAddress];
+            this.readMemory();
         }else{
-            this.MemRead = 0;
+            this.MemRead = "0";
         }
            
     }
