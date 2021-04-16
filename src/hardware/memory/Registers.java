@@ -14,7 +14,9 @@ public class Registers {
     private String outA;
     private String outB;
 
-    
+    /**
+     * Constructor
+     */
     Registers(){
         this.registers = new String[32];
         for(String reg : this.registers){
@@ -38,8 +40,7 @@ public class Registers {
         if(value.length() == 1){
             this.RegWrite = value;
             if(this.RegWrite == "1"){
-                this.outA = this.readRegister(this.addressOfReadRegisterA);
-                this.outB = this.readRegister(this.addressOfReadRegisterB);
+                this.writeRegister();
             }
         }
     }
@@ -120,7 +121,7 @@ public class Registers {
      * @return a 32 bits value (String)
      */
     public String getData1(){
-        return this.outA;
+        return this.readRegister(this.addressOfReadRegisterA);
     }
 
      /**
@@ -128,6 +129,6 @@ public class Registers {
      * @return a 32 bits value (String)
      */
     public String getData2(){
-        return this.outB;
+        return this.readRegister(this.addressOfReadRegisterB);
     }
 }
