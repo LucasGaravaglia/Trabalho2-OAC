@@ -70,13 +70,13 @@ public class ALU {
     public void setALUControl(String value){
         this.control = value;
 
-        if(this.control == "0010"){//add
+        if(this.control.compareTo("0010") == 0){//add
             this.result = Binary.addBinary_32_bits(this.data1, this.data2);
-        }else if(this.control == "0110"){//sub
+        }else if(this.control.compareTo("0110") == 0){//sub
             this.result = Binary.subBinary_32_bits(this.data1, this.data2);
-        }else if(this.control == "0000"){//and
+        }else if(this.control.compareTo("0000") == 0){//and
             this.result = Binary.andBinary_32_bits(this.data1, this.data2);
-        }else if(this.control == "0001"){//or
+        }else if(this.control.compareTo("0001") == 0){//or
             this.result = Binary.orBinary_32_bits(this.data1, this.data2);
         }else {
             this.result = Binary.BITS_32_ZERO;

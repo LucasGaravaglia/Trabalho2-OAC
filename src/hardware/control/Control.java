@@ -1,5 +1,7 @@
 package src.hardware.control;
 
+import src.utils.*;
+
 /**
  * @author Levi
  */
@@ -26,8 +28,32 @@ public class Control {
         }
     }
 
+    /**
+     * Function that determines the value of the outputs of the control unit
+     */
     private void execute(){
+        Boolean o0, o1, o2, o3, o4, o5, o6;
+        Boolean rFormat, lw, sw, beq, bFormat;
+        o6 = !TypesConversion.getLogicValueFromString(this.input.substring(0, 1));
+        o5 = !TypesConversion.getLogicValueFromString(this.input.substring(1, 2));
+        o4 = !TypesConversion.getLogicValueFromString(this.input.substring(2, 3));
+        o3 = !TypesConversion.getLogicValueFromString(this.input.substring(3, 4));
+        o2 = !TypesConversion.getLogicValueFromString(this.input.substring(4, 5));
+        o1 = !TypesConversion.getLogicValueFromString(this.input.substring(5, 6));
+        o0 = !TypesConversion.getLogicValueFromString(this.input.substring(6, 7));
         
+        rFormat = o6 && (!o5) && (!o4) && o3 && o2 && (!o1) && (!o0);
+        lw = o6 && o5 && o4 && o3 && o2 && (!o1) && (!o0);
+        sw = o6 && (!o5) && o4 && o3 && o2 && (!o1) && (!o0);
+        bFormat = (!o6) && (!o5) && o4 && o3 && o2 && (!o1) && (!o0);
+
+        this.branch = TypesConversion.boolToString(bFormat);
+        this.MemRead = TypesConversion.boolToString(lw);
+        this.MemToReg = TypesConversion.boolToString(lw);
+        this.MemWrite = TypesConversion.boolToString(sw);
+        this.RegWrite = TypesConversion.boolToString(rFormat || lw);
+        this.ALUSrc = TypesConversion.boolToString(lw || sw);
+        this.ALUOp = TypesConversion.boolToString(rFormat) + TypesConversion.boolToString(bFormat);
     }
 
 
