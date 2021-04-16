@@ -33,7 +33,7 @@ public class Control {
      */
     private void execute(){
         Boolean o0, o1, o2, o3, o4, o5, o6;
-        Boolean rFormat, lw, sw, bFormat;
+        Boolean rFormat, lw, sw, bFormat, iFormat;
         o6 = !TypesConversion.getLogicValueFromString(this.input.substring(0, 1));
         o5 = !TypesConversion.getLogicValueFromString(this.input.substring(1, 2));
         o4 = !TypesConversion.getLogicValueFromString(this.input.substring(2, 3));
@@ -46,13 +46,14 @@ public class Control {
         lw = o6 && o5 && o4 && o3 && o2 && (!o1) && (!o0);
         sw = o6 && (!o5) && o4 && o3 && o2 && (!o1) && (!o0);
         bFormat = (!o6) && (!o5) && o4 && o3 && o2 && (!o1) && (!o0);
+        iFormat = o6 && o5 && (!o4) && o3 && o2 && (!o1) && (!o0);
 
         this.branch = TypesConversion.boolToString(bFormat);
         this.MemRead = TypesConversion.boolToString(lw);
         this.MemToReg = TypesConversion.boolToString(lw);
         this.MemWrite = TypesConversion.boolToString(sw);
-        this.RegWrite = TypesConversion.boolToString(rFormat || lw);
-        this.ALUSrc = TypesConversion.boolToString(lw || sw);
+        this.RegWrite = TypesConversion.boolToString(rFormat || lw || iFormat);
+        this.ALUSrc = TypesConversion.boolToString(lw || sw || iFormat);
         this.ALUOp = TypesConversion.boolToString(rFormat) + TypesConversion.boolToString(bFormat);
     }
 
