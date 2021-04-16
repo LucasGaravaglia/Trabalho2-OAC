@@ -17,8 +17,8 @@ public class Registers {
      */
     Registers(){
         this.registers = new String[32];
-        for(String reg : this.registers){
-            reg = Binary.BITS_32_ZERO;
+        for(int i = 0; i < this.registers.length;i++){
+            this.registers[i] = Binary.BITS_32_ZERO;
         }
         this.addressOfReadRegisterA = Binary.BITS_5_ZERO;
         this.addressOfReadRegisterB = Binary.BITS_5_ZERO;

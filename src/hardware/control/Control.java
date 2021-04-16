@@ -33,7 +33,7 @@ public class Control {
      */
     private void execute(){
         Boolean o0, o1, o2, o3, o4, o5, o6;
-        Boolean rFormat, lw, sw, beq, bFormat;
+        Boolean rFormat, lw, sw, bFormat;
         o6 = !TypesConversion.getLogicValueFromString(this.input.substring(0, 1));
         o5 = !TypesConversion.getLogicValueFromString(this.input.substring(1, 2));
         o4 = !TypesConversion.getLogicValueFromString(this.input.substring(2, 3));
