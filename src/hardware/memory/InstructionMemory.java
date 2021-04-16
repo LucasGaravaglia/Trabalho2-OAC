@@ -65,7 +65,7 @@ public class InstructionMemory {
 
     /**
      * Function that determines which address will be read
-     * @param readAddress
+     * @param readAddress binary value
      */
     public void setReadAddress(String readAddress){
         if(this.instructions.length >= Long.parseLong(readAddress, 2)){
