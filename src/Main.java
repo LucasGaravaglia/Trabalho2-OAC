@@ -1,10 +1,9 @@
 package src;
-import src.hardware.control.*;
-import src.hardware.memory.InstructionMemory;
+
+import src.test.*;
 
 public class Main {
 	public static void main(String[] args) {
-		
-		
+		TestControl.testAluControl();		
 	}	
 }
