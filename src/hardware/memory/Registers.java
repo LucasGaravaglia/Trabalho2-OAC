@@ -10,6 +10,9 @@ public class Registers {
     private String addressOfWriteRegister;
     private String writeValue;
     private String[] registers;
+    private String RegWrite;
+    private String outA;
+    private String outB;
 
     
     Registers(){
@@ -20,23 +23,45 @@ public class Registers {
         this.addressOfReadRegisterA = Binary.BITS_5_ZERO;
         this.addressOfReadRegisterB = Binary.BITS_5_ZERO;
         this.addressOfWriteRegister = Binary.BITS_5_ZERO;
+        this.outA = Binary.BITS_5_ZERO;
+        this.outB = Binary.BITS_5_ZERO;
         this.writeValue = Binary.BITS_32_ZERO;
+        this.RegWrite = "0";
     }
 
-    public String getAddressOfReadRegisterA (){
-        return this.addressOfReadRegisterA;
-    }         
-
-    public String getAddressOfReadRegisterB (){
-        return this.addressOfReadRegisterB;
-    }     
-
-    public String getAddressOfWriteRegister (){
-        return this.addressOfWriteRegister;
-    } 
-   
     /**
-     * 
+     * Function that determines the value of the flag RegWrite
+     * When tha value is "1", the values are read
+     * @param value String "0" or "1"
+     */
+    public void setRegWrite(String value){
+        if(value.length() == 1){
+            this.RegWrite = value;
+            if(this.RegWrite == "1"){
+                this.outA = this.readRegister(this.addressOfReadRegisterA);
+                this.outB = this.readRegister(this.addressOfReadRegisterB);
+            }
+        }
+    }
+
+    /**
+     * Function thar allow clone the content of all registers at once
+     * @return Array of Strings, each String with 32 of length
+     */
+    public String[] cloneRegisters(){
+        return this.registers.clone();
+    }
+
+    /**
+     * Function that allow to overwrite all register at once
+     * @param value Array of Strings, each String with 32 of length
+     */
+    public void overwriteAlRegisters(String[] value){
+        this.registers = value.clone();
+    }
+
+    /**
+     * Function that determines the address of the first input of the registers
      * @param address_5_bits address of register to be read
      */
     public void setAddressOfReadRegisterA(String address_5_bits){
@@ -46,17 +71,17 @@ public class Registers {
     }    
 
     /**
-     * 
-     * @param address_5_bits adress of register to be readed
+     * Function that determines the address of the second input of the registers
+     * @param address_5_bits address of register to be read
      */
-    public void setAdressOfReadRegisterB(String address_5_bits){
+    public void setAddressOfReadRegisterB(String address_5_bits){
         if(address_5_bits.length() == 5){
             this.addressOfReadRegisterB = address_5_bits;
         }
     }
 
     /**
-     * 
+     * Function that determines the address of the third input of the registers
      * @param address_5_bits address of register to be write
      */
     public void setAddressOfWriteRegister(String address_5_bits){
@@ -66,25 +91,18 @@ public class Registers {
     }
 
     /**
-     * 
+     * Function that determines the value of the forth input of the registers
      * @param value_32_bits value to be stored in the write register
      */
     public void setWriteValue(String value_32_bits){
         this.writeValue = value_32_bits;
     }
 
-    /**
-     * 
-     * @return value to be write in the register
-     */
-    public String getWriteValue(){
-        return this.writeValue;
-    }
 
     /**
      * Function responsible for write the value on the write register
      */
-    public void writeRegister(){
+    private void writeRegister(){
         this.registers[Integer.parseInt(this.addressOfWriteRegister, 2)] = this.writeValue;
     }
 
@@ -102,7 +120,7 @@ public class Registers {
      * @return a 32 bits value (String)
      */
     public String getData1(){
-        return this.readRegister(this.addressOfReadRegisterA);
+        return this.outA;
     }
 
      /**
@@ -110,6 +128,6 @@ public class Registers {
      * @return a 32 bits value (String)
      */
     public String getData2(){
-        return this.readRegister(this.addressOfReadRegisterB);
+        return this.outB;
     }
 }
