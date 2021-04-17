@@ -13,7 +13,7 @@ public class Control {
     private String MemWrite;
     private String ALUSrc;
     private String RegWrite;
-    private String branch0
+    private String branch0;
     private String branch1;
 
     /**
@@ -64,19 +64,13 @@ public class Control {
 
     /**
      * Function that bit of the flag branch
-     * @return String "0"or "1"
+     * @return String "00", "01", "10" o "11"
      */
-    public String getBranch0(){
-        return this.branch0;
+    public String getBranch(){
+        return this.branch1 + this.branch0;
     }
 
-    /**
-     * Function that bit of the flag branch
-     * @return String "0"or "1"
-     */
-    public String getBranch1(){
-        return this.branch1;
-    }
+    
     
     /**
      * Function that bit of the flag MemRead
