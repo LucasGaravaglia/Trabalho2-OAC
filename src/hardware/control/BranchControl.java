@@ -11,6 +11,15 @@ public class BranchControl {
     private String output;
 
     /**
+     * Constructor
+     */
+    public BranchControl(){
+        this.branch = "00";
+        this.output = "0";
+        this.zero = "0";
+    }
+
+    /**
      * Function that determines the branch input of the branchControl
      * @param value String with length of 2
      */

@@ -60,6 +60,27 @@ public class Binary {
     }
 
     /**
+     * Function that add zeros or ones at the left of the string to complete 32 bits
+     * @param value a binary String
+     * @return String with length 32
+     */
+    public static String normalizeSizeWithSignal(String value){
+        if(value.length() > 32){
+            return Binary.BITS_32_ZERO;
+        }else if(value.length() == 32){
+            return value;
+        }
+        
+        String newString = "";
+        String left = (value.charAt(0) == '1')? "1":"0";
+        for(int i = 1;i < (32 - value.length());i++){
+            newString += left;
+        }
+                
+        return newString + value;
+    }
+
+    /**
      * Function that execute an and binary with the given values
      * @param value1 Binary String with length 32
      * @param value2 Binary String with length 32
