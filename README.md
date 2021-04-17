@@ -35,11 +35,11 @@ Informações detalhadas desta arquitetura encontram-se no livro do Patterson e 
 #### RISC-V Monocycle
 
 <h1 align="center">
-    <img alt="CCL" title="RISC-V_Monocycle" src="https://github.com/arcanjolevi/trabalho2_OAC/blob/main/docs/model.png" width="700px" />
+    <img alt="CCL" title="RISC-V_Monocycle" src="https://github.com/LucasGaravaglia/Trabalho2-OAC/blob/main/docs/model.png" width="700px" />
 </h1>
 
 #### Interface Example
 
 <h1 align="center">
-    <img alt="CCL" title="EXAMPLE_INTERFACE" src="https://github.com/arcanjolevi/trabalho2_OAC/blob/main/docs/example1.png" width="700px" />
+    <img alt="CCL" title="EXAMPLE_INTERFACE" src="https://github.com/LucasGaravaglia/Trabalho2-OAC/blob/main/docs/example1.png" width="700px" />
 </h1>
