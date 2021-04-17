@@ -6,21 +6,22 @@ import src.utils.*;
  * @author Levi
  */
 public class Control {
-    private String input;
-    private String branch;
+    private String input;    
     private String MemRead;
     private String MemToReg;
     private String ALUOp;
     private String MemWrite;
     private String ALUSrc;
     private String RegWrite;
+    private String branch0
+    private String branch1;
 
     /**
      * Function that determines the input of the control, bits 0-6 of the instruction
-     * @param value String with length of 7
+     * @param value String with length of 8
      */
     public void setInput(String value){
-        if(value.length() == 7){
+        if(value.length() == 8){
             this.input = value;
             this.execute();
         }else{
@@ -32,15 +33,17 @@ public class Control {
      * Function that determines the value of the outputs of the control unit
      */
     private void execute(){
-        Boolean o0, o1, o2, o3, o4, o5, o6;
+        Boolean o0, o1, o2, o3, o4, o5, o6, o7;
         Boolean rFormat, lw, sw, bFormat, iFormat;
-        o6 = !TypesConversion.getLogicValueFromString(this.input.substring(0, 1));
-        o5 = !TypesConversion.getLogicValueFromString(this.input.substring(1, 2));
-        o4 = !TypesConversion.getLogicValueFromString(this.input.substring(2, 3));
-        o3 = !TypesConversion.getLogicValueFromString(this.input.substring(3, 4));
-        o2 = !TypesConversion.getLogicValueFromString(this.input.substring(4, 5));
-        o1 = !TypesConversion.getLogicValueFromString(this.input.substring(5, 6));
-        o0 = !TypesConversion.getLogicValueFromString(this.input.substring(6, 7));
+        
+        o7 = !TypesConversion.getLogicValueFromString(this.input.substring(0, 1));
+        o6 = !TypesConversion.getLogicValueFromString(this.input.substring(1, 2));
+        o5 = !TypesConversion.getLogicValueFromString(this.input.substring(2, 3));
+        o4 = !TypesConversion.getLogicValueFromString(this.input.substring(3, 4));
+        o3 = !TypesConversion.getLogicValueFromString(this.input.substring(4, 5));
+        o2 = !TypesConversion.getLogicValueFromString(this.input.substring(5, 6));
+        o1 = !TypesConversion.getLogicValueFromString(this.input.substring(6, 7));
+        o0 = !TypesConversion.getLogicValueFromString(this.input.substring(7, 8));
         
         rFormat = o6 && (!o5) && (!o4) && o3 && o2 && (!o1) && (!o0);
         lw = o6 && o5 && o4 && o3 && o2 && (!o1) && (!o0);
@@ -48,7 +51,8 @@ public class Control {
         bFormat = (!o6) && (!o5) && o4 && o3 && o2 && (!o1) && (!o0);
         iFormat = o6 && o5 && (!o4) && o3 && o2 && (!o1) && (!o0);
 
-        this.branch = TypesConversion.boolToString(bFormat);
+        this.branch0 = TypesConversion.boolToString(bFormat);
+        this.branch1 = TypesConversion.boolToString(bFormat && o7);
         this.MemRead = TypesConversion.boolToString(lw);
         this.MemToReg = TypesConversion.boolToString(lw);
         this.MemWrite = TypesConversion.boolToString(sw);
@@ -62,8 +66,16 @@ public class Control {
      * Function that bit of the flag branch
      * @return String "0"or "1"
      */
-    public String getBranch(){
-        return this.branch;
+    public String getBranch0(){
+        return this.branch0;
+    }
+
+    /**
+     * Function that bit of the flag branch
+     * @return String "0"or "1"
+     */
+    public String getBranch1(){
+        return this.branch1;
     }
     
     /**

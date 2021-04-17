@@ -86,16 +86,16 @@ public class InstructionMemory {
      * Index of the instruction:  31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10  9  8  7  6  5  4  3  2  1  0
      * @return
      */ 
-    public String get_6_0(){
+    public String get12and6to0(){
         String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
-        return value.substring(25);
+        return value.substring(19, 20) + value.substring(25);
     }
 
     /**
      * Function that represents the output 11-7 of the instruction
      * @return
      */
-    public String get_11_7(){
+    public String get11to7(){
         String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
         return value.substring(20, 25);
     }
@@ -104,7 +104,7 @@ public class InstructionMemory {
      * Function that represents the output 14-12 of the instruction
      * @return
      */
-    public String get_14_12(){
+    public String get14to12(){
         String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
         return value.substring(17, 20);
     }
@@ -113,7 +113,7 @@ public class InstructionMemory {
      * Function that represents the output 15-19 of the instruction
      * @return
      */
-    public String get_15_19(){
+    public String get15to19(){
         String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
         return value.substring(12, 17);
     }
@@ -122,7 +122,7 @@ public class InstructionMemory {
      * Function that represents the output 20-24 of the instruction
      * @return
      */
-    public String get_20_24(){
+    public String get20to24(){
         String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
         return value.substring(7, 12);
     }
@@ -131,7 +131,7 @@ public class InstructionMemory {
      * Function that represents the output 30,14-12
      * @return
      */
-    public String get_30__14_12(){
+    public String get30and14to12(){
         String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
         return value.substring(1, 2)+value.substring(17, 20);
     }
@@ -140,7 +140,7 @@ public class InstructionMemory {
      * Function that represents the output 31-0
      * @return
      */
-    public String get_31_0(){
+    public String get31to0(){
         String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
         return value;
     }

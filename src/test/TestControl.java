@@ -27,7 +27,7 @@ public class TestControl{
 
 		for(int i = 0;i < 7;i++){
 			instMemo.setReadAddress(address[i]);
-			aluControl.setInstruction(instMemo.get_30__14_12());
+			aluControl.setInstruction(instMemo.get30and14to12());
 			value = aluControl.getControl();
 			result = value.compareTo("0010") == 0;
 			System.out.println("Instruction" + address[i] +": " + value + " -> " + result);
@@ -38,7 +38,7 @@ public class TestControl{
 
 		for(int i = 0;i < 7;i++){
 			instMemo.setReadAddress(address[i]);
-			aluControl.setInstruction(instMemo.get_30__14_12());
+			aluControl.setInstruction(instMemo.get30and14to12());
 			value = aluControl.getControl();
 			result = value.compareTo("0110") == 0;
 			System.out.println("Instruction" + address[i] +": " + value + " -> " + result);
@@ -49,7 +49,7 @@ public class TestControl{
 
 		for(int i = 0;i < 4;i++){
 			instMemo.setReadAddress(address[i]);
-			aluControl.setInstruction(instMemo.get_30__14_12());
+			aluControl.setInstruction(instMemo.get30and14to12());
 			value = aluControl.getControl();
 			result = value.compareTo(instructionResults[i]) == 0;
 			System.out.println("Instruction" + address[i] +": " + value + " -> " + result);
@@ -60,7 +60,7 @@ public class TestControl{
 
 		
 		instMemo.setReadAddress("111");
-		aluControl.setInstruction(instMemo.get_30__14_12());
+		aluControl.setInstruction(instMemo.get30and14to12());
 		value = aluControl.getControl();
 		result = value.compareTo(instructionResults[6]) == 0;
 		System.out.println("Instruction" + address[6] +": " + value + " -> " + result);
