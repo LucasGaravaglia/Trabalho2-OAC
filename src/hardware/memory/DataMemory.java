@@ -28,6 +28,38 @@ public class DataMemory {
     }
 
     /**
+     * Function that returns the current address int the memory
+     * @return String with 32 of length
+     */
+    public String getCurrentAddress(){
+        return this.address;
+    }
+
+    /**
+     * Function that returns the current value to write in the memory 
+     * @return String with 32 of length
+     */
+    public String getCurrentWriteValue(){
+        return this.valueToWrite;
+    }
+
+    /**
+     * Function that returns the current MemWrite flag
+     * @return "0" or "1"
+     */
+    public String getCurrentMemWrite(){
+        return this.MemWrite;
+    }
+
+    /**
+     * Function that returns the current MemRead flag
+     * @return "0" or "1"
+     */
+    public String getCurrentMemRead(){
+        return this.MemRead;
+    }
+
+    /**
      * Function that overwrite all memory at once
      * @param newMemory an Array os Strings, each string with length o 32
      */
@@ -79,7 +111,9 @@ public class DataMemory {
      */
     private void writeMemory(){
         if(this.MemWrite.compareTo("1") == 0){
-            memory[Integer.parseInt(this.address, 2)] = this.valueToWrite;
+            int l = (int)Long.parseLong(this.address, 2);
+            l = l/4;
+            memory[l] = this.valueToWrite;
         }
     }
 
@@ -102,6 +136,7 @@ public class DataMemory {
     private void readMemory(){
         if(this.MemRead.compareTo("1") == 0){
             int memoryAddress = (int) Long.parseLong(this.address, 2);
+            memoryAddress = memoryAddress/4;
             this.dataRead = this.memory[memoryAddress];
         }
     }
