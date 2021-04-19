@@ -45,6 +45,9 @@ public class Window extends JFrame {
   private JButton BackButton;
   private JButton LoadFile;
 
+  /**
+   * Constructor
+   */
   public Window() {
     super();
 
@@ -101,7 +104,13 @@ public class Window extends JFrame {
     });
   }
 
+  /**
+   * Method responsible for select and send path file for flux processor
+   * 
+   * @exception Exception Error when to obtain file path
+   */
   public void selectFile() {
+    StringBuilder message = new StringBuilder();
     try {
       JFileChooser jFileChooser = new JFileChooser();
       int filePickerResponse = jFileChooser.showOpenDialog(LoadFile);
@@ -109,25 +118,51 @@ public class Window extends JFrame {
         File selectFile = jFileChooser.getSelectedFile();
         System.out.println(selectFile.getAbsolutePath());
       } else {
-        System.out.println("Nenhum arquivo selecionado.");
+        message.append("Nenhum arquivo selecionado.");
+        JOptionPane.showMessageDialog(null, message);
       }
     } catch (Exception e) {
-      System.out.println("Cold not open file.\n" + e.getMessage());
+      message.append("Cold not open file.\n" + e.getMessage());
+      JOptionPane.showMessageDialog(null, message);
     }
   }
 
+  /**
+   * Responsible for set JList of Register.
+   * 
+   * @param model String array object.
+   * @throws Exception Error set JList
+   */
   public void handlerListRegisters(DefaultListModel<String> model) throws Exception {
     this.ListRegister.setModel(model);
   }
 
+  /**
+   * Responsible for set JList of Memory.
+   * 
+   * @param model String array object.
+   * @throws Exception Error set JList
+   */
   public void handlerListMemorys(DefaultListModel<String> model) throws Exception {
     this.ListMemory.setModel(model);
   }
 
-  public void handlerPC(Integer pc) throws Exception {
-    this.PC.setName("PC: " + pc.toString());
+  /**
+   * Responsible for set JLabel of pc.
+   * 
+   * @param pc Pointer of PC.
+   * @throws Exception Error set JLabel.
+   */
+  public void handlerPC(String pc) throws Exception {
+    this.PC.setName("PC: " + pc);
   }
 
+  /**
+   * Method responsible for update signals.
+   * 
+   * @param signals Array Boolean the Signals is True
+   * @throws Exception Error set JCheckBox of signals.
+   */
   public void handlerSignals(Boolean[] signals) throws Exception {
     this.Branch.setSelected(signals[0]);
     this.MemRead.setSelected(signals[1]);
@@ -138,19 +173,37 @@ public class Window extends JFrame {
     this.RegWrite.setSelected(signals[6]);
   }
 
+  /**
+   * Method responsible for set all components.
+   * 
+   * @param b Variable responsible for saying whether to go to the next
+   *          instruction or back.
+   */
   public void handlerAllComponents(Boolean b) {
   }
 
+  /**
+   * Method responsible for instantiate the JButtons
+   * 
+   * @exception Exception Error when instantiating some JButtons
+   */
   private void initJButton() {
     try {
       this.NextButton = new JButton("Proxima instrução");
       this.BackButton = new JButton("Voltar uma instrução");
       this.LoadFile = new JButton("Carregar arquivo");
     } catch (Exception e) {
-      System.out.println("Can't instantiate the JButton.\n" + e.getMessage());
+      StringBuilder message = new StringBuilder();
+      message.append("Can't instantiate the JButton.\n" + e.getMessage());
+      JOptionPane.showMessageDialog(null, message);
     }
   }
 
+  /**
+   * Method responsible for instantiate the JFrame
+   * 
+   * @exception Exception Error when instantiating some JFrame
+   */
   private void initJFrame() {
     try {
       this.setTitle("Simulador");
@@ -162,10 +215,17 @@ public class Window extends JFrame {
       this.setLayout(this.layout);
       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     } catch (Exception e) {
-      System.out.println("Can't instantiate the JFrames.\n" + e.getMessage());
+      StringBuilder message = new StringBuilder();
+      message.append("Can't instantiate the JFrames.\n" + e.getMessage());
+      JOptionPane.showMessageDialog(null, message);
     }
   }
 
+  /**
+   * Method responsible for instantiate the JLabel
+   * 
+   * @exception Exception Error when instantiating some JLabel
+   */
   private void initJLabel() {
     try {
       this.Sinais = new JLabel("Sinais de Controle:");
@@ -173,10 +233,17 @@ public class Window extends JFrame {
       this.Memoria = new JLabel("Memoria:");
       this.PC = new JLabel("PC: ");
     } catch (Exception e) {
-      System.out.println("Can't instantiate the JLabel.\n" + e.getMessage());
+      StringBuilder message = new StringBuilder();
+      message.append("Can't instantiate the JLabel.\n" + e.getMessage());
+      JOptionPane.showMessageDialog(null, message);
     }
   }
 
+  /**
+   * Method responsible for instantiate the JCheckBox
+   * 
+   * @exception Exception Error when instantiating some JCheckBox
+   */
   private void initJCheckBox() {
     try {
       this.Branch = new JCheckBox("Branch", false);
@@ -194,29 +261,50 @@ public class Window extends JFrame {
       this.RegWrite = new JCheckBox("RegWrite", false);
       this.RegWrite.setEnabled(false);
     } catch (Exception e) {
-      System.out.println("Can't instantiate the JCheckBox.\n" + e.getMessage());
+      StringBuilder message = new StringBuilder();
+      message.append("Can't instantiate the JCheckBox.\n" + e.getMessage());
+      JOptionPane.showMessageDialog(null, message);
     }
   }
 
+  /**
+   * Method responsible for instantiate the JScrollPane
+   * 
+   * @exception Exception Error when instantiating some JScrollPane
+   */
   private void initJScrollPane() {
     this.initList();
     try {
       this.SPRegister = new JScrollPane(this.ListRegister);
       this.SPMemory = new JScrollPane(this.ListMemory);
     } catch (Exception e) {
-      System.out.println("Can't instantiate the JScrollPane.\n" + e.getMessage());
+      StringBuilder message = new StringBuilder();
+      message.append("Can't instantiate the JScrollPane.\n" + e.getMessage());
+      JOptionPane.showMessageDialog(null, message);
     }
   }
 
+  /**
+   * Method responsible for instantiate the JList
+   * 
+   * @exception Exception Error when instantiating some JList
+   */
   private void initList() {
     try {
       this.ListMemory = new JList<String>();
       this.ListRegister = new JList<String>();
     } catch (Exception e) {
-      System.out.println("Can't instantiate the JList.\n" + e.getMessage());
+      StringBuilder message = new StringBuilder();
+      message.append("Can't instantiate the JList.\n" + e.getMessage());
+      JOptionPane.showMessageDialog(null, message);
     }
   }
 
+  /**
+   * Method responsible for instantiate the JPanel
+   * 
+   * @exception Exception Error when instantiating some JPanel
+   */
   private void initJPanel() {
     try {
       int widthPanel = 290;
@@ -236,7 +324,9 @@ public class Window extends JFrame {
       this.MemoryPanel.setPreferredSize(new Dimension(widthPanel, heightPanel));
       this.buttonsPanel.setPreferredSize(new Dimension(this.width, 100));
     } catch (Exception e) {
-      System.out.println("Can't instantiate the JPanel.\n" + e.getMessage());
+      StringBuilder message = new StringBuilder();
+      message.append("Can't instantiate the JPanel.\n" + e.getMessage());
+      JOptionPane.showMessageDialog(null, message);
     }
   }
 }
