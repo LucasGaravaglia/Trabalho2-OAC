@@ -355,10 +355,10 @@ public class Flux {
 
         //this.test3();
 
-        String[] a = new String[32];
-        a[11] = Binary.get32BitsStringValue(5);
-        a[12] = Binary.get32BitsStringValue(6);
-        this.registers.overwriteAlRegisters(a);
+        //String[] a = new String[32];
+        //a[11] = Binary.get32BitsStringValue(5);
+        //a[12] = Binary.get32BitsStringValue(6);
+        //this.registers.overwriteAlRegisters(a);
 
         this.executeRegisters();
         
