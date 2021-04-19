@@ -11,11 +11,11 @@ public class load {
   }
 
   public String[] loadFile(String path) {
-    String[] content = new String(50);
+    String[] content = new String[50];
     int i = 0;
     try {
       FileReader arc = new FileReader(path);
-      BufferedReader readArc = BufferedReader(arc);
+      BufferedReader readArc = new BufferedReader(arc);
       String line = "";
       try {
         line = readArc.readLine();
@@ -32,7 +32,8 @@ public class load {
       content[0] = "Could not open file.\n" + eNFE.getMessage();
     }
     if (content[0].contains("Could not")) {
-      return "";
+      String[] Err = { "" };
+      return Err;
     } else {
       return content;
     }
