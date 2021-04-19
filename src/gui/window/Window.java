@@ -7,6 +7,7 @@ import java.awt.*;
 
 import src.control.flux.*;
 import src.control.simulation.*;
+import src.gui.data.*;
 import src.file.*;
 
 /**
@@ -53,14 +54,16 @@ public class Window extends JFrame {
   private Simulation simulation;
   private Load loadFile;
 
+  private Data data;
+
   /**
    * Constructor
    */
   public Window() {
     super();
 
-    this.flux = new Flux();
     this.simulation = new Simulation();
+    this.flux = new Flux(this.simulation);
     this.loadFile = new Load();
 
     this.layout = new FlowLayout();
@@ -193,8 +196,12 @@ public class Window extends JFrame {
    */
   public void handlerAllComponents(Boolean b) {
     if (b) {
-      this.flux.doClock();
-      this.simulation.getCurrentState();
+      try {
+        this.flux.doClock();
+        this.simulation.getCurrentState();
+      } catch (Exception e) {
+        System.out.println("Erro ao obter o estado atual do processador.");
+      }
     } else {
 
     }
