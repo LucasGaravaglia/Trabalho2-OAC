@@ -198,12 +198,25 @@ public class Window extends JFrame {
     if (b) {
       try {
         this.flux.doClock();
-        this.simulation.getCurrentState();
+        this.data = this.simulation.getCurrentState();
+        this.handlerSignals(this.data.getSignals());
+        this.handlerListMemorys(this.data.getModelMemory());
+        this.handlerListRegisters(this.data.getModelRegister());
+        this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
-        System.out.println("Erro ao obter o estado atual do processador.");
+        System.out.println("Erro ao obter o estado atual do processador.(PROXIMO)");
       }
     } else {
-
+      try {
+        // this.flux.();
+        this.data = this.simulation.getCurrentState();
+        this.handlerSignals(this.data.getSignals());
+        this.handlerListMemorys(this.data.getModelMemory());
+        this.handlerListRegisters(this.data.getModelRegister());
+        this.handlerPC(this.data.getPc().toString());
+      } catch (Exception e) {
+        System.out.println("Erro ao obter o estado atual do processador.(ANTERIOR)");
+      }
     }
 
   }
