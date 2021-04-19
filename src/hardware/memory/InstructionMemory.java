@@ -113,7 +113,7 @@ public class InstructionMemory {
      * Function that represents the output 15-19 of the instruction
      * @return
      */
-    public String get15to19(){
+    public String get19to15(){
         String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
         return value.substring(12, 17);
     }
@@ -122,7 +122,7 @@ public class InstructionMemory {
      * Function that represents the output 20-24 of the instruction
      * @return
      */
-    public String get20to24(){
+    public String get24to20(){
         String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
         return value.substring(7, 12);
     }

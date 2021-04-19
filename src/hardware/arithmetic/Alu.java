@@ -94,7 +94,7 @@ public class Alu {
      * @return the current data in the control input of the ALU
      */
     public String getALUControl(){
-        return this.getALUControl();
+        return this.control;
     }
 
     /**
