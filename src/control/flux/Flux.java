@@ -25,8 +25,8 @@ public class Flux {
     /**
      * Constructor.
      */
-    public Flux() {
-        this.simulation = new Simulation();
+    public Flux(Simulation simulation) {
+        this.simulation = simulation;
         this.alu = new Alu();
         this.firstAuxAlu = new Alu();
         this.secondAuxAlu = new Alu();
