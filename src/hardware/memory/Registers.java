@@ -94,7 +94,10 @@ public class Registers {
      * @param value Array of Strings, each String with 32 of length
      */
     public void overwriteAlRegisters(String[] value){
-        this.registers = value.clone();
+        if(value.length == 32){
+            this.registers = value.clone();
+        }
+        
     }
 
     /**
