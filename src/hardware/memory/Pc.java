@@ -1,12 +1,18 @@
 package src.hardware.memory;
 
 
-
 /**
  * @author Levi
  */
 public class Pc {
     private String value;
+
+    /**
+     * Constructor
+     */
+    public Pc(){
+        this.value = src.utils.Binary.BITS_32_ZERO;
+    }
 
     /**
      * Function that allows to set the input value to the PC Register

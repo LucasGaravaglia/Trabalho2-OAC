@@ -16,6 +16,22 @@ public class Mux2X {
     }
 
     /**
+     * Function that return the value in the first input of the mux
+     * @return String with 32 of length
+     */
+    public String getValue1(){
+        return this.value1;
+    }
+
+    /**
+     * Function that return the value in the first input of the mux
+     * @return String with 32 of length
+     */
+    public String getValue2(){
+        return this.value2;
+    }
+
+    /**
      * Function that set the first input of the mux
      * @param value String with length of 32
      */
