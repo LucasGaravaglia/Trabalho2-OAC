@@ -10,7 +10,7 @@ import java.io.IOException;
  * 
  * @author Lucas Garavaglia
  */
-public class load {
+public class Load {
   /**
    * Method responsible for reading all commands and return to processor
    * 
