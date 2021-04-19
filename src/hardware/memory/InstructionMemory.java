@@ -20,6 +20,14 @@ public class InstructionMemory {
     }
 
     /**
+     * Function that return the current read address
+     * @return String with 32 of length
+     */
+    public String getReadAddress(){
+        return this.readAddress;
+    }
+
+    /**
      * Function that update all memory replacing it
      * @param instructions 32 bits instructions 
      */
