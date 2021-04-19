@@ -5,6 +5,7 @@ import src.hardware.control.*;
 import src.hardware.memory.*;
 import src.control.simulation.Simulation;
 import src.utils.Binary;
+import src.gui.data.Data;
 public class Flux {
     private Simulation simulation;
     private Alu alu;
@@ -332,6 +333,15 @@ public class Flux {
         System.out.println("\n");
         System.out.println(this.addrAluPcMux.getResult());
         System.out.println(this.pc.getValue());
+    }
+
+    /**
+     * Return the current state of the simulation.
+     * @return Current state of CPU (Registers + PC + Signals + Memory).
+     * @throws Exception no states in simulation.
+     */
+    public Data getCurrentState() throws Exception {
+        return this.simulation.getCurrentState();
     }
 
     /**
