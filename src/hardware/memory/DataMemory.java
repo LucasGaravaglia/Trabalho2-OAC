@@ -134,6 +134,7 @@ public class DataMemory {
     private void readMemory(){
         if(this.MemRead.compareTo("1") == 0){
             int memoryAddress = (int) Long.parseLong(this.address, 2);
+            memoryAddress = memoryAddress/4;
             this.dataRead = this.memory[memoryAddress];
         }
     }
