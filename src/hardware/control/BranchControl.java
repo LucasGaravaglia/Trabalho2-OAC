@@ -32,6 +32,22 @@ public class BranchControl {
     }
 
     /**
+     * Function that returns the current input of branch
+     * @return String with length of 2
+     */
+    public String getCurrentBranchInput(){
+        return this.branch;
+    }
+
+    /**
+     * Function that returns the current input of zero
+     * @return String with length of 1
+     */
+    public String getCurrentZeroInput(){
+        return this.zero;
+    }
+
+    /**
      * Function that determines the "zero" input of the branchControl
      * @param value String with length of 1
      */

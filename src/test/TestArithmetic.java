@@ -6,16 +6,26 @@ public class TestArithmetic {
 
     public static void testAlu(){
         Alu alu = new Alu();
-        String input1 = "00000000000000000000000000000001";
+        String input1 = "00000000000000000000000000000101";
         String input2 = "00000000000000000000000000000100";
 
         alu.setData1(input1);
         alu.setData2(input2);
+
+        System.out.println("add");
         alu.setALUControl("0010");//SUM
         System.out.println(alu.getResult());
         
+        System.out.println("sub");
+        alu.setALUControl("0110");//dub
+        System.out.println(alu.getResult());
 
-        alu.setALUControl("0110");//SUM
+        System.out.println("and");
+        alu.setALUControl("0000");//and
+        System.out.println(alu.getResult());
+
+        System.out.println("or");
+        alu.setALUControl("0001");//OR
         System.out.println(alu.getResult());
         
     }
@@ -31,7 +41,8 @@ public class TestArithmetic {
 			"00000000001100000000001010010011",//addi -> addi x5,x0,3
 			"00000001001010000000011001100011",//beq  -> beq x16, $18, 12
             "11111111000010000000100011100011",//beq  -> beq x16, x16, -16"
-		};
+            "11111111000010010001110011100011",//bne -> bne $18, $16, -8
+        };
         ImmGen immGen = new ImmGen();
 
         immGen.setInput(inst[0]);
@@ -60,5 +71,8 @@ public class TestArithmetic {
 
         immGen.setInput(inst[8]);
         System.out.println("beq: " + immGen.getOutput());
+
+        immGen.setInput(inst[9]);
+        System.out.println("bne: " + immGen.getOutput());
     } 
 }

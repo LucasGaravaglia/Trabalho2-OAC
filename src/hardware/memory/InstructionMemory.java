@@ -65,9 +65,9 @@ public class InstructionMemory {
      * @param address_32_bits 32 bits address
      * @return 32 bits instruction stored
      */
-    public String getInstruction(String address_32_bits){
-        String address_16_bits = address_32_bits.substring(16);
-        int index = Integer.parseInt(address_16_bits, 2);
+    public String getInstruction(String address_32_bits){        
+        int index = (int) Long.parseLong(address_32_bits, 2);
+        index = index/4;
         return this.instructions[index];
     }
 

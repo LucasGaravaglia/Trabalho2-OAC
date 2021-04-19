@@ -30,6 +30,14 @@ public class Control {
     }
 
     /**
+     * Function that returns the current input of the control unit
+     * @return String with 8 of length
+     */
+    public String getCurrentInput(){
+        return this.input;
+    }
+
+    /**
      * Function that determines the value of the outputs of the control unit
      */
     private void execute(){
