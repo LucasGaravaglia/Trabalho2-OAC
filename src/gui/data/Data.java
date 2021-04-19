@@ -8,7 +8,6 @@ public class Data {
   private Boolean[] signals;
   private Integer Pc;
 
-
   public Data() {
     this.modelMemory = new DefaultListModel<String>();
     this.modelRegister = new DefaultListModel<String>();
@@ -17,7 +16,7 @@ public class Data {
   }
 
   public void setPc(String pc) {
-    this.Pc = Integer.parseInt(pc);
+    this.Pc = src.utils.Binary.getDecimalValue(pc);
   }
 
   public void setSignals(String[] signals) {
@@ -27,7 +26,7 @@ public class Data {
       i++;
     }
   }
-  
+
   public void setModelMemory(String line) {
     this.modelMemory.addElement(line);
   }
