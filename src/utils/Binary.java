@@ -52,7 +52,7 @@ public class Binary {
         }
         
         String newString = "";
-        for(int i = 1;i < (32 - value.length());i++){
+        for(int i = 0;i < (32 - value.length());i++){
             newString += 0;
         }
                 
@@ -73,10 +73,9 @@ public class Binary {
         
         String newString = "";
         String left = (value.charAt(0) == '1')? "1":"0";
-        for(int i = 1;i < (32 - value.length());i++){
+        for(int i = 0;i < (32 - value.length());i++){
             newString += left;
         }
-                
         return newString + value;
     }
 
@@ -119,7 +118,11 @@ public class Binary {
         int b = getInt(value2);
         int c = a + b;
         String result = Integer.toBinaryString(c);
-        return Binary.normalizeSize(result);
+        if(c >= 0){
+            return Binary.normalizeSize(result);
+        }else{
+            return Binary.normalizeSizeWithSignal(result);
+        }        
     }
 
     /**
@@ -133,7 +136,11 @@ public class Binary {
         int b = getInt(value2);
         int c = a - b;
         String result = Integer.toBinaryString(c);
-        return Binary.normalizeSize(result);
+        if(c >= 0){
+            return Binary.normalizeSize(result);
+        }else{
+            return Binary.normalizeSizeWithSignal(result);
+        }      
     }
 
     /**

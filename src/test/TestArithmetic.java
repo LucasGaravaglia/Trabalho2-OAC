@@ -3,6 +3,23 @@ package src.test;
 import src.hardware.arithmetic.*;
 
 public class TestArithmetic {
+
+    public static void testAlu(){
+        Alu alu = new Alu();
+        String input1 = "00000000000000000000000000000001";
+        String input2 = "00000000000000000000000000000100";
+
+        alu.setData1(input1);
+        alu.setData2(input2);
+        alu.setALUControl("0010");//SUM
+        System.out.println(alu.getResult());
+        
+
+        alu.setALUControl("0110");//SUM
+        System.out.println(alu.getResult());
+        
+    }
+
     public static void testIMMGen(){
         String[] inst = {
 			"00000000110001011000011100110011",//add  -> add $14, $11, $12
