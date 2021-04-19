@@ -28,6 +28,22 @@ public class DataMemory {
     }
 
     /**
+     * Function that returns the current MemWrite flag
+     * @return "0" or "1"
+     */
+    public String getCurrentMemWrite(){
+        return this.MemWrite;
+    }
+
+    /**
+     * Function that returns the current MemRead flag
+     * @return "0" or "1"
+     */
+    public String getCurrentMemRead(){
+        return this.MemRead;
+    }
+
+    /**
      * Function that overwrite all memory at once
      * @param newMemory an Array os Strings, each string with length o 32
      */

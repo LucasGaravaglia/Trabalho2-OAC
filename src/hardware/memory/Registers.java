@@ -28,6 +28,14 @@ public class Registers {
     }
 
     /**
+     * Function that returns the current RegWrite flag
+     * @return "0" or "1"
+     */
+    public String getCurrentRegWriteFlag(){
+        return this.RegWrite;
+    }
+
+    /**
      * Function that returns the current value in the address A
      * @return String with 32 of length
      */

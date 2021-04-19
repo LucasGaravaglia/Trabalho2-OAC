@@ -23,6 +23,14 @@ public class AluControl {
     }
 
     /**
+     * Function that returns the current aluOp
+     * @return  String with length of 2
+     */
+    public String getCurrentAluOp(){
+        return this.ALUOp;
+    }
+
+    /**
      * Function that determines the first input of the ALUControl 
      * @param value String with length of 4
      */
