@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Class responsible for read and treat file.
+ * 
+ * @author Lucas Garavaglia
+ */
 public class load {
   /**
    * Method responsible for reading all commands and return to processor
