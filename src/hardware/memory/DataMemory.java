@@ -28,6 +28,22 @@ public class DataMemory {
     }
 
     /**
+     * Function that returns the current address int the memory
+     * @return String with 32 of length
+     */
+    public String getCurrentAddress(){
+        return this.address;
+    }
+
+    /**
+     * Function that returns the current value to write in the memory 
+     * @return String with 32 of length
+     */
+    public String getCurrentWriteValue(){
+        return this.valueToWrite;
+    }
+
+    /**
      * Function that returns the current MemWrite flag
      * @return "0" or "1"
      */
