@@ -6,10 +6,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class load {
-  public load() {
-
-  }
-
+  /**
+   * Method responsible for reading all commands and return to processor
+   * 
+   * @param path path to file of test.
+   * @return string array with all commands
+   * @exception All If an exception occurs it returns an empty string
+   */
   public String[] loadFile(String path) {
     String[] content = new String[50];
     int i = 0;
@@ -20,7 +23,7 @@ public class load {
       try {
         line = readArc.readLine();
         while (line != null) {
-          content[i] = line;
+          content[i] = line.replace(" ", "").replace("\r", "");
           i++;
           line = readArc.readLine();
         }
