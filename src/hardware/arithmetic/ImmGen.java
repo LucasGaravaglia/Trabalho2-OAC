@@ -4,14 +4,14 @@ import src.utils.Binary;
 /**
  * @author Levi
  */
-public class IMMGen {
+public class ImmGen {
     private String input;
     private String immediate;
     
     /**
      * Constructor
      */
-    public IMMGen() {
+    public ImmGen() {
         this.input = Binary.BITS_32_ZERO;
         this.immediate = Binary.BITS_32_ZERO;
     }

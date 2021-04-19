@@ -15,7 +15,7 @@ public class Registers {
     /**
      * Constructor
      */
-    Registers(){
+    public Registers(){
         this.registers = new String[32];
         for(int i = 0; i < this.registers.length;i++){
             this.registers[i] = Binary.BITS_32_ZERO;

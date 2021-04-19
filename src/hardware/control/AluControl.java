@@ -3,9 +3,9 @@ package src.hardware.control;
 import src.utils.*;
 
 /**
- * @author
+ * @author Levi
  */
-public class ALUControl {
+public class AluControl {
     private String ALUOp;
     private String instruction;
     private String control;

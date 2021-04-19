@@ -5,7 +5,7 @@ import src.utils.*;
 /**
  * @author
  */
-public class ALU {
+public class Alu {
     private String data1;
     private String data2;
     private String result;
@@ -15,7 +15,7 @@ public class ALU {
     /**
      * Constructor
      */
-    public ALU(){
+    public Alu(){
         this.data1 = Binary.BITS_32_ZERO;
         this.data2 = Binary.BITS_32_ZERO;
         this.result = Binary.BITS_32_ZERO;

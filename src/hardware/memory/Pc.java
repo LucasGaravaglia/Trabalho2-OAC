@@ -5,7 +5,7 @@ package src.hardware.memory;
 /**
  * @author Levi
  */
-public class PC {
+public class Pc {
     private String value;
 
     /**

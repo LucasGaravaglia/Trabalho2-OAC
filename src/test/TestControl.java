@@ -16,7 +16,7 @@ public class TestControl{
 		};
 
 		InstructionMemory instMemo = new InstructionMemory(inst);
-		ALUControl aluControl = new ALUControl();
+		AluControl aluControl = new AluControl();
 		Boolean result;
 		String value = "";
 		String[] address = {"000", "001", "010", "011", "100", "101", "110", "111"};

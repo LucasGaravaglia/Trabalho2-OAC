@@ -15,7 +15,7 @@ public class TestArithmetic {
 			"00000001001010000000011001100011",//beq  -> beq x16, $18, 12
             "11111111000010000000100011100011",//beq  -> beq x16, x16, -16"
 		};
-        IMMGen immGen = new IMMGen();
+        ImmGen immGen = new ImmGen();
 
         immGen.setInput(inst[0]);
         System.out.println("rFormat: " + immGen.getOutput());
