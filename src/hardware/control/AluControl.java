@@ -33,6 +33,14 @@ public class AluControl {
             this.instruction = value;
         }
     }
+
+    /**
+     * Function that return the current instruction input
+     * @return String with 32 of length
+     */
+    public String getCurrentInstruction(){
+        return this.instruction;
+    }
     
 
     /**

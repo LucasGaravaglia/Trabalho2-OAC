@@ -28,6 +28,38 @@ public class Registers {
     }
 
     /**
+     * Function that returns the current value in the address A
+     * @return String with 32 of length
+     */
+    public String getCurrentAddressA(){
+        return this.addressOfReadRegisterA;
+    }
+
+    /**
+     * Function that returns the current value in the address B
+     * @return String with 32 of length
+     */
+    public String getCurrentAddressB(){
+        return this.addressOfReadRegisterB;
+    }
+
+    /**
+     * Function that returns the current value in the write address
+     * @return String with 32 of length
+     */
+    public String getCurrentWriteAddress(){
+        return this.addressOfWriteRegister;
+    }
+
+    /**
+     * Function that returns the current value in the write data
+     * @return String with 32 of length
+     */
+    public String getCurrentWriteValue(){
+        return this.writeValue;
+    }
+
+    /**
      * Function that determines the value of the flag RegWrite
      * When tha value is "1", the values are read
      * @param value String "0" or "1"
