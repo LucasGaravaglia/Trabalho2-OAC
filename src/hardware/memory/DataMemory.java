@@ -111,7 +111,9 @@ public class DataMemory {
      */
     private void writeMemory(){
         if(this.MemWrite.compareTo("1") == 0){
-            memory[Integer.parseInt(this.address, 2)] = this.valueToWrite;
+            int l = (int)Long.parseLong(this.address, 2);
+            l = l/4;
+            memory[l] = this.valueToWrite;
         }
     }
 
