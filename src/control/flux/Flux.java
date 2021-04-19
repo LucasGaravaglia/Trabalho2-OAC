@@ -345,6 +345,13 @@ public class Flux {
     }
 
     /**
+     * Return the simulation to the previous state.
+     */
+    public void undoClock() {
+        this.simulation.popState();
+    }
+
+    /**
      * Runs a CPU clock, executing all components and storing the data for si-
      * mulation purpose.
      */
