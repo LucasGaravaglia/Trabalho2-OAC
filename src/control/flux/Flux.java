@@ -249,115 +249,137 @@ public class Flux {
 
     private void testControl() {
         System.out.println("Test Control\n");
-        System.out.println(this.control.getCurrentInput());
+        System.out.println("Current Input: "+this.control.getCurrentInput());
         System.out.println("________________________________________________");
-        System.out.println(this.control.getBranch());
-        System.out.println(this.control.getMemRead());
-        System.out.println(this.control.getMemToReg());
-        System.out.println(this.control.getALUOp());
-        System.out.println(this.control.getMemWrite());
-        System.out.println(this.control.getALUSrc());
-        System.out.println(this.control.getRegWrite());
+        System.out.println("Signal Branch(12): "+this.control.getBranch());
+        System.out.println("Signal Branch(6): "+this.control.getMemRead());
+        System.out.println("Signal MemToReg(5): "+this.control.getMemToReg());
+        System.out.println("Signal AluOp(4-3): "+this.control.getALUOp());
+        System.out.println("Signal MemWrite(2): "+this.control.getMemWrite());
+        System.out.println("Signal AluSrc(1): "+this.control.getALUSrc());
+        System.out.println("Signal RegWrite(0): "+this.control.getRegWrite());
     }
 
     private void testRegisters() {
         System.out.println("Test Registers\n");
-        System.out.println(this.registers.getCurrentAddressA());
-        System.out.println(this.registers.getCurrentAddressB());
-        System.out.println(this.registers.getCurrentWriteAddress());
-        System.out.println(this.registers.getCurrentWriteValue());
+        System.out.println("Read Register 1: "+this.registers.getCurrentAddressA());
+        System.out.println("Read Register 2: "+this.registers.getCurrentAddressB());
+        System.out.println("Write register: "+this.registers.getCurrentWriteAddress());
+        System.out.println("Write data: : "+this.registers.getCurrentWriteValue());
         System.out.println("________________________________________________");
-        System.out.println(this.registers.getData1());
-        System.out.println(this.registers.getData2());
+        System.out.println("Register Read Data 1: "+this.registers.getData1());
+        System.out.println("Register Read Data 2: "+this.registers.getData2());
         System.out.println("________________________________________________");
-        System.out.println(this.alu.getData1());
-        System.out.println(this.registersAluMux.getValue1());
-        System.out.println(this.dataMemory.getCurrentWriteValue());
+        System.out.println("Alu Read Data 1: "+this.alu.getData1());
+        System.out.println("RegisterAluMux Read Data 2: "+this.registersAluMux.getValue1());
+        System.out.println("Write Data  Data Memory: "+this.dataMemory.getCurrentWriteValue());
     }
 
     private void testImmGen() {
         System.out.println("Test ImmGen\n");
-        System.out.println(this.immGen.getCurrentInputInstruction());
-        System.out.println(this.registersAluMux.getValue2());
-        System.out.println(this.secondAuxAlu.getData2());
+        System.out.println("Instruction(31-0): "+this.immGen.getCurrentInputInstruction());
+        System.out.println("ImmGen to Mux: "+this.registersAluMux.getValue2());
+        System.out.println("ImmGen to Second AuxAlu: "+ this.secondAuxAlu.getData2());
     }
 
     private void testRegistersAluMux() {
         System.out.println("Test Registers Alu Mux\n");
-        System.out.println(this.registersAluMux.getValue1());
-        System.out.println(this.registersAluMux.getValue2());
-        System.out.println(this.registersAluMux.getResult());
-        System.out.println(this.registersAluMux.getBit());
-        System.out.println(this.alu.getData2());
+        System.out.println("Data 1 Register to Alu Mux: "+this.registersAluMux.getValue1());
+        System.out.println("Data 2 Register to Alu Mux: "+this.registersAluMux.getValue2());
+        System.out.println("Result Register to Alu Mux: "+this.registersAluMux.getResult());
+        System.out.println("Flag Mux Register to Alu "+this.registersAluMux.getBit());
+        System.out.println("Input Alu, Register to Alu Mux"+this.alu.getData2());
     }
 
     private void testAluControl() {
         System.out.println("Test Alu Control\n");
-        System.out.println(this.aluControl.getCurrentAluOp());
-        System.out.println(this.aluControl.getCurrentInstruction());
-        System.out.println(this.aluControl.getControl());
+        System.out.println("Alu Op: "+this.aluControl.getCurrentAluOp());
+        System.out.println("Instruction: "+this.aluControl.getCurrentInstruction());
+        System.out.println("Signal Control: "+this.aluControl.getControl());
         System.out.println("________________________________________________");
-        System.out.println(this.alu.getALUControl());
+        System.out.println("Signal Alu Control OutPut: "+this.alu.getALUControl());
     }
 
     private void testSecondAuxAlu() {
         System.out.println("Test Second Aux Alu\n");
-        System.out.println(this.secondAuxAlu.getData1());
-        System.out.println(this.secondAuxAlu.getData2());
-        System.out.println(this.secondAuxAlu.getResult());
-        System.out.println(this.addrAluPcMux.getValue2());
+        System.out.println("Read 1 AuxAlu"+this.secondAuxAlu.getData1());
+        System.out.println("Read 2 AuxAlu"+this.secondAuxAlu.getData2());
+        System.out.println("Second Aux Alu result: " + 
+            this.secondAuxAlu.getResult());
+        System.out.println("Addr Alu Pc Mux Value 1: " + 
+            this.addrAluPcMux.getValue2());
     }
 
     private void testAlu() {
         System.out.println("Test Alu\n");
-        System.out.println(this.alu.getData1());
-        System.out.println(this.alu.getData2());
-        System.out.println(this.alu.getALUControl());
+        System.out.println("Alu Read Data 1: " + this.alu.getData1());
+        System.out.println("Alu Read Data 2: " + this.alu.getData2());
+        System.out.println("Alu Control flag: " + this.alu.getALUControl());
         System.out.println("________________________________________________");
-        System.out.println(this.alu.getZeroFlag());
-        System.out.println(this.alu.getResult());
+        System.out.println("Alu Zero Flag: " + this.alu.getZeroFlag());
+        System.out.println("Alu Result: " + this.alu.getResult());
         System.out.println("________________________________________________");
-        System.out.println(this.dataMemory.getCurrentAddress());
-        System.out.println(this.dataMemoryRegistersMux.getValue2());
+        System.out.println("Data Memory Address: " + 
+            this.dataMemory.getCurrentAddress());
+        System.out.println("Data Memory REgister Mux value 1: " + 
+            this.dataMemoryRegistersMux.getValue2());
     }
 
     private void testBranchControl() {
         System.out.println("Test Branch Control\n");
-        System.out.println(this.branchControl.getCurrentBranchInput());
-        System.out.println(this.branchControl.getCurrentZeroInput());
-        System.out.println(this.branchControl.getOutput());
+        System.out.println("Branch Control Flag Input: " + 
+            this.branchControl.getCurrentBranchInput());
+        System.out.println("Branch Control Zero Input: " + 
+            this.branchControl.getCurrentZeroInput());
+        System.out.println("Branch Control output: " + 
+            this.branchControl.getOutput());
         System.out.println("________________________________________________");
-        System.out.println(this.addrAluPcMux.getBit());
+        System.out.println("Addr Alu Pc Mux flag: " + 
+            this.addrAluPcMux.getBit());
     }
 
     private void testDataMemory() {
         System.out.println("Test Data Memory\n");
-        System.out.println(this.dataMemory.getCurrentAddress());
-        System.out.println(this.dataMemory.getCurrentWriteValue());
-        System.out.println(this.dataMemory.getCurrentMemWrite());
-        System.out.println(this.dataMemory.getCurrentMemRead());
+        System.out.println("Data Memory Address: " + 
+            this.dataMemory.getCurrentAddress());
+        System.out.println("Data Memory Write Data: " + 
+            this.dataMemory.getCurrentWriteValue());
+        System.out.println("Data Memory Mem Write Flag: " + 
+            this.dataMemory.getCurrentMemWrite());
+        System.out.println("Data Memory Mem Read Flag: " + 
+            this.dataMemory.getCurrentMemRead());
         System.out.println("________________________________________________");
-        System.out.println(this.dataMemory.memoryReadResult());
-        System.out.println(this.dataMemoryRegistersMux.getValue1());
+        System.out.println("Data Memory Read Result: " + 
+            this.dataMemory.memoryReadResult());
+        System.out.println("Data Memory Register Mux value 0: " + 
+            this.dataMemoryRegistersMux.getValue1());
     }
 
     private void testDataMemoryRegistersMux() {
         System.out.println("Test Data Memory Registers Mux\n");
-        System.out.println(this.dataMemoryRegistersMux.getBit());
-        System.out.println(this.dataMemoryRegistersMux.getValue1());
-        System.out.println(this.dataMemoryRegistersMux.getValue2());
+        System.out.println("Data Memory Registers Mux flag: " + 
+            this.dataMemoryRegistersMux.getBit());
+        System.out.println("Data Memory Registers Mux value 0: " + 
+            this.dataMemoryRegistersMux.getValue1());
+        System.out.println("Data Memory Registers Mux value 1: " + 
+            this.dataMemoryRegistersMux.getValue2());
         System.out.println("________________________________________________");
-        System.out.println(this.registers.getCurrentWriteValue());
+        System.out.println("Registers Write Data: " + 
+            this.registers.getCurrentWriteValue());
     }
 
     private void testAddrAluPcMux() {
         System.out.println("Test Addr Alu Pc Mux\n");
-        System.out.println(this.addrAluPcMux.getValue1());
-        System.out.println(this.addrAluPcMux.getValue2());
-        System.out.println(this.addrAluPcMux.getBit());
+        System.out.println("Addr Alu Pc Mux value 0: " + 
+            this.addrAluPcMux.getValue1());
+        System.out.println("Addr Alu Pc Mux value 1: " + 
+            this.addrAluPcMux.getValue2());
+        System.out.println("Addr Alu Pc Mux flag: " + 
+            this.addrAluPcMux.getBit());
         System.out.println("________________________________________________");
-        System.out.println(this.addrAluPcMux.getResult());
-        System.out.println(this.pc.getValue());
+        System.out.println("Addr Alu Pc Mux result: " + 
+            this.addrAluPcMux.getResult());
+        System.out.println("Pc Value: " + this.pc.getValue());
     }
 
     private void fillRegisters() {
