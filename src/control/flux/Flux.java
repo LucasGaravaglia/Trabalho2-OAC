@@ -356,8 +356,8 @@ public class Flux {
      * mulation purpose.
      */
     public void doClock() {
-        this.simulation.pushState(this.dataMemory.getMemory(),
-            this.registers.cloneRegisters(), this.getSignals(),
+        this.simulation.pushState(this.dataMemory.toString(),
+            this.registers.toString(), this.getSignals(),
             this.pc.getValue());
 
         this.executeFirstAuxAlu();
