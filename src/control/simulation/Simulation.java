@@ -24,7 +24,7 @@ public class Simulation {
             String[] signals, String pc) {
         Data state = new Data();
         for (String line : memory) state.setModelMemory(line);
-        for (String line : registers) state.setModelMemory(line);
+        for (String line : registers) state.setModelRegister(line);
         state.setSignals(signals);
         state.setPc(pc);
         this.list.add(state);
