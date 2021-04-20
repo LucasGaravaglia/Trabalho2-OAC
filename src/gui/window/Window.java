@@ -160,7 +160,7 @@ public class Window extends JFrame {
    * @param model String array object.
    * @throws Exception Error set JList
    */
-  public void handlerListMemorys(DefaultListModel<String> model) throws Exception {
+  public void handlerListMemories(DefaultListModel<String> model) throws Exception {
     this.ListMemory.setModel(model);
   }
 
@@ -171,7 +171,7 @@ public class Window extends JFrame {
    * @throws Exception Error set JLabel.
    */
   public void handlerPC(String pc) throws Exception {
-    this.PC.setName("PC: " + pc);
+    this.PC.setText("PC: " + pc);
   }
 
   /**
@@ -202,13 +202,9 @@ public class Window extends JFrame {
         this.flux.doClock();
         this.data = this.simulation.getCurrentState();
         this.handlerSignals(this.data.getSignals());
-        this.handlerListMemorys(this.data.getModelMemory());
-        // this.handlerListRegisters(this.data.getModelRegister());
-        DefaultListModel<String> model = this.data.getModelRegister();
-        for (int i = 0; i < model.getSize(); i++) {
-          System.out.println(model.get(i));
-        }
-        // this.handlerPC(this.data.getPc().toString());
+        this.handlerListMemories(this.data.getModelMemory());
+        this.handlerListRegisters(this.data.getModelRegister());
+        this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
         System.out.println("Erro ao obter o estado atual do processador.(PROXIMO)");
       }
@@ -217,7 +213,7 @@ public class Window extends JFrame {
         this.flux.undoClock();
         this.data = this.simulation.getCurrentState();
         this.handlerSignals(this.data.getSignals());
-        this.handlerListMemorys(this.data.getModelMemory());
+        this.handlerListMemories(this.data.getModelMemory());
         this.handlerListRegisters(this.data.getModelRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
