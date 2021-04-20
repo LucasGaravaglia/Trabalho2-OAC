@@ -20,11 +20,13 @@ public class Simulation {
      * @param signals CPU Signals.
      * @param pc CPU Program Counter.
      */
-    public void pushState(String[] memory, String[] registers, 
+    public void pushState(String memory, String registers, 
             String[] signals, String pc) {
         Data state = new Data();
-        for (String line : memory) state.setModelMemory(line);
-        for (String line : registers) state.setModelRegister(line);
+
+        state.setModelMemory(memory);
+        state.setModelRegister(registers);
+        
         state.setSignals(signals);
         state.setPc(pc);
         this.list.add(state);

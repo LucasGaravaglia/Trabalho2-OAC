@@ -80,8 +80,8 @@ public class DataMemory {
      */
     public String toString(){
         String text = "";
-        for(String x: this.memory){
-            text += x + "\n";
+        for(int i = 0;i < this.memory.length;i++){
+            text += "["+i+"]:\t" + this.memory[i] + "\n";
         }
         return text;
     }
