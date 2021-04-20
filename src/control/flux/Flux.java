@@ -358,6 +358,7 @@ public class Flux {
      * Runs a CPU clock, executing all components and storing the data for si-
      * mulation purpose.
      */
+    private int i = 0;
     public void doClock() {
         this.executeFirstAuxAlu();
 
@@ -370,11 +371,44 @@ public class Flux {
         this.executeControl();
 
         //this.test3();
-
-        // String[] a = new String[32];
-        // a[11] = Binary.get32BitsStringValue(5);
-        // a[12] = Binary.get32BitsStringValue(6);
-        // this.registers.overwriteAlRegisters(a);
+        if (i == 0) {
+            String[] a = new String[32];
+            a[0] = Binary.get32BitsStringValue(0);
+            a[1] = Binary.get32BitsStringValue(0);
+            a[2] = Binary.get32BitsStringValue(0);
+            a[3] = Binary.get32BitsStringValue(0);
+            a[4] = Binary.get32BitsStringValue(0);
+            a[5] = Binary.get32BitsStringValue(0);
+            a[6] = Binary.get32BitsStringValue(0);
+            a[7] = Binary.get32BitsStringValue(0);
+            a[8] = Binary.get32BitsStringValue(0);
+            a[9] = Binary.get32BitsStringValue(0);
+            a[10] = Binary.get32BitsStringValue(0);
+            a[11] = Binary.get32BitsStringValue(5);
+            a[12] = Binary.get32BitsStringValue(6);
+            a[13] = Binary.get32BitsStringValue(0);
+            a[14] = Binary.get32BitsStringValue(0);
+            a[15] = Binary.get32BitsStringValue(0);
+            a[16] = Binary.get32BitsStringValue(0);
+            a[17] = Binary.get32BitsStringValue(0);
+            a[18] = Binary.get32BitsStringValue(0);
+            a[19] = Binary.get32BitsStringValue(0);
+            a[20] = Binary.get32BitsStringValue(0);
+            a[21] = Binary.get32BitsStringValue(0);
+            a[22] = Binary.get32BitsStringValue(0);
+            a[23] = Binary.get32BitsStringValue(0);
+            a[24] = Binary.get32BitsStringValue(0);
+            a[25] = Binary.get32BitsStringValue(0);
+            a[26] = Binary.get32BitsStringValue(0);
+            a[27] = Binary.get32BitsStringValue(0);
+            a[28] = Binary.get32BitsStringValue(0);
+            a[29] = Binary.get32BitsStringValue(0);
+            a[30] = Binary.get32BitsStringValue(0);
+            a[31] = Binary.get32BitsStringValue(0);
+            this.registers.overwriteAlRegisters(a);
+            i++;
+        }
+        
 
         this.executeRegisters();
         
