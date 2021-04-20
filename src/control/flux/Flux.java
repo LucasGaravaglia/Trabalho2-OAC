@@ -251,13 +251,13 @@ public class Flux {
         System.out.println("Test Control\n");
         System.out.println("Current Input: "+this.control.getCurrentInput());
         System.out.println("________________________________________________");
-        System.out.println("Signal Branch(12): "+this.control.getBranch());
-        System.out.println("Signal Branch(6): "+this.control.getMemRead());
-        System.out.println("Signal MemToReg(5): "+this.control.getMemToReg());
-        System.out.println("Signal AluOp(4-3): "+this.control.getALUOp());
-        System.out.println("Signal MemWrite(2): "+this.control.getMemWrite());
-        System.out.println("Signal AluSrc(1): "+this.control.getALUSrc());
-        System.out.println("Signal RegWrite(0): "+this.control.getRegWrite());
+        System.out.println("Signal Branch: "+this.control.getBranch());
+        System.out.println("Signal MemRead: "+this.control.getMemRead());
+        System.out.println("Signal MemToReg: "+this.control.getMemToReg());
+        System.out.println("Signal AluOp: "+this.control.getALUOp());
+        System.out.println("Signal MemWrite: "+this.control.getMemWrite());
+        System.out.println("Signal AluSrc: "+this.control.getALUSrc());
+        System.out.println("Signal RegWrite: "+this.control.getRegWrite());
     }
 
     private void testRegisters() {
@@ -271,7 +271,7 @@ public class Flux {
         System.out.println("Register Read Data 2: "+this.registers.getData2());
         System.out.println("________________________________________________");
         System.out.println("Alu Read Data 1: "+this.alu.getData1());
-        System.out.println("RegisterAluMux Read Data 2: "+this.registersAluMux.getValue1());
+        System.out.println("Register Alu Mux value 0: "+this.registersAluMux.getValue1());
         System.out.println("Write Data  Data Memory: "+this.dataMemory.getCurrentWriteValue());
     }
 
@@ -302,8 +302,8 @@ public class Flux {
 
     private void testSecondAuxAlu() {
         System.out.println("Test Second Aux Alu\n");
-        System.out.println("Read 1 AuxAlu"+this.secondAuxAlu.getData1());
-        System.out.println("Read 2 AuxAlu"+this.secondAuxAlu.getData2());
+        System.out.println("Read 1 AuxAlu: "+this.secondAuxAlu.getData1());
+        System.out.println("Read 2 AuxAlu: "+this.secondAuxAlu.getData2());
         System.out.println("Second Aux Alu result: " + 
             this.secondAuxAlu.getResult());
         System.out.println("Addr Alu Pc Mux Value 1: " + 
@@ -321,8 +321,10 @@ public class Flux {
         System.out.println("________________________________________________");
         System.out.println("Data Memory Address: " + 
             this.dataMemory.getCurrentAddress());
-        System.out.println("Data Memory REgister Mux value 1: " + 
-            this.dataMemoryRegistersMux.getValue2());
+        System.out.println("Data Memory REgister Mux value 0: " + 
+            this.dataMemoryRegistersMux.getValue1());
+        System.out.println("Branch Control Zero Flag: " + 
+            this.branchControl.getCurrentZeroInput());
     }
 
     private void testBranchControl() {
@@ -351,8 +353,8 @@ public class Flux {
         System.out.println("________________________________________________");
         System.out.println("Data Memory Read Result: " + 
             this.dataMemory.memoryReadResult());
-        System.out.println("Data Memory Register Mux value 0: " + 
-            this.dataMemoryRegistersMux.getValue1());
+        System.out.println("Data Memory Register Mux value 1: " + 
+            this.dataMemoryRegistersMux.getValue2());
     }
 
     private void testDataMemoryRegistersMux() {
@@ -389,6 +391,7 @@ public class Flux {
         }
         reg[11] = Binary.get32BitsStringValue(5);
         reg[12] = Binary.get32BitsStringValue(6);
+        this.registers.overwriteAlRegisters(reg);
     }
 
     /**
@@ -418,7 +421,7 @@ public class Flux {
 
         this.executeInstructionMemory();
 
-        this.testInstructionMemory();
+        //this.testInstructionMemory();
 
         this.executeControl();
 
@@ -456,7 +459,7 @@ public class Flux {
 
         this.executeDataMemory();
 
-        //this.testDataMemory();
+        this.testDataMemory();
 
         this.executeDataMemoryRegistersMux();
 
