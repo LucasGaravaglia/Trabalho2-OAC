@@ -277,7 +277,7 @@ public class Window extends JFrame {
   private void initJLabel() {
     try {
       this.Sinais = new JLabel("Sinais de Controle:");
-      this.Registradores = new JLabel("Registradoras:");
+      this.Registradores = new JLabel("Registradores:");
       this.Memoria = new JLabel("Memoria:");
       this.PC = new JLabel("PC: ");
     } catch (Exception e) {
