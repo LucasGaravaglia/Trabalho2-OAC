@@ -5,6 +5,7 @@ import src.hardware.control.*;
 import src.hardware.memory.*;
 import src.control.simulation.Simulation;
 import src.utils.Binary;
+import src.gui.data.Data;
 public class Flux {
     private Simulation simulation;
     private Alu alu;
@@ -25,8 +26,8 @@ public class Flux {
     /**
      * Constructor.
      */
-    public Flux() {
-        this.simulation = new Simulation();
+    public Flux(Simulation simulation) {
+        this.simulation = simulation;
         this.alu = new Alu();
         this.firstAuxAlu = new Alu();
         this.secondAuxAlu = new Alu();
@@ -335,12 +336,28 @@ public class Flux {
     }
 
     /**
+     * Return the current state of the simulation.
+     * @return Current state of CPU (Registers + PC + Signals + Memory).
+     * @throws Exception no states in simulation.
+     */
+    public Data getCurrentState() throws Exception {
+        return this.simulation.getCurrentState();
+    }
+
+    /**
+     * Return the simulation to the previous state.
+     */
+    public void undoClock() {
+        this.simulation.popState();
+    }
+
+    /**
      * Runs a CPU clock, executing all components and storing the data for si-
      * mulation purpose.
      */
     public void doClock() {
-        this.simulation.pushState(this.dataMemory.getMemory(),
-            this.registers.cloneRegisters(), this.getSignals(),
+        this.simulation.pushState(this.dataMemory.toString(),
+            this.registers.toString(), this.getSignals(),
             this.pc.getValue());
 
         this.executeFirstAuxAlu();
@@ -355,10 +372,10 @@ public class Flux {
 
         //this.test3();
 
-        String[] a = new String[32];
-        a[11] = Binary.get32BitsStringValue(5);
-        a[12] = Binary.get32BitsStringValue(6);
-        this.registers.overwriteAlRegisters(a);
+        //String[] a = new String[32];
+        //a[11] = Binary.get32BitsStringValue(5);
+        //a[12] = Binary.get32BitsStringValue(6);
+        //this.registers.overwriteAlRegisters(a);
 
         this.executeRegisters();
         

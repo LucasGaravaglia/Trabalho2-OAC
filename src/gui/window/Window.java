@@ -5,6 +5,11 @@ import java.awt.event.*;
 import java.io.File;
 import java.awt.*;
 
+import src.control.flux.*;
+import src.control.simulation.*;
+import src.gui.data.*;
+import src.file.*;
+
 /**
  * Class responsible for creating the graphical interface.
  * 
@@ -27,12 +32,12 @@ public class Window extends JFrame {
   private JLabel Memoria;
   private JLabel PC;
 
+  private JCheckBox AluOp;
+  private JCheckBox AluSrc;
   private JCheckBox Branch;
   private JCheckBox MemRead;
   private JCheckBox MemToReg;
-  private JCheckBox AluOp;
   private JCheckBox MemWrite;
-  private JCheckBox AluSrc;
   private JCheckBox RegWrite;
 
   private JScrollPane SPRegister;
@@ -45,11 +50,21 @@ public class Window extends JFrame {
   private JButton BackButton;
   private JButton LoadFile;
 
+  private Flux flux;
+  private Simulation simulation;
+  private Load loadFile;
+
+  private Data data;
+
   /**
    * Constructor
    */
   public Window() {
     super();
+
+    this.simulation = new Simulation();
+    this.flux = new Flux(this.simulation);
+    this.loadFile = new Load();
 
     this.layout = new FlowLayout();
 
@@ -61,12 +76,12 @@ public class Window extends JFrame {
     this.initJButton();
 
     this.signalsPanel.add(this.Sinais);
+    this.signalsPanel.add(this.AluOp);
+    this.signalsPanel.add(this.AluSrc);
     this.signalsPanel.add(this.Branch);
     this.signalsPanel.add(this.MemRead);
     this.signalsPanel.add(this.MemToReg);
-    this.signalsPanel.add(this.AluOp);
     this.signalsPanel.add(this.MemWrite);
-    this.signalsPanel.add(this.AluSrc);
     this.signalsPanel.add(this.RegWrite);
     this.signalsPanel.add(this.PC);
     this.add(this.signalsPanel);
@@ -116,7 +131,9 @@ public class Window extends JFrame {
       int filePickerResponse = jFileChooser.showOpenDialog(LoadFile);
       if (filePickerResponse == JFileChooser.APPROVE_OPTION) {
         File selectFile = jFileChooser.getSelectedFile();
-        System.out.println(selectFile.getAbsolutePath());
+        this.flux.setInstructions(this.loadFile.loadFile(selectFile.getPath()));
+        message.append("Arquivo aberto com sucesso!");
+        JOptionPane.showMessageDialog(null, message);
       } else {
         message.append("Nenhum arquivo selecionado.");
         JOptionPane.showMessageDialog(null, message);
@@ -143,7 +160,7 @@ public class Window extends JFrame {
    * @param model String array object.
    * @throws Exception Error set JList
    */
-  public void handlerListMemorys(DefaultListModel<String> model) throws Exception {
+  public void handlerListMemories(DefaultListModel<String> model) throws Exception {
     this.ListMemory.setModel(model);
   }
 
@@ -154,7 +171,7 @@ public class Window extends JFrame {
    * @throws Exception Error set JLabel.
    */
   public void handlerPC(String pc) throws Exception {
-    this.PC.setName("PC: " + pc);
+    this.PC.setText("PC: " + pc);
   }
 
   /**
@@ -164,12 +181,12 @@ public class Window extends JFrame {
    * @throws Exception Error set JCheckBox of signals.
    */
   public void handlerSignals(Boolean[] signals) throws Exception {
-    this.Branch.setSelected(signals[0]);
-    this.MemRead.setSelected(signals[1]);
-    this.MemToReg.setSelected(signals[2]);
-    this.AluOp.setSelected(signals[3]);
-    this.MemWrite.setSelected(signals[4]);
-    this.AluSrc.setSelected(signals[5]);
+    this.AluOp.setSelected(signals[0]);
+    this.AluSrc.setSelected(signals[1]);
+    this.Branch.setSelected(signals[2]);
+    this.MemRead.setSelected(signals[3]);
+    this.MemToReg.setSelected(signals[4]);
+    this.MemWrite.setSelected(signals[5]);
     this.RegWrite.setSelected(signals[6]);
   }
 
@@ -180,6 +197,30 @@ public class Window extends JFrame {
    *          instruction or back.
    */
   public void handlerAllComponents(Boolean b) {
+    if (b) {
+      try {
+        this.flux.doClock();
+        this.data = this.simulation.getCurrentState();
+        this.handlerSignals(this.data.getSignals());
+        this.handlerListMemories(this.data.getModelMemory());
+        this.handlerListRegisters(this.data.getModelRegister());
+        this.handlerPC(this.data.getPc().toString());
+      } catch (Exception e) {
+        System.out.println("Erro ao obter o estado atual do processador.(PROXIMO)");
+      }
+    } else {
+      try {
+        this.flux.undoClock();
+        this.data = this.simulation.getCurrentState();
+        this.handlerSignals(this.data.getSignals());
+        this.handlerListMemories(this.data.getModelMemory());
+        this.handlerListRegisters(this.data.getModelRegister());
+        this.handlerPC(this.data.getPc().toString());
+      } catch (Exception e) {
+        System.out.println("Erro ao obter o estado atual do processador.(ANTERIOR)");
+      }
+    }
+
   }
 
   /**

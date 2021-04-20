@@ -19,7 +19,7 @@ public class Data {
   public Data() {
     this.modelMemory = new DefaultListModel<String>();
     this.modelRegister = new DefaultListModel<String>();
-    this.signals = new Boolean[8];
+    this.signals = new Boolean[7];
     this.Pc = 0;
   }
 
@@ -51,7 +51,10 @@ public class Data {
    * @param line Line that will be added to the modelMemory
    */
   public void setModelMemory(String line) {
-    this.modelMemory.addElement(line);
+    String[] strings = line.split("\n");
+    for (String string : strings) {
+      this.modelMemory.addElement(string);
+    }
   }
 
   /**
@@ -61,7 +64,10 @@ public class Data {
    */
 
   public void setModelRegister(String line) {
-    this.modelRegister.addElement(line);
+    String[] strings = line.split("\n");
+    for (String string : strings) {
+      this.modelRegister.addElement(string);
+    }
   }
 
   /**
