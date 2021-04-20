@@ -27,6 +27,14 @@ public class Registers {
         this.RegWrite = "0";
     }
 
+    public String toString(){
+        String text = "";
+        for(int i = 0;i < this.registers.length;i++){
+            text += "["+ i +"]:\t"+ Binary.getInt(registers[i]) +"\t" + registers[i]+"\n";
+        }
+        return text;
+    }
+
     /**
      * Function that returns the current RegWrite flag
      * @return "0" or "1"
