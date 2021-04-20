@@ -134,6 +134,13 @@ public class Window extends JFrame {
         this.flux.setInstructions(this.loadFile.loadFile(selectFile.getPath()));
         message.append("Arquivo aberto com sucesso!");
         JOptionPane.showMessageDialog(null, message);
+
+        this.data = this.flux.getCurrentState();
+        this.handlerSignals(this.data.getSignals());
+        this.handlerListMemories(this.data.getModelMemory());
+        this.handlerListRegisters(this.data.getModelRegister());
+        this.handlerPC(this.data.getPc().toString());
+        
       } else {
         message.append("Nenhum arquivo selecionado.");
         JOptionPane.showMessageDialog(null, message);
@@ -200,24 +207,24 @@ public class Window extends JFrame {
     if (b) {
       try {
         this.flux.doClock();
-        this.data = this.simulation.getCurrentState();
+        this.data = this.flux.getCurrentState();
         this.handlerSignals(this.data.getSignals());
         this.handlerListMemories(this.data.getModelMemory());
         this.handlerListRegisters(this.data.getModelRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
-        System.out.println("Erro ao obter o estado atual do processador.(PROXIMO)");
+        System.out.println("Erro ao obter o estado atual do processador."+e.getMessage());
       }
     } else {
       try {
         this.flux.undoClock();
-        this.data = this.simulation.getCurrentState();
+        this.data = this.flux.getCurrentState();
         this.handlerSignals(this.data.getSignals());
         this.handlerListMemories(this.data.getModelMemory());
         this.handlerListRegisters(this.data.getModelRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
-        System.out.println("Erro ao obter o estado atual do processador.(ANTERIOR)");
+        System.out.println("Erro ao obter o estado atual do processador."+e.getMessage());
       }
     }
 
@@ -348,8 +355,8 @@ public class Window extends JFrame {
    */
   private void initJPanel() {
     try {
-      int widthPanel = 290;
-      int heightPanel = this.height - 150;
+      int widthPanel = 350;
+      int heightPanel = this.height - 120;
 
       this.signalsPanel = new JPanel();
       this.RegisterPanel = new JPanel();

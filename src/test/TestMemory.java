@@ -7,6 +7,7 @@ public class TestMemory {
         DataMemory m = new DataMemory();
         String[] samples = {"00000000000000000000000000000000", "00000000000000000000000000000000"};
         System.out.println(m.toString());
+        System.out.println(samples);
     }
 
     public static void testRegisters(){

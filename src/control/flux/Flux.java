@@ -41,6 +41,9 @@ public class Flux {
         this.dataMemory = new DataMemory();
         this.pc = new Pc();
         this.registers = new Registers();
+        this.simulation.pushState(this.dataMemory.toString(),
+            this.registers.toString(), this.getSignals(),
+            this.pc.getValue());
     }
 
     /**
@@ -356,10 +359,6 @@ public class Flux {
      * mulation purpose.
      */
     public void doClock() {
-        this.simulation.pushState(this.dataMemory.toString(),
-            this.registers.toString(), this.getSignals(),
-            this.pc.getValue());
-
         this.executeFirstAuxAlu();
 
         //this.test1();
@@ -372,10 +371,10 @@ public class Flux {
 
         //this.test3();
 
-        //String[] a = new String[32];
-        //a[11] = Binary.get32BitsStringValue(5);
-        //a[12] = Binary.get32BitsStringValue(6);
-        //this.registers.overwriteAlRegisters(a);
+        // String[] a = new String[32];
+        // a[11] = Binary.get32BitsStringValue(5);
+        // a[12] = Binary.get32BitsStringValue(6);
+        // this.registers.overwriteAlRegisters(a);
 
         this.executeRegisters();
         
@@ -416,5 +415,8 @@ public class Flux {
         this.executeAddrAluPcMux();
 
         //this.test13();
+        this.simulation.pushState(this.dataMemory.toString(),
+            this.registers.toString(), this.getSignals(),
+            this.pc.getValue());
     }
 }
