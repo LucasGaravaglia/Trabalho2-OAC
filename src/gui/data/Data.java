@@ -19,7 +19,7 @@ public class Data {
   public Data() {
     this.modelMemory = new DefaultListModel<String>();
     this.modelRegister = new DefaultListModel<String>();
-    this.signals = new Boolean[8];
+    this.signals = new Boolean[7];
     this.Pc = 0;
   }
 
