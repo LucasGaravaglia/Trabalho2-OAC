@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.*;
 
 /**
  * Class responsible for read and treat file.
@@ -19,7 +20,8 @@ public class Load {
    * @exception All If an exception occurs it returns an empty string
    */
   public String[] loadFile(String path) {
-    String[] content = new String[50];
+    ArrayList<String> content = new ArrayList<String>();
+    String[] finalContent;
     int i = 0;
     try {
       FileReader arc = new FileReader(path);
@@ -28,22 +30,25 @@ public class Load {
       try {
         line = readArc.readLine();
         while (line != null) {
-          content[i] = line.replace(" ", "").replace("\r", "");
-          i++;
+          content.add(line.replace(" ", "").replace("\r", ""));
           line = readArc.readLine();
         }
         arc.close();
       } catch (IOException eIO) {
-        content[0] = "Could not read file.\n" + eIO.getMessage();
+        content.add(0, "Could not read file.\n" + eIO.getMessage());
       }
     } catch (FileNotFoundException eNFE) {
-      content[0] = "Could not open file.\n" + eNFE.getMessage();
+      content.add(0, "Could not open file.\n" + eNFE.getMessage());
     }
-    if (content[0].contains("Could not")) {
+    if (content.get(0).contains("Could not")) {
       String[] Err = { "" };
       return Err;
     } else {
-      return content;
+      finalContent = new String[content.size()];
+      for (String string : content) {
+        finalContent[i++] = string;
+      }
+      return finalContent;
     }
   }
 }

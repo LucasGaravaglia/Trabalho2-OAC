@@ -132,6 +132,8 @@ public class Window extends JFrame {
       if (filePickerResponse == JFileChooser.APPROVE_OPTION) {
         File selectFile = jFileChooser.getSelectedFile();
         this.flux.setInstructions(this.loadFile.loadFile(selectFile.getPath()));
+        message.append("Arquivo aberto com sucesso!");
+        JOptionPane.showMessageDialog(null, message);
       } else {
         message.append("Nenhum arquivo selecionado.");
         JOptionPane.showMessageDialog(null, message);
@@ -201,14 +203,18 @@ public class Window extends JFrame {
         this.data = this.simulation.getCurrentState();
         this.handlerSignals(this.data.getSignals());
         this.handlerListMemorys(this.data.getModelMemory());
-        this.handlerListRegisters(this.data.getModelRegister());
-        this.handlerPC(this.data.getPc().toString());
+        // this.handlerListRegisters(this.data.getModelRegister());
+        DefaultListModel<String> model = this.data.getModelRegister();
+        for (int i = 0; i < model.getSize(); i++) {
+          System.out.println(model.get(i));
+        }
+        // this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
         System.out.println("Erro ao obter o estado atual do processador.(PROXIMO)");
       }
     } else {
       try {
-        // this.flux.();
+        this.flux.undoClock();
         this.data = this.simulation.getCurrentState();
         this.handlerSignals(this.data.getSignals());
         this.handlerListMemorys(this.data.getModelMemory());
