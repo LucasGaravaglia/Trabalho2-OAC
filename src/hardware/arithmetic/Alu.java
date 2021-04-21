@@ -82,7 +82,7 @@ public class Alu {
             this.result = Binary.BITS_32_ZERO;
         }
         
-        if(this.result == Binary.BITS_32_ZERO){
+        if(this.result.compareTo(Binary.BITS_32_ZERO) == 0){
             this.zeroFlag = 1;
         }else{
             this.zeroFlag = 0;

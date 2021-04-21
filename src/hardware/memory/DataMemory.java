@@ -64,7 +64,9 @@ public class DataMemory {
      * @param newMemory an Array os Strings, each string with length o 32
      */
     public void setMemory(String[] newMemory){
-        this.memory = newMemory.clone();
+        if(newMemory.length == Defines.DATA_MEMORY_SIZE){
+            this.memory = newMemory.clone();
+        }       
     }
 
     /**
