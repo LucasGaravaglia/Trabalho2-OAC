@@ -81,12 +81,12 @@ public class Flux {
     }
 
     /**
-     * Clear the CPU, insert new instructions in the instruction memory and store
+     * Set pc to 0, insert new instructions in the instruction memory and store
      * the new state of the cpu in the simulation.
      * @param instructions
      */
     public void setInstructions(String[] instructions) {
-        this.cleanCpu();
+        this.pc.setValue("0");
         this.instructionMemory.setInstructionMemory(instructions);
         this.simulation.clearList();
         this.simulation.push(this.dataMemory.getMemory(), 
