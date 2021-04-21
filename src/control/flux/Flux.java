@@ -485,9 +485,7 @@ public class Flux {
         this.executeControl();
 
         //this.testControl();
-        
-        this.fillRegisters();
-        
+                
         this.executeRegisters();
         
         //this.testRegisters();
