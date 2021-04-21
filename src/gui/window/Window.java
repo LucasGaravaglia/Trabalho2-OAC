@@ -141,10 +141,15 @@ public class Window extends JFrame {
       if (filePickerResponse == JFileChooser.APPROVE_OPTION) {
         File selectFile = jFileChooser.getSelectedFile();
         fileContent = this.loadFile.loadFile(selectFile.getPath());
-        this.flux.setInstructions(fileContent);
+        try {
+          this.flux.setInstructions(fileContent);
+
+        } catch (Exception e) {
+          System.out.println("FOI");
+        }
         this.handlerListInstructions(fileContent);
         this.data = null;
-        this.data = this.flux.getCurrentState();
+        this.data = this.flux.getState();
         this.handlerSignals(this.data.getSignals());
         this.handlerMemories(this.data.getMemory());
         this.handlerRegisters(this.data.getRegister());
@@ -156,10 +161,10 @@ public class Window extends JFrame {
         JOptionPane.showMessageDialog(null, message);
       }
     } catch (EOFException e) {
-      message.append("Erro ao abrir o arquivo.\n" + e.getMessage());
+      message.append("Erro ao abrir o arquivo.\n" + e);
       JOptionPane.showMessageDialog(null, message);
     } catch (Exception e1) {
-      message.append("Carregar os dados para a memória.\n" + e1.getMessage());
+      message.append("Erro ao carregar os dados para a memória.\n" + e1);
       JOptionPane.showMessageDialog(null, message);
     }
   }
@@ -178,7 +183,7 @@ public class Window extends JFrame {
   }
 
   /**
-   * Responsible for set pointer JTable of instructions.
+   * Responsible for set pointer JTable of Instructions.
    * 
    * @param address Address of actually instruction.
    * @throws Exception Error set JTable
@@ -188,28 +193,29 @@ public class Window extends JFrame {
     for (int i = 0; i < n; i++) {
       this.modelInstruction.setValueAt("", i, 0);
     }
-    this.modelInstruction.setValueAt("*", address / 4, 0);
+    if (n > address / 4)
+      this.modelInstruction.setValueAt("*", address / 4, 0);
   }
 
   /**
-   * Responsible for set JList of Register.
+   * Responsible for set JTable of Register.
    * 
-   * @param model String array object.
-   * @throws Exception Error set JList
+   * @param model String array of Registers.
+   * @throws Exception Error set JTable
    */
   public void handlerRegisters(String[] register) throws Exception {
     this.modelRegister.setRowCount(0);
     int n = register.length;
     for (Integer i = 0; i < n; i++) {
-      this.modelMemory.addRow(new Object[] { "X" + i.toString(), src.utils.Binary.getInt(register[i]), register[i] });
+      this.modelRegister.addRow(new Object[] { "X" + i.toString(), src.utils.Binary.getInt(register[i]), register[i] });
     }
   }
 
   /**
-   * Responsible for set JList of Memory.
+   * Responsible for set JTable of Memory.
    * 
-   * @param model String array object.
-   * @throws Exception Error set JList
+   * @param model String array of memories.
+   * @throws Exception Error set JTable
    */
   public void handlerMemories(String[] memories) throws Exception {
     this.modelMemory.setRowCount(0);
@@ -253,29 +259,39 @@ public class Window extends JFrame {
    *          instruction or back.
    */
   public void handlerAllComponents(Boolean b) {
+    StringBuilder message = new StringBuilder();
+
     if (b) {
       try {
         this.flux.doClock();
         this.data = null;
-        this.data = this.flux.getCurrentState();
+        this.data = this.flux.getState();
+        // System.out.println(this.data.getPc());
         this.handlerSignals(this.data.getSignals());
         this.handlerMemories(this.data.getMemory());
         this.handlerRegisters(this.data.getRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
-        System.out.println("Erro ao obter o estado atual do processador." + e.getMessage());
+        if (e.getMessage() == "End of instruction memory") {
+          message.append("Fim das instruções.");
+          JOptionPane.showMessageDialog(null, message);
+        } else if (e.getMessage() == "States list is empty") {
+          message.append("Não é possível voltar mais.");
+          JOptionPane.showMessageDialog(null, message);
+        } else
+          System.out.println("Erro ao obter o estado atual do processador." + e);
       }
     } else {
       try {
         this.flux.undoClock();
         this.data = null;
-        this.data = this.flux.getCurrentState();
+        this.data = this.flux.getState();
         this.handlerSignals(this.data.getSignals());
         this.handlerMemories(this.data.getMemory());
         this.handlerRegisters(this.data.getRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
-        System.out.println("Erro ao obter o estado atual do processador." + e.getMessage());
+        System.out.println("Erro ao obter o estado atual do processador." + e);
       }
     }
 
@@ -328,12 +344,12 @@ public class Window extends JFrame {
    */
   private void initJButton() {
     try {
-      this.NextButton = new JButton("Proxima instrução");
-      this.BackButton = new JButton("Voltar uma instrução");
+      this.NextButton = new JButton("Executar");
+      this.BackButton = new JButton("Voltar");
       this.LoadFile = new JButton("Carregar arquivo");
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JButton.\n" + e.getMessage());
+      message.append("Can't instantiate the JButton.\n" + e);
       JOptionPane.showMessageDialog(null, message);
     }
   }
@@ -355,7 +371,7 @@ public class Window extends JFrame {
       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JFrames.\n" + e.getMessage());
+      message.append("Can't instantiate the JFrames.\n" + e);
       JOptionPane.showMessageDialog(null, message);
     }
   }
@@ -373,7 +389,7 @@ public class Window extends JFrame {
       this.PC = new JLabel("PC: ");
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JLabel.\n" + e.getMessage());
+      message.append("Can't instantiate the JLabel.\n" + e);
       JOptionPane.showMessageDialog(null, message);
     }
   }
@@ -401,7 +417,7 @@ public class Window extends JFrame {
       this.RegWrite.setEnabled(false);
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JCheckBox.\n" + e.getMessage());
+      message.append("Can't instantiate the JCheckBox.\n" + e);
       JOptionPane.showMessageDialog(null, message);
     }
   }
@@ -442,7 +458,7 @@ public class Window extends JFrame {
       this.buttonsPanel.setPreferredSize(new Dimension(this.width, 100));
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JPanel.\n" + e.getMessage());
+      message.append("Can't instantiate the JPanel.\n" + e);
       JOptionPane.showMessageDialog(null, message);
     }
   }
