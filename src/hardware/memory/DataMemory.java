@@ -83,7 +83,7 @@ public class DataMemory {
     public String toString(){
         String text = "";
         for(int i = 0;i < this.memory.length;i++){
-            text += "["+(i*4)+"]:\t" + this.memory[i] + "\n";
+            text += this.memory[i] + "\n";
         }
         return text;
     }
