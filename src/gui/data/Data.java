@@ -15,7 +15,7 @@ public class Data {
    * Constructor of class
    */
   public Data() {
-    this.signals = new Boolean[7];
+    this.signals = new Boolean[9];
     this.Pc = 0;
   }
 
@@ -36,7 +36,7 @@ public class Data {
   public void setSignals(String[] signals) {
     int i = 0;
     for (String boolean1 : signals) {
-      this.signals[i] = Boolean.parseBoolean(boolean1);
+      this.signals[i] = src.utils.TypesConversion.getLogicValueFromString(boolean1);
       i++;
     }
   }

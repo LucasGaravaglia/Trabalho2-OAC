@@ -34,9 +34,11 @@ public class Window extends JFrame {
   private JLabel Memoria;
   private JLabel PC;
 
-  private JCheckBox AluOp;
+  private JCheckBox AluOp0;
+  private JCheckBox AluOp1;
   private JCheckBox AluSrc;
-  private JCheckBox Branch;
+  private JCheckBox Branch0;
+  private JCheckBox Branch1;
   private JCheckBox MemRead;
   private JCheckBox MemToReg;
   private JCheckBox MemWrite;
@@ -85,9 +87,11 @@ public class Window extends JFrame {
     this.initJTableTableMemory();
 
     this.signalsPanel.add(this.Sinais);
-    this.signalsPanel.add(this.AluOp);
+    this.signalsPanel.add(this.AluOp0);
+    this.signalsPanel.add(this.AluOp1);
     this.signalsPanel.add(this.AluSrc);
-    this.signalsPanel.add(this.Branch);
+    this.signalsPanel.add(this.Branch0);
+    this.signalsPanel.add(this.Branch1);
     this.signalsPanel.add(this.MemRead);
     this.signalsPanel.add(this.MemToReg);
     this.signalsPanel.add(this.MemWrite);
@@ -238,13 +242,15 @@ public class Window extends JFrame {
    * @throws Exception Error set JCheckBox of signals.
    */
   public void handlerSignals(Boolean[] signals) throws Exception {
-    this.AluOp.setSelected(signals[0]);
-    this.AluSrc.setSelected(signals[1]);
-    this.Branch.setSelected(signals[2]);
-    this.MemRead.setSelected(signals[3]);
-    this.MemToReg.setSelected(signals[4]);
-    this.MemWrite.setSelected(signals[5]);
-    this.RegWrite.setSelected(signals[6]);
+    this.AluOp0.setSelected(signals[0]);
+    this.AluOp1.setSelected(signals[1]);
+    this.AluSrc.setSelected(signals[2]);
+    this.Branch0.setSelected(signals[3]);
+    this.Branch1.setSelected(signals[4]);
+    this.MemRead.setSelected(signals[5]);
+    this.MemToReg.setSelected(signals[6]);
+    this.MemWrite.setSelected(signals[7]);
+    this.RegWrite.setSelected(signals[8]);
   }
 
   /**
@@ -392,14 +398,18 @@ public class Window extends JFrame {
    */
   private void initJCheckBox() {
     try {
-      this.Branch = new JCheckBox("Branch", false);
-      this.Branch.setEnabled(false);
+      this.Branch0 = new JCheckBox("Branch0", false);
+      this.Branch0.setEnabled(false);
+      this.Branch1 = new JCheckBox("Branch0", false);
+      this.Branch1.setEnabled(false);
       this.MemRead = new JCheckBox("MemRead", false);
       this.MemRead.setEnabled(false);
       this.MemToReg = new JCheckBox("MemToReg", false);
       this.MemToReg.setEnabled(false);
-      this.AluOp = new JCheckBox("AluOp", false);
-      this.AluOp.setEnabled(false);
+      this.AluOp0 = new JCheckBox("AluOp0", false);
+      this.AluOp0.setEnabled(false);
+      this.AluOp1 = new JCheckBox("AluOp0", false);
+      this.AluOp1.setEnabled(false);
       this.MemWrite = new JCheckBox("MemWrite", false);
       this.MemWrite.setEnabled(false);
       this.AluSrc = new JCheckBox("AluSrc", false);
@@ -444,8 +454,8 @@ public class Window extends JFrame {
       this.MemoryPanel.setLayout(new BoxLayout(MemoryPanel, BoxLayout.Y_AXIS));
 
       this.signalsPanel.setPreferredSize(new Dimension(widthPanel + 50, heightPanel));
-      this.RegisterPanel.setPreferredSize(new Dimension(widthPanel, heightPanel));
-      this.MemoryPanel.setPreferredSize(new Dimension(widthPanel, heightPanel));
+      this.RegisterPanel.setPreferredSize(new Dimension(widthPanel+100, heightPanel));
+      this.MemoryPanel.setPreferredSize(new Dimension(widthPanel+100, heightPanel));
       this.buttonsPanel.setPreferredSize(new Dimension(this.width, 100));
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
