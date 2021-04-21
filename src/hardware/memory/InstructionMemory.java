@@ -83,7 +83,7 @@ public class InstructionMemory {
      * @return true if the value is valid
      */
     public boolean setReadAddress(String readAddress){
-        if(this.instructions.length > Long.parseLong(readAddress, 2)){
+        if(this.instructions.length > (Long.parseLong(readAddress, 2)/4)){
             this.readAddress = readAddress;  
             return true;                    
         }else{
