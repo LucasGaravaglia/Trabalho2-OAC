@@ -8,8 +8,8 @@ import javax.swing.DefaultListModel;
  * @author Lucas Garavaglia
  */
 public class Data {
-  private DefaultListModel<String> modelMemory;
-  private DefaultListModel<String> modelRegister;
+  private String[] Memory;
+  private String[] Register;
   private Boolean[] signals;
   private Integer Pc;
 
@@ -17,8 +17,6 @@ public class Data {
    * Constructor of class
    */
   public Data() {
-    this.modelMemory = new DefaultListModel<String>();
-    this.modelRegister = new DefaultListModel<String>();
     this.signals = new Boolean[7];
     this.Pc = 0;
   }
@@ -50,10 +48,12 @@ public class Data {
    * 
    * @param line Line that will be added to the modelMemory
    */
-  public void setModelMemory(String line) {
+  public void setMemory(String line) {
     String[] strings = line.split("\n");
+    this.Memory = new String[strings.length];
+    int i=0;
     for (String string : strings) {
-      this.modelMemory.addElement(string);
+      this.Memory[i++] = string;
     }
   }
 
@@ -63,25 +63,13 @@ public class Data {
    * @param line Line that will be added to the modelRegister
    */
 
-  public void setModelRegister(String line) {
+  public void setRegister(String line) {
     String[] strings = line.split("\n");
+    this.Register = new String[strings.length];
+    int i=0;
     for (String string : strings) {
-      this.modelRegister.addElement(string);
+      this.Register[i++] = string;
     }
-  }
-
-  /**
-   * Method responsible for clear the modelMemory.
-   */
-  public void clearModelMemory() {
-    this.modelMemory.clear();
-  }
-
-  /**
-   * Method responsible for clear the modelRegister.
-   */
-  public void clearModelRegister() {
-    this.modelRegister.clear();
   }
 
   /**
@@ -107,8 +95,8 @@ public class Data {
    * 
    * @return ModelMemory
    */
-  public DefaultListModel<String> getModelMemory() {
-    return this.modelMemory;
+  public String[] getMemory() {
+    return this.Memory;
   }
 
   /**
@@ -116,7 +104,7 @@ public class Data {
    * 
    * @return ModelRegister
    */
-  public DefaultListModel<String> getModelRegister() {
-    return this.modelRegister;
+  public String[] getRegister() {
+    return this.Register;
   }
 }
