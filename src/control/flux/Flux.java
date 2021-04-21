@@ -95,6 +95,8 @@ public class Flux {
         this.firstAuxAlu.setData2(Binary.get32BitsStringValue(4));
         this.firstAuxAlu.setALUControl("0010"); // add
         this.addrAluPcMux.setValue1(this.firstAuxAlu.getResult());
+
+        this.firstAuxAlu.doLog();
     }
 
     /**
@@ -134,6 +136,8 @@ public class Flux {
 
         // Alu control
         this.aluControl.setInstruction(aluControlInstruction);
+
+        this.instructionMemory.doLog();
     }
 
     /**
@@ -145,6 +149,8 @@ public class Flux {
         this.dataMemoryRegistersMux.setBit(this.control.getMemToReg());
         this.aluControl.setALUOp(this.control.getALUOp());
         this.registersAluMux.setBit(this.control.getALUSrc());
+
+        this.control.doLog();
     }
 
     /**
@@ -154,6 +160,8 @@ public class Flux {
         this.alu.setData1(this.registers.getData1());
         this.registersAluMux.setValue1(this.registers.getData2());
         this.dataMemory.setValueToWrite(this.registers.getData2());
+
+        this.registers.doLog();
     }
 
     /**
@@ -163,6 +171,8 @@ public class Flux {
     private void executeImmGen() {
         this.registersAluMux.setValue2(this.immGen.getOutput());
         this.secondAuxAlu.setData2(this.immGen.getOutput());
+
+        this.immGen.doLog();
     }
 
     /**
@@ -170,6 +180,8 @@ public class Flux {
      */
     private void executeRegistersAluMux() {
         this.alu.setData2(this.registersAluMux.getResult());
+
+        this.registersAluMux.doLog();
     }
 
     /**
@@ -178,6 +190,8 @@ public class Flux {
      */
     private void executeAluControl() {
         this.alu.setALUControl(this.aluControl.getControl());
+
+        this.aluControl.doLog();
     }
 
     /**
@@ -189,6 +203,8 @@ public class Flux {
         this.secondAuxAlu.setData1(this.pc.getValue());
         this.secondAuxAlu.setALUControl("0010"); // add
         this.addrAluPcMux.setValue2(this.secondAuxAlu.getResult());
+
+        this.secondAuxAlu.doLog();
     }
 
     /**
@@ -204,6 +220,8 @@ public class Flux {
         this.dataMemoryRegistersMux.setValue1(this.alu.getResult());
         this.dataMemory.setMemRead(this.control.getMemRead());
         this.dataMemory.setMemWrite(this.control.getMemWrite());
+
+        this.alu.doLog();
     }
 
     /**
@@ -211,6 +229,8 @@ public class Flux {
      */
     private void executeBranchControl() {
         this.addrAluPcMux.setBit(this.branchControl.getOutput());
+
+        this.branchControl.doLog();
     }
 
     /**
@@ -218,6 +238,8 @@ public class Flux {
      */
     private void executeDataMemory() {
         this.dataMemoryRegistersMux.setValue2(this.dataMemory.memoryReadResult());
+
+        this.dataMemory.doLog();
     }
 
     /**
@@ -226,6 +248,8 @@ public class Flux {
     private void executeDataMemoryRegistersMux() {
         this.registers.setWriteValue(this.dataMemoryRegistersMux.getResult());
         this.registers.setRegWrite(this.control.getRegWrite());
+
+        this.dataMemoryRegistersMux.doLog();
     }
 
     /**
@@ -233,6 +257,8 @@ public class Flux {
      */
     private void executeAddrAluPcMux() {
         this.pc.setValue(this.addrAluPcMux.getResult());
+
+        this.addrAluPcMux.doLog();
     }
 
     private void testFirstAuxAlu() {
