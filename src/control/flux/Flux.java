@@ -389,9 +389,18 @@ public class Flux {
         for(int i = 0; i < 32; i++) {
             reg[i] = Binary.get32BitsStringValue(0);
         }
-        reg[11] = Binary.get32BitsStringValue(5);
-        reg[12] = Binary.get32BitsStringValue(6);
+        reg[12] = Binary.get32BitsStringValue(35);
+        reg[11] = Binary.get32BitsStringValue(11);
         this.registers.overwriteAlRegisters(reg);
+    }
+
+    private void fillMemory() {
+        String[] memory = new String[256];
+        for(int i = 0; i < memory.length; i++){
+            memory[i] = Binary.BITS_32_ZERO;
+        }
+        memory[16] = Binary.get32BitsStringValue(32);
+        this.dataMemory.setMemory(memory);
     }
 
     /**
@@ -427,7 +436,7 @@ public class Flux {
 
         //this.testControl();
         
-        this.fillRegisters();
+        //this.fillRegisters();
         
         this.executeRegisters();
         
@@ -459,7 +468,7 @@ public class Flux {
 
         this.executeDataMemory();
 
-        this.testDataMemory();
+        //this.testDataMemory();
 
         this.executeDataMemoryRegistersMux();
 

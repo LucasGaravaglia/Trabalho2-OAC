@@ -114,7 +114,7 @@ public class Main {
 	}
 
 	public static void show_s(String bits) {
-		String imm1,rs2,rs1,funct3,imm2,opcode;
+		String imm1,rd,rs1,funct3,imm2,opcode;
 		imm1 = String.valueOf(bits.charAt(0)) +
 				 String.valueOf(bits.charAt(1)) +
 				 String.valueOf(bits.charAt(2)) +
@@ -122,7 +122,7 @@ public class Main {
 				 String.valueOf(bits.charAt(4)) +
 				 String.valueOf(bits.charAt(5)) +
 				 String.valueOf(bits.charAt(6));
-		rs2 = String.valueOf(bits.charAt(7)) +
+		rd = String.valueOf(bits.charAt(7)) +
 			  String.valueOf(bits.charAt(8)) +
 			  String.valueOf(bits.charAt(9)) +
 			  String.valueOf(bits.charAt(10)) +
@@ -153,7 +153,7 @@ public class Main {
 				 String.valueOf(bits.charAt(31));
 		show_bits(bits);
 		System.out.print("imm1: " + imm1 + "\n");
-		System.out.print("rs2: " + rs2 + "\n");
+		System.out.print("rd: " + rd + "\n");
 		System.out.print("rs1: " + rs1 + "\n");
 		System.out.print("funct3: " + funct3 + "\n");
 		System.out.print("imm2: " + imm2 + "\n");
@@ -218,7 +218,7 @@ public class Main {
 		// "00000000000001010010010110000011",//lw
 		// "00000000000100000000100000010011",//addi
 		// "00000001001010000000011001100011",//beq
-		String bits = "01000000101101100000011110110011";
+		String bits = "00000000110001011110100100110011";
 		String[] s = {bits};
 		f.setInstructions(s);
 
