@@ -30,7 +30,7 @@ public class Registers {
     public String toString(){
         String text = "";
         for(int i = 0;i < this.registers.length;i++){
-            text += "["+ i +"]:\t"+ Binary.getInt(registers[i]) +"\t" + registers[i]+"\n";
+            text += registers[i]+"\n";
         }
         return text;
     }
