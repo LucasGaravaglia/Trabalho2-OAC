@@ -41,10 +41,6 @@ public class Flux {
         this.dataMemory = new DataMemory();
         this.pc = new Pc();
         this.registers = new Registers();
-        // Store current state with all components zeroed.
-        this.simulation.pushState(this.dataMemory.toString(),
-            this.registers.toString(), this.getSignals(),
-            this.pc.getValue());
     }
 
     /**
@@ -54,6 +50,10 @@ public class Flux {
     public void setInstructions(String[] instructions) {
         this.simulation.clearStates();
         this.instructionMemory = new InstructionMemory(instructions);
+        // Store current state with all components zeroed.
+        this.simulation.pushState(this.dataMemory.toString(),
+            this.registers.toString(), this.getSignals(),
+            this.pc.getValue());
     }
 
     /**
