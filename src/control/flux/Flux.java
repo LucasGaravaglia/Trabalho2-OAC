@@ -26,8 +26,8 @@ public class Flux {
     /**
      * Constructor.
      */
-    public Flux(Simulation simulation) {
-        this.simulation = simulation;
+    public Flux() {
+        this.simulation = new Simulation();
         this.alu = new Alu();
         this.firstAuxAlu = new Alu();
         this.secondAuxAlu = new Alu();
@@ -41,13 +41,14 @@ public class Flux {
         this.dataMemory = new DataMemory();
         this.pc = new Pc();
         this.registers = new Registers();
+        // Store current state with all components zeroed.
         this.simulation.pushState(this.dataMemory.toString(),
             this.registers.toString(), this.getSignals(),
             this.pc.getValue());
     }
 
     /**
-     * 
+     * Set all the instructions in the instruction memory.
      * @param instructions Instructions to be loaded to the instruction memory.
      */
     public void setInstructions(String[] instructions) {
@@ -55,7 +56,7 @@ public class Flux {
     }
 
     /**
-     * 
+     * Create a string array with all cpu signals.
      * @return Array of strings containing all the cpu signals.
      */
     private String[] getSignals() {
@@ -72,8 +73,6 @@ public class Flux {
 
     /**
      * Steps of execution for first auxiliary alu.
-     * Set data 1, data 2 and ALUControl.
-     * Set value 1 to addrAluPcMux.
      */
     private void executeFirstAuxAlu() {
         this.firstAuxAlu.setData1(this.pc.getValue());
@@ -94,15 +93,15 @@ public class Flux {
         String immGenInstruction;
         String aluControlInstruction;
 
+        // Instruction memory
+        this.instructionMemory.setReadAddress(this.pc.getValue());
+
         controlInstruction = this.instructionMemory.get12and6to0();
         registersInstruction1 = this.instructionMemory.get19to15();
         registersInstruction2 = this.instructionMemory.get24to20();
         registersWriteDataInstruction = this.instructionMemory.get11to7();
         immGenInstruction = this.instructionMemory.get31to0();
         aluControlInstruction = this.instructionMemory.get30and14to12();
-
-        // Instruction memory
-        this.instructionMemory.setReadAddress(this.pc.getValue());
 
         // Control
         this.control.setInput(controlInstruction);
@@ -120,22 +119,18 @@ public class Flux {
     }
 
     /**
-     * Send all cpu flag signals to their respective components.
+     * Send some cpu flag signals to their respective components.
+     * Write and Read flags from registers and memory are not sent here.
      */
     private void executeControl() {
         this.branchControl.setBranch(this.control.getBranch());
-        this.dataMemory.setMemRead(this.control.getMemRead());
         this.dataMemoryRegistersMux.setBit(this.control.getMemToReg());
         this.aluControl.setALUOp(this.control.getALUOp());
-        this.dataMemory.setMemWrite(this.control.getMemWrite());
         this.registersAluMux.setBit(this.control.getALUSrc());
-        this.registers.setRegWrite(this.control.getRegWrite());
     }
 
     /**
-     * Set data 1 in alu. 
-     * set value 1 in registersAluMux. 
-     * set valueToWrite in data memory.
+     * Set data in Alu and Data Memory.
      */
     private void executeRegisters() {
         this.alu.setData1(this.registers.getData1());
@@ -161,6 +156,7 @@ public class Flux {
 
     /**
      * Set AluControl in alu.
+     * Execute Alu.
      */
     private void executeAluControl() {
         this.alu.setALUControl(this.aluControl.getControl());
@@ -179,14 +175,17 @@ public class Flux {
 
     /**
      * Set zero flag in branch control from alu.
-     * Set adress in data memory from alu.
+     * Set address in data memory from alu.
      * Set value 2 in data memory registers mux from alu.
+     * Set MemRead and MemWrite in data memory.
      */
     @Deprecated
     private void executeAlu() {
         this.branchControl.setZero(new Integer(this.alu.getZeroFlag()).toString());
         this.dataMemory.setAddress(this.alu.getResult());
         this.dataMemoryRegistersMux.setValue1(this.alu.getResult());
+        this.dataMemory.setMemRead(this.control.getMemRead());
+        this.dataMemory.setMemWrite(this.control.getMemWrite());
     }
 
     /**
@@ -208,6 +207,7 @@ public class Flux {
      */
     private void executeDataMemoryRegistersMux() {
         this.registers.setWriteValue(this.dataMemoryRegistersMux.getResult());
+        this.registers.setRegWrite(this.control.getRegWrite());
     }
 
     /**
@@ -217,125 +217,190 @@ public class Flux {
         this.pc.setValue(this.addrAluPcMux.getResult());
     }
 
-    private void test1() {
-        System.out.println(this.firstAuxAlu.getData1());
-        System.out.println(this.firstAuxAlu.getData2());
-        System.out.println(this.firstAuxAlu.getALUControl());
-        System.out.println("\n");
-        System.out.println(this.firstAuxAlu.getResult());
+    private void testFirstAuxAlu() {
+        System.out.println("Test First Aux Alu\n");
+        System.out.println("Pc: " + this.pc.getValue());
+        System.out.println("________________________________________________");
+        System.out.println("Alu Data 0: " + this.firstAuxAlu.getData1());
+        System.out.println("Alu Data 1: " + this.firstAuxAlu.getData2());
+        System.out.println("Alu Control: " + this.firstAuxAlu.getALUControl());
+        System.out.println("________________________________________________");
+        System.out.println("Alu Result: " + this.firstAuxAlu.getResult());
     }
 
-    private void test2() {
-        System.out.println(this.instructionMemory.getReadAddress());
-        System.out.println("\n");
-        System.out.println(this.instructionMemory.get12and6to0());
-        System.out.println(this.instructionMemory.get19to15());
-        System.out.println(this.instructionMemory.get24to20());
-        System.out.println(this.instructionMemory.get11to7());
-        System.out.println(this.instructionMemory.get31to0());
-        System.out.println(this.instructionMemory.get30and14to12());
+    private void testInstructionMemory() {
+        System.out.println("Test Instruction Memory\n");
+        System.out.println("Read Address: " + 
+            this.instructionMemory.getReadAddress());
+        System.out.println("________________________________________________");
+        System.out.println("Control Instruction (12 + 6 - 0): " + 
+            this.instructionMemory.get12and6to0());
+        System.out.println("First Instruction Memory Instruction (19 - 15): " + 
+            this.instructionMemory.get19to15());
+        System.out.println("Second Instruction Memory Instruction (24 - 20): " + 
+            this.instructionMemory.get24to20());
+        System.out.println("Third Instruction Memory Instruction (11 - 7): " + 
+            this.instructionMemory.get11to7());
+        System.out.println("ImmGen Instruction (31 - 0): " + 
+            this.instructionMemory.get31to0());
+        System.out.println("Alu Control Instruction (30 + 14 - 12): " + 
+            this.instructionMemory.get30and14to12());
     }
 
-    private void test3() {
-        System.out.println(this.control.getCurrentInput());
-        System.out.println("\n");
-        System.out.println(this.control.getBranch());
-        System.out.println(this.control.getMemRead());
-        System.out.println(this.control.getMemToReg());
-        System.out.println(this.control.getALUOp());
-        System.out.println(this.control.getMemWrite());
-        System.out.println(this.control.getALUSrc());
-        System.out.println(this.control.getRegWrite());
+    private void testControl() {
+        System.out.println("Test Control\n");
+        System.out.println("Current Input: "+this.control.getCurrentInput());
+        System.out.println("________________________________________________");
+        System.out.println("Signal Branch: "+this.control.getBranch());
+        System.out.println("Signal MemRead: "+this.control.getMemRead());
+        System.out.println("Signal MemToReg: "+this.control.getMemToReg());
+        System.out.println("Signal AluOp: "+this.control.getALUOp());
+        System.out.println("Signal MemWrite: "+this.control.getMemWrite());
+        System.out.println("Signal AluSrc: "+this.control.getALUSrc());
+        System.out.println("Signal RegWrite: "+this.control.getRegWrite());
     }
 
-    private void test4() {
-        System.out.println(this.registers.getCurrentAddressA());
-        System.out.println(this.registers.getCurrentAddressB());
-        System.out.println(this.registers.getCurrentWriteAddress());
-        System.out.println(this.registers.getCurrentWriteValue());
-        System.out.println("\n");
-        System.out.println(this.registers.getData1());
-        System.out.println(this.registers.getData2());
-        System.out.println("\n");
-        System.out.println(this.alu.getData1());
-        System.out.println(this.registersAluMux.getValue1());
-        System.out.println(this.dataMemory.getCurrentWriteValue());
+    private void testRegisters() {
+        System.out.println("Test Registers\n");
+        System.out.println("Read Register 1: "+this.registers.getCurrentAddressA());
+        System.out.println("Read Register 2: "+this.registers.getCurrentAddressB());
+        System.out.println("Write register: "+this.registers.getCurrentWriteAddress());
+        System.out.println("Write data: : "+this.registers.getCurrentWriteValue());
+        System.out.println("________________________________________________");
+        System.out.println("Register Read Data 1: "+this.registers.getData1());
+        System.out.println("Register Read Data 2: "+this.registers.getData2());
+        System.out.println("________________________________________________");
+        System.out.println("Alu Read Data 1: "+this.alu.getData1());
+        System.out.println("Register Alu Mux value 0: "+this.registersAluMux.getValue1());
+        System.out.println("Write Data  Data Memory: "+this.dataMemory.getCurrentWriteValue());
     }
 
-    private void test5() {
-        System.out.println(this.immGen.getCurrentInputInstruction());
-        System.out.println(this.registersAluMux.getValue2());
-        System.out.println(this.secondAuxAlu.getData2());
+    private void testImmGen() {
+        System.out.println("Test ImmGen\n");
+        System.out.println("Instruction(31-0): "+this.immGen.getCurrentInputInstruction());
+        System.out.println("ImmGen to Mux: "+this.registersAluMux.getValue2());
+        System.out.println("ImmGen to Second AuxAlu: "+ this.secondAuxAlu.getData2());
     }
 
-    private void test6() {
-        System.out.println(this.registersAluMux.getValue1());
-        System.out.println(this.registersAluMux.getValue2());
-        System.out.println(this.registersAluMux.getResult());
-        System.out.println(this.registersAluMux.getBit());
-        System.out.println(this.alu.getData2());
+    private void testRegistersAluMux() {
+        System.out.println("Test Registers Alu Mux\n");
+        System.out.println("Data 1 Register to Alu Mux: "+this.registersAluMux.getValue1());
+        System.out.println("Data 2 Register to Alu Mux: "+this.registersAluMux.getValue2());
+        System.out.println("Result Register to Alu Mux: "+this.registersAluMux.getResult());
+        System.out.println("Flag Mux Register to Alu "+this.registersAluMux.getBit());
+        System.out.println("Input Alu, Register to Alu Mux"+this.alu.getData2());
     }
 
-    private void test7() {
-        System.out.println(this.aluControl.getCurrentAluOp());
-        System.out.println(this.aluControl.getCurrentInstruction());
-        System.out.println(this.aluControl.getControl());
-        System.out.println("\n");
-        System.out.println(this.alu.getALUControl());
+    private void testAluControl() {
+        System.out.println("Test Alu Control\n");
+        System.out.println("Alu Op: "+this.aluControl.getCurrentAluOp());
+        System.out.println("Instruction: "+this.aluControl.getCurrentInstruction());
+        System.out.println("Signal Control: "+this.aluControl.getControl());
+        System.out.println("________________________________________________");
+        System.out.println("Signal Alu Control OutPut: "+this.alu.getALUControl());
     }
 
-    private void test8() {
-        System.out.println(this.secondAuxAlu.getData1());
-        System.out.println(this.secondAuxAlu.getData2());
-        System.out.println(this.secondAuxAlu.getResult());
-        System.out.println(this.addrAluPcMux.getValue2());
+    private void testSecondAuxAlu() {
+        System.out.println("Test Second Aux Alu\n");
+        System.out.println("Read 1 AuxAlu: "+this.secondAuxAlu.getData1());
+        System.out.println("Read 2 AuxAlu: "+this.secondAuxAlu.getData2());
+        System.out.println("Second Aux Alu result: " + 
+            this.secondAuxAlu.getResult());
+        System.out.println("Addr Alu Pc Mux Value 1: " + 
+            this.addrAluPcMux.getValue2());
     }
 
-    private void test9() {
-        System.out.println(this.alu.getData1());
-        System.out.println(this.alu.getData2());
-        System.out.println(this.alu.getALUControl());
-        System.out.println("\n");
-        System.out.println(this.alu.getZeroFlag());
-        System.out.println(this.alu.getResult());
-        System.out.println("\n");
-        System.out.println(this.dataMemory.getCurrentAddress());
-        System.out.println(this.dataMemoryRegistersMux.getValue2());
+    private void testAlu() {
+        System.out.println("Test Alu\n");
+        System.out.println("Alu Read Data 1: " + this.alu.getData1());
+        System.out.println("Alu Read Data 2: " + this.alu.getData2());
+        System.out.println("Alu Control flag: " + this.alu.getALUControl());
+        System.out.println("________________________________________________");
+        System.out.println("Alu Zero Flag: " + this.alu.getZeroFlag());
+        System.out.println("Alu Result: " + this.alu.getResult());
+        System.out.println("________________________________________________");
+        System.out.println("Data Memory Address: " + 
+            this.dataMemory.getCurrentAddress());
+        System.out.println("Data Memory REgister Mux value 0: " + 
+            this.dataMemoryRegistersMux.getValue1());
+        System.out.println("Branch Control Zero Flag: " + 
+            this.branchControl.getCurrentZeroInput());
     }
 
-    private void test10() {
-        System.out.println(this.branchControl.getCurrentBranchInput());
-        System.out.println(this.branchControl.getCurrentZeroInput());
-        System.out.println(this.branchControl.getOutput());
-        System.out.println("\n");
-        System.out.println(this.addrAluPcMux.getBit());
+    private void testBranchControl() {
+        System.out.println("Test Branch Control\n");
+        System.out.println("Branch Control Flag Input: " + 
+            this.branchControl.getCurrentBranchInput());
+        System.out.println("Branch Control Zero Input: " + 
+            this.branchControl.getCurrentZeroInput());
+        System.out.println("Branch Control output: " + 
+            this.branchControl.getOutput());
+        System.out.println("________________________________________________");
+        System.out.println("Addr Alu Pc Mux flag: " + 
+            this.addrAluPcMux.getBit());
     }
 
-    private void test11() {
-        System.out.println(this.dataMemory.getCurrentAddress());
-        System.out.println(this.dataMemory.getCurrentWriteValue());
-        System.out.println(this.dataMemory.getCurrentMemWrite());
-        System.out.println(this.dataMemory.getCurrentMemRead());
-        System.out.println("\n");
-        System.out.println(this.dataMemory.memoryReadResult());
-        System.out.println(this.dataMemoryRegistersMux.getValue1());
+    private void testDataMemory() {
+        System.out.println("Test Data Memory\n");
+        System.out.println("Data Memory Address: " + 
+            this.dataMemory.getCurrentAddress());
+        System.out.println("Data Memory Write Data: " + 
+            this.dataMemory.getCurrentWriteValue());
+        System.out.println("Data Memory Mem Write Flag: " + 
+            this.dataMemory.getCurrentMemWrite());
+        System.out.println("Data Memory Mem Read Flag: " + 
+            this.dataMemory.getCurrentMemRead());
+        System.out.println("________________________________________________");
+        System.out.println("Data Memory Read Result: " + 
+            this.dataMemory.memoryReadResult());
+        System.out.println("Data Memory Register Mux value 1: " + 
+            this.dataMemoryRegistersMux.getValue2());
     }
 
-    private void test12() {
-        System.out.println(this.dataMemoryRegistersMux.getBit());
-        System.out.println(this.dataMemoryRegistersMux.getValue1());
-        System.out.println(this.dataMemoryRegistersMux.getValue2());
-        System.out.println("\n");
-        System.out.println(this.registers.getCurrentWriteValue());
+    private void testDataMemoryRegistersMux() {
+        System.out.println("Test Data Memory Registers Mux\n");
+        System.out.println("Data Memory Registers Mux flag: " + 
+            this.dataMemoryRegistersMux.getBit());
+        System.out.println("Data Memory Registers Mux value 0: " + 
+            this.dataMemoryRegistersMux.getValue1());
+        System.out.println("Data Memory Registers Mux value 1: " + 
+            this.dataMemoryRegistersMux.getValue2());
+        System.out.println("________________________________________________");
+        System.out.println("Registers Write Data: " + 
+            this.registers.getCurrentWriteValue());
     }
 
-    private void test13() {
-        System.out.println(this.addrAluPcMux.getValue1());
-        System.out.println(this.addrAluPcMux.getValue2());
-        System.out.println(this.addrAluPcMux.getBit());
-        System.out.println("\n");
-        System.out.println(this.addrAluPcMux.getResult());
-        System.out.println(this.pc.getValue());
+    private void testAddrAluPcMux() {
+        System.out.println("Test Addr Alu Pc Mux\n");
+        System.out.println("Addr Alu Pc Mux value 0: " + 
+            this.addrAluPcMux.getValue1());
+        System.out.println("Addr Alu Pc Mux value 1: " + 
+            this.addrAluPcMux.getValue2());
+        System.out.println("Addr Alu Pc Mux flag: " + 
+            this.addrAluPcMux.getBit());
+        System.out.println("________________________________________________");
+        System.out.println("Addr Alu Pc Mux result: " + 
+            this.addrAluPcMux.getResult());
+        System.out.println("Pc Value: " + this.pc.getValue());
+    }
+
+    private void fillRegisters() {
+        String[] reg = new String[32];
+        for(int i = 0; i < 32; i++) {
+            reg[i] = Binary.get32BitsStringValue(0);
+        }
+        reg[11] = Binary.get32BitsStringValue(14);
+        reg[12] = Binary.get32BitsStringValue(16);
+        this.registers.overwriteAlRegisters(reg);
+    }
+
+    private void fillMemory() {
+        String[] memory = new String[256];
+        for(int i = 0; i < memory.length; i++){
+            memory[i] = Binary.BITS_32_ZERO;
+        }
+        memory[16] = Binary.get32BitsStringValue(32);
+        this.dataMemory.setMemory(memory);
     }
 
     /**
@@ -358,97 +423,60 @@ public class Flux {
      * Runs a CPU clock, executing all components and storing the data for si-
      * mulation purpose.
      */
-    private int i = 0;
     public void doClock() {
         this.executeFirstAuxAlu();
 
-        //this.test1();
+        //this.testFirstAuxAlu();
 
         this.executeInstructionMemory();
 
-        //this.test2();
+        //this.testInstructionMemory();
 
         this.executeControl();
 
-        //this.test3();
-        if (i == 0) {
-            String[] a = new String[32];
-            a[0] = Binary.get32BitsStringValue(0);
-            a[1] = Binary.get32BitsStringValue(0);
-            a[2] = Binary.get32BitsStringValue(0);
-            a[3] = Binary.get32BitsStringValue(0);
-            a[4] = Binary.get32BitsStringValue(0);
-            a[5] = Binary.get32BitsStringValue(0);
-            a[6] = Binary.get32BitsStringValue(0);
-            a[7] = Binary.get32BitsStringValue(0);
-            a[8] = Binary.get32BitsStringValue(0);
-            a[9] = Binary.get32BitsStringValue(0);
-            a[10] = Binary.get32BitsStringValue(0);
-            a[11] = Binary.get32BitsStringValue(5);
-            a[12] = Binary.get32BitsStringValue(6);
-            a[13] = Binary.get32BitsStringValue(0);
-            a[14] = Binary.get32BitsStringValue(0);
-            a[15] = Binary.get32BitsStringValue(0);
-            a[16] = Binary.get32BitsStringValue(0);
-            a[17] = Binary.get32BitsStringValue(0);
-            a[18] = Binary.get32BitsStringValue(0);
-            a[19] = Binary.get32BitsStringValue(0);
-            a[20] = Binary.get32BitsStringValue(0);
-            a[21] = Binary.get32BitsStringValue(0);
-            a[22] = Binary.get32BitsStringValue(0);
-            a[23] = Binary.get32BitsStringValue(0);
-            a[24] = Binary.get32BitsStringValue(0);
-            a[25] = Binary.get32BitsStringValue(0);
-            a[26] = Binary.get32BitsStringValue(0);
-            a[27] = Binary.get32BitsStringValue(0);
-            a[28] = Binary.get32BitsStringValue(0);
-            a[29] = Binary.get32BitsStringValue(0);
-            a[30] = Binary.get32BitsStringValue(0);
-            a[31] = Binary.get32BitsStringValue(0);
-            this.registers.overwriteAlRegisters(a);
-            i++;
-        }
+        //this.testControl();
         
-
+        this.fillRegisters();
+        
         this.executeRegisters();
         
-        //this.test4();
+        //this.testRegisters();
         
         this.executeImmGen();
 
-        //this.test5();
+        //this.testImmGen();
         
         this.executeRegistersAluMux();
 
-        //this.test6();
+        //this.testRegistersAluMux();
 
         this.executeAluControl();
 
-        //this.test7();
+        //this.testAluControl();
 
         this.executeSecondAuxAlu();
 
-        //this.test8();
+        //this.testSecondAuxAlu();
 
         this.executeAlu();
 
-        //this.test9();
+        //this.testAlu();
 
         this.executeBranchControl();
 
-        //this.test10();
+        //this.testBranchControl();
 
         this.executeDataMemory();
 
-        //this.test11();
+        //this.testDataMemory();
 
         this.executeDataMemoryRegistersMux();
 
-        //this.test12();
+        //this.testDataMemoryRegistersMux();
 
         this.executeAddrAluPcMux();
 
-        //this.test13();
+        //this.testAddrAluPcMux();
         this.simulation.pushState(this.dataMemory.toString(),
             this.registers.toString(), this.getSignals(),
             this.pc.getValue());
