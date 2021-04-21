@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.*;
+import java.io.EOFException;
 import java.io.File;
 import java.awt.*;
 
@@ -42,13 +43,6 @@ public class Window extends JFrame {
   private JCheckBox MemWrite;
   private JCheckBox RegWrite;
 
-  private JScrollPane SPRegister;
-  private JScrollPane SPMemory;
-  private JScrollPane SPInstructions;
-
-  private JList<String> ListRegister;
-  private JList<String> ListMemory;
-
   private JButton NextButton;
   private JButton BackButton;
   private JButton LoadFile;
@@ -58,9 +52,17 @@ public class Window extends JFrame {
 
   private Data data;
 
+  private JScrollPane SPRegister;
+  private JScrollPane SPMemory;
+  private JScrollPane SPInstructions;
+
   private JTable tableInstructions;
+  private JTable tableMemory;
+  private JTable tableRegister;
 
   private DefaultTableModel modelInstruction;
+  private DefaultTableModel modelRegister;
+  private DefaultTableModel modelMemory;
 
   /**
    * Constructor
@@ -80,6 +82,8 @@ public class Window extends JFrame {
     this.initJScrollPane();
     this.initJButton();
     this.initJTableInstruction();
+    this.initJTableRegister();
+    this.initJTableTableMemory();
 
     this.signalsPanel.add(this.Sinais);
     this.signalsPanel.add(this.AluOp);
@@ -142,21 +146,23 @@ public class Window extends JFrame {
         fileContent = this.loadFile.loadFile(selectFile.getPath());
         this.flux.setInstructions(fileContent);
         this.handlerListInstructions(fileContent);
-        message.append("Arquivo aberto com sucesso!");
-        JOptionPane.showMessageDialog(null, message);
-
+        this.data = null;
         this.data = this.flux.getCurrentState();
         this.handlerSignals(this.data.getSignals());
-        this.handlerListMemories(this.data.getModelMemory());
-        this.handlerListRegisters(this.data.getModelRegister());
+        this.handlerMemories(this.data.getMemory());
+        this.handlerRegisters(this.data.getRegister());
         this.handlerPC(this.data.getPc().toString());
-
+        message.append("Arquivo aberto com sucesso!");
+        JOptionPane.showMessageDialog(null, message);
       } else {
         message.append("Nenhum arquivo selecionado.");
         JOptionPane.showMessageDialog(null, message);
       }
-    } catch (Exception e) {
-      message.append("Cold not open file.\n" + e.getMessage());
+    } catch (EOFException e) {
+      message.append("Erro ao abrir o arquivo.\n" + e.getMessage());
+      JOptionPane.showMessageDialog(null, message);
+    } catch (Exception e1) {
+      message.append("Carregar os dados para a memória.\n" + e1.getMessage());
       JOptionPane.showMessageDialog(null, message);
     }
   }
@@ -173,6 +179,34 @@ public class Window extends JFrame {
     this.tableInstructions.setEnabled(false);
     this.SPInstructions.setViewportView(this.tableInstructions);
   }
+
+  public void initJTableTableMemory() {
+    this.modelMemory = new DefaultTableModel();
+    this.tableMemory = new JTable(this.modelMemory);
+    this.modelMemory.addColumn("Address");
+    this.modelMemory.addColumn("Dc");
+    this.modelMemory.addColumn("Content");
+    this.tableMemory.getColumnModel().getColumn(0).setPreferredWidth(20);
+    this.tableMemory.getColumnModel().getColumn(1).setPreferredWidth(1);
+    this.tableMemory.getColumnModel().getColumn(2).setPreferredWidth(200);
+    this.tableMemory.setEnabled(false);
+    this.SPMemory.setViewportView(this.tableMemory);
+
+  }
+
+  public void initJTableRegister() {
+    this.modelRegister = new DefaultTableModel();
+    this.tableRegister = new JTable(this.modelRegister);
+    this.modelRegister.addColumn("Rg");
+    this.modelRegister.addColumn("Dc");
+    this.modelRegister.addColumn("Content");
+    this.tableRegister.getColumnModel().getColumn(0).setPreferredWidth(1);
+    this.tableRegister.getColumnModel().getColumn(1).setPreferredWidth(1);
+    this.tableRegister.getColumnModel().getColumn(2).setPreferredWidth(200);
+    this.tableRegister.setEnabled(false);
+    this.SPRegister.setViewportView(this.tableRegister);
+  }
+
 
   /**
    * Responsible for set JList of Instructions.
@@ -202,8 +236,12 @@ public class Window extends JFrame {
    * @param model String array object.
    * @throws Exception Error set JList
    */
-  public void handlerListRegisters(DefaultListModel<String> model) throws Exception {
-    this.ListRegister.setModel(model);
+  public void handlerRegisters(String[] register) throws Exception {
+    this.modelRegister.setRowCount(0);
+    int n = register.length;
+    for (Integer i = 0; i < n; i++) {
+      this.modelMemory.addRow(new Object[] {"X"+i.toString(), src.utils.Binary.getInt(register[i]), register[i] });
+    }
   }
 
   /**
@@ -212,8 +250,12 @@ public class Window extends JFrame {
    * @param model String array object.
    * @throws Exception Error set JList
    */
-  public void handlerListMemories(DefaultListModel<String> model) throws Exception {
-    this.ListMemory.setModel(model);
+  public void handlerMemories(String[] memories) throws Exception {
+    this.modelMemory.setRowCount(0);
+    int n = memories.length;
+    for (int i = 0; i < n; i++) {
+      this.modelMemory.addRow(new Object[] {i*4, src.utils.Binary.getInt(memories[i]), memories[i] });
+    }
   }
 
   /**
@@ -253,10 +295,11 @@ public class Window extends JFrame {
     if (b) {
       try {
         this.flux.doClock();
+        this.data = null;
         this.data = this.flux.getCurrentState();
         this.handlerSignals(this.data.getSignals());
-        this.handlerListMemories(this.data.getModelMemory());
-        this.handlerListRegisters(this.data.getModelRegister());
+        this.handlerMemories(this.data.getMemory());
+        this.handlerRegisters(this.data.getRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
         System.out.println("Erro ao obter o estado atual do processador."+e.getMessage());
@@ -264,10 +307,11 @@ public class Window extends JFrame {
     } else {
       try {
         this.flux.undoClock();
+        this.data = null;
         this.data = this.flux.getCurrentState();
         this.handlerSignals(this.data.getSignals());
-        this.handlerListMemories(this.data.getModelMemory());
-        this.handlerListRegisters(this.data.getModelRegister());
+        this.handlerMemories(this.data.getMemory());
+        this.handlerRegisters(this.data.getRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
         System.out.println("Erro ao obter o estado atual do processador."+e.getMessage());
@@ -367,32 +411,9 @@ public class Window extends JFrame {
    * @exception Exception Error when instantiating some JScrollPane
    */
   private void initJScrollPane() {
-    this.initList();
-    try {
-      this.SPRegister = new JScrollPane(this.ListRegister);
-      this.SPMemory = new JScrollPane(this.ListMemory);
-      this.SPInstructions = new JScrollPane();
-    } catch (Exception e) {
-      StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JScrollPane.\n" + e.getMessage());
-      JOptionPane.showMessageDialog(null, message);
-    }
-  }
-
-  /**
-   * Method responsible for instantiate the JList
-   * 
-   * @exception Exception Error when instantiating some JList
-   */
-  private void initList() {
-    try {
-      this.ListMemory = new JList<String>();
-      this.ListRegister = new JList<String>();
-    } catch (Exception e) {
-      StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JList.\n" + e.getMessage());
-      JOptionPane.showMessageDialog(null, message);
-    }
+    this.SPRegister = new JScrollPane();
+    this.SPMemory = new JScrollPane();
+    this.SPInstructions = new JScrollPane();
   }
 
   /**
