@@ -94,15 +94,15 @@ public class Flux {
         String immGenInstruction;
         String aluControlInstruction;
 
+        // Instruction memory
+        this.instructionMemory.setReadAddress(this.pc.getValue());
+
         controlInstruction = this.instructionMemory.get12and6to0();
         registersInstruction1 = this.instructionMemory.get19to15();
         registersInstruction2 = this.instructionMemory.get24to20();
         registersWriteDataInstruction = this.instructionMemory.get11to7();
         immGenInstruction = this.instructionMemory.get31to0();
         aluControlInstruction = this.instructionMemory.get30and14to12();
-
-        // Instruction memory
-        this.instructionMemory.setReadAddress(this.pc.getValue());
 
         // Control
         this.control.setInput(controlInstruction);
@@ -124,12 +124,9 @@ public class Flux {
      */
     private void executeControl() {
         this.branchControl.setBranch(this.control.getBranch());
-        this.dataMemory.setMemRead(this.control.getMemRead());
         this.dataMemoryRegistersMux.setBit(this.control.getMemToReg());
         this.aluControl.setALUOp(this.control.getALUOp());
-        this.dataMemory.setMemWrite(this.control.getMemWrite());
         this.registersAluMux.setBit(this.control.getALUSrc());
-        this.registers.setRegWrite(this.control.getRegWrite());
     }
 
     /**
@@ -187,6 +184,8 @@ public class Flux {
         this.branchControl.setZero(new Integer(this.alu.getZeroFlag()).toString());
         this.dataMemory.setAddress(this.alu.getResult());
         this.dataMemoryRegistersMux.setValue1(this.alu.getResult());
+        this.dataMemory.setMemRead(this.control.getMemRead());
+        this.dataMemory.setMemWrite(this.control.getMemWrite());
     }
 
     /**
@@ -208,6 +207,7 @@ public class Flux {
      */
     private void executeDataMemoryRegistersMux() {
         this.registers.setWriteValue(this.dataMemoryRegistersMux.getResult());
+        this.registers.setRegWrite(this.control.getRegWrite());
     }
 
     /**
@@ -389,8 +389,8 @@ public class Flux {
         for(int i = 0; i < 32; i++) {
             reg[i] = Binary.get32BitsStringValue(0);
         }
-        reg[12] = Binary.get32BitsStringValue(35);
-        reg[11] = Binary.get32BitsStringValue(11);
+        reg[11] = Binary.get32BitsStringValue(14);
+        reg[12] = Binary.get32BitsStringValue(16);
         this.registers.overwriteAlRegisters(reg);
     }
 
@@ -436,7 +436,7 @@ public class Flux {
 
         //this.testControl();
         
-        //this.fillRegisters();
+        this.fillRegisters();
         
         this.executeRegisters();
         
