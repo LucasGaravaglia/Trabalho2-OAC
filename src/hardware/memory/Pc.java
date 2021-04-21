@@ -1,5 +1,6 @@
 package src.hardware.memory;
 
+import src.log.Log;
 
 /**
  * @author Levi
@@ -32,5 +33,14 @@ public class Pc {
      */  
     public String getValue(){
         return this.value;
+    }
+
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(){
+        Log.doLog("********* PC *******");
+        Log.doLog("value input: "+ this.value);
     }
 }

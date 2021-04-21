@@ -1,7 +1,7 @@
 package src.hardware.control;
 
 import src.utils.TypesConversion;
-
+import src.log.Log;
 /**
  * @author Levi
  */
@@ -17,6 +17,7 @@ public class BranchControl {
         this.branch = "00";
         this.output = "0";
         this.zero = "0";
+        this.execute();
     }
 
     /**
@@ -29,6 +30,7 @@ public class BranchControl {
         }else{
             this.branch = "00";
         }
+        this.execute();
     }
 
     /**
@@ -57,6 +59,7 @@ public class BranchControl {
         }else{
             this.zero = "0";
         }
+        this.execute();
     }
 
     /**
@@ -77,7 +80,17 @@ public class BranchControl {
      * @return String "1" or "0"
      */
     public String getOutput(){
-        this.execute();
         return this.output;
+    }
+
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(){
+        Log.doLog("********* BranchControl *******");        
+        Log.doLog("branch: " + this.branch);
+        Log.doLog("zero: " + this.zero);
+        Log.doLog("output: " + this.output);
     }
 }

@@ -1,6 +1,6 @@
 package src.hardware.memory;
 import src.utils.*;
-
+import src.log.Log;
 /**
  * @author Levi
  */
@@ -163,6 +163,21 @@ public class DataMemory {
      */
     public String memoryReadResult(){
         return this.dataRead;
+    }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(){
+        Log.doLog("********* DataMemory *******");
+        Log.doLog("address: " + address);
+        Log.doLog("valueToWrite: " + valueToWrite);
+        Log.doLog("MemWrite: " + MemWrite);
+        Log.doLog("MemRead: " + MemRead);
+        Log.doLog("dataRead: " + dataRead);
+        for(int i = 0;i < this.memory.length;i++){
+            Log.doLog("(" + i + "): " + this.memory[i]);
+        }        
     }
 
 }

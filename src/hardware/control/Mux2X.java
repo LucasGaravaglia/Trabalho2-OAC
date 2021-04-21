@@ -1,6 +1,7 @@
 package src.hardware.control;
 import src.utils.*;
 
+import src.log.Log;
 /**
  * @author Levi
  */
@@ -82,6 +83,17 @@ public class Mux2X {
             return this.value2;
         }
         return this.value1;
+    }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(){
+        Log.doLog("********* MUX *******");
+        Log.doLog("value1: " + this.value1);
+        Log.doLog("value2: " + this.value2);
+        Log.doLog("bit: " + this.bit);
+          
     }
 
 }

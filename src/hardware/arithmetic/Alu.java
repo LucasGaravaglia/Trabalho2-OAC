@@ -1,7 +1,7 @@
 package src.hardware.arithmetic;
 
 import src.utils.*;
-
+import src.log.Log;
 /**
  * @author
  */
@@ -20,7 +20,7 @@ public class Alu {
         this.data2 = Binary.BITS_32_ZERO;
         this.result = Binary.BITS_32_ZERO;
         this.zeroFlag = 0;
-        this.control = "00";
+        this.setALUControl("00");
     }
 
     /**
@@ -111,5 +111,17 @@ public class Alu {
      */
     public String getResult(){        
         return this.result;
+    }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(){
+        Log.doLog("********* Alu *******");        
+        Log.doLog("data1: " + this.data1);
+        Log.doLog("data2: " + this.data2);
+        Log.doLog("result: " + this.result);
+        Log.doLog("zeroFlag: " + this.zeroFlag);
+        Log.doLog("control: " + this.control);
     }
 }

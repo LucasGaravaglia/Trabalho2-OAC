@@ -1,4 +1,5 @@
 package src.hardware.memory;
+import src.log.Log;
 import src.utils.*;
 
 /**
@@ -178,5 +179,21 @@ public class Registers {
      */
     public String getData2(){
         return this.readRegister(this.addressOfReadRegisterB);
+    }
+
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(){
+        Log.doLog("********* Register *******");
+        Log.doLog("addressOfReadRegisterA: " + this.addressOfReadRegisterA);
+        Log.doLog("addressOfReadRegisterB: " + this.addressOfReadRegisterB);
+        Log.doLog("addressOfWriteRegister: " + this.addressOfWriteRegister);
+        Log.doLog("writeValue: " + this.writeValue);
+        for(int i = 0;i < this.registers.length;i++){
+            Log.doLog("Registers: (" + i + "):" + this.registers[i]);
+        }        
+        Log.doLog("RegWrite: " + this.RegWrite);
     }
 }
