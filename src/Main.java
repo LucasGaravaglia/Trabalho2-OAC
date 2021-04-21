@@ -1,6 +1,5 @@
 package src;
 
-import src.control.flux.Flux;
 import src.gui.window.Window;
 
 public class Main {
