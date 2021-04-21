@@ -7,7 +7,7 @@ public class TestArithmetic {
     public static void testAlu(){
         Alu alu = new Alu();
         String input1 = "00000000000000000000000000000101";
-        String input2 = "00000000000000000000000000000100";
+        String input2 = "00000000000000000000000000000010";
 
         alu.setData1(input1);
         alu.setData2(input2);
@@ -15,18 +15,22 @@ public class TestArithmetic {
         System.out.println("add");
         alu.setALUControl("0010");//SUM
         System.out.println(alu.getResult());
+        System.out.println(alu.getZeroFlag());
         
         System.out.println("sub");
-        alu.setALUControl("0110");//dub
+        alu.setALUControl("0110");//sub
         System.out.println(alu.getResult());
+        System.out.println(alu.getZeroFlag());
 
         System.out.println("and");
         alu.setALUControl("0000");//and
         System.out.println(alu.getResult());
+        System.out.println(alu.getZeroFlag());
 
         System.out.println("or");
         alu.setALUControl("0001");//OR
         System.out.println(alu.getResult());
+        System.out.println(alu.getZeroFlag());
         
     }
 
