@@ -1,6 +1,8 @@
 package src.gui.window;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.*;
 import java.io.File;
 import java.awt.*;
@@ -42,21 +44,23 @@ public class Window extends JFrame {
 
   private JScrollPane SPRegister;
   private JScrollPane SPMemory;
-  private JScrollPane SPInstruction;
+  private JScrollPane SPInstructions;
 
   private JList<String> ListRegister;
   private JList<String> ListMemory;
-  private JList<String> ListInstructions;
 
   private JButton NextButton;
   private JButton BackButton;
   private JButton LoadFile;
 
   private Flux flux;
-  private Simulation simulation;
   private Load loadFile;
 
   private Data data;
+
+  private JTable tableInstructions;
+
+  private DefaultTableModel modelInstruction;
 
   /**
    * Constructor
@@ -64,8 +68,7 @@ public class Window extends JFrame {
   public Window() {
     super();
 
-    this.simulation = new Simulation();
-    this.flux = new Flux(this.simulation);
+    this.flux = new Flux();
     this.loadFile = new Load();
 
     this.layout = new FlowLayout();
@@ -76,6 +79,7 @@ public class Window extends JFrame {
     this.initJCheckBox();
     this.initJScrollPane();
     this.initJButton();
+    this.initJTableInstruction();
 
     this.signalsPanel.add(this.Sinais);
     this.signalsPanel.add(this.AluOp);
@@ -86,8 +90,7 @@ public class Window extends JFrame {
     this.signalsPanel.add(this.MemWrite);
     this.signalsPanel.add(this.RegWrite);
     this.signalsPanel.add(this.PC);
-    this.handlerListInstructions();
-    this.signalsPanel.add(this.ListInstructions);
+    this.signalsPanel.add(this.SPInstructions);
     this.add(this.signalsPanel);
 
     this.RegisterPanel.add(this.Registradores);
@@ -158,6 +161,19 @@ public class Window extends JFrame {
     }
   }
 
+  public void initJTableInstruction() {
+    this.modelInstruction = new DefaultTableModel();
+    this.tableInstructions = new JTable(this.modelInstruction);
+    this.modelInstruction.addColumn("CI");
+    this.modelInstruction.addColumn("Address");
+    this.modelInstruction.addColumn("Instruction");
+    this.tableInstructions.getColumnModel().getColumn(0).setPreferredWidth(1);
+    this.tableInstructions.getColumnModel().getColumn(1).setPreferredWidth(30);
+    this.tableInstructions.getColumnModel().getColumn(2).setPreferredWidth(250);
+    this.tableInstructions.setEnabled(false);
+    this.SPInstructions.setViewportView(this.tableInstructions);
+  }
+
   /**
    * Responsible for set JList of Instructions.
    * 
@@ -165,21 +181,20 @@ public class Window extends JFrame {
    * @throws Exception Error set JList
    */
   public void handlerListInstructions(String[] list) throws Exception {
-    DefaultListModel<String> model = new DefaultListModel<String>();
-    Integer pc = 0;
-    model.addElement("PC   Instrução");
-    for (String string : list) {
-      model.addElement(pc.toString()+"    "+ string);
-      pc = pc + 4;
+    this.modelInstruction.setRowCount(0);
+    for (int i = 0; i < list.length; i++) {
+      this.modelInstruction.addRow(new Object[] { "", i * 4, list[i] });
     }
-    this.ListInstructions.setModel(model);
   }
-  public void handlerListInstructions(){
-    DefaultListModel<String> model = new DefaultListModel<String>();
-    Integer pc = 0;
-    model.addElement("PC   Instrução");
-    this.ListInstructions.setModel(model);
+
+  public void handlerListInstructions(Integer address) throws Exception {
+    int n = this.modelInstruction.getRowCount();
+    for (int i = 0; i < n; i++) {
+      this.modelInstruction.setValueAt("", i, 0);
+    }
+      this.modelInstruction.setValueAt("*",address/4,0);
   }
+  
 
   /**
    * Responsible for set JList of Register.
@@ -209,6 +224,7 @@ public class Window extends JFrame {
    */
   public void handlerPC(String pc) throws Exception {
     this.PC.setText("PC: " + pc);
+    this.handlerListInstructions(Integer.parseInt(pc));
   }
 
   /**
@@ -355,6 +371,7 @@ public class Window extends JFrame {
     try {
       this.SPRegister = new JScrollPane(this.ListRegister);
       this.SPMemory = new JScrollPane(this.ListMemory);
+      this.SPInstructions = new JScrollPane();
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
       message.append("Can't instantiate the JScrollPane.\n" + e.getMessage());
@@ -371,7 +388,6 @@ public class Window extends JFrame {
     try {
       this.ListMemory = new JList<String>();
       this.ListRegister = new JList<String>();
-      this.ListInstructions = new JList<String>();
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
       message.append("Can't instantiate the JList.\n" + e.getMessage());
@@ -398,7 +414,7 @@ public class Window extends JFrame {
       this.RegisterPanel.setLayout(new BoxLayout(RegisterPanel, BoxLayout.Y_AXIS));
       this.MemoryPanel.setLayout(new BoxLayout(MemoryPanel, BoxLayout.Y_AXIS));
 
-      this.signalsPanel.setPreferredSize(new Dimension(widthPanel, heightPanel));
+      this.signalsPanel.setPreferredSize(new Dimension(widthPanel+50, heightPanel));
       this.RegisterPanel.setPreferredSize(new Dimension(widthPanel, heightPanel));
       this.MemoryPanel.setPreferredSize(new Dimension(widthPanel, heightPanel));
       this.buttonsPanel.setPreferredSize(new Dimension(this.width, 100));
