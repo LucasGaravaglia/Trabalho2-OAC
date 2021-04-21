@@ -9,6 +9,7 @@ public class InstructionMemory {
     private String[] instructions;
     private String readAddress; 
 
+
     /**
      * Constructor
      * Each instruction per index
@@ -68,22 +69,26 @@ public class InstructionMemory {
     public String getInstruction(String address_32_bits){        
         int index = (int) Long.parseLong(address_32_bits, 2);
         index = index/4;
-        return this.instructions[index];
+        if(index >= this.instructions.length){
+            return src.utils.Binary.BITS_32_ZERO;
+        }else{
+            return this.instructions[index];
+        }
+        
     }
 
     /**
      * Function that determines which address will be read
      * @param readAddress binary value
+     * @return true if the value is valid
      */
-    public void setReadAddress(String readAddress){
-        if(this.instructions.length >= Long.parseLong(readAddress, 2)){
-            if(readAddress.length() >= 32){
-                this.readAddress = readAddress.substring(1);
-            }else{
-                this.readAddress = readAddress;
-            }            
+    public boolean setReadAddress(String readAddress){
+        if(this.instructions.length > Long.parseLong(readAddress, 2)){
+            this.readAddress = readAddress;  
+            return true;                    
         }else{
             this.readAddress = "0";
+            return false;
         }        
     }
 

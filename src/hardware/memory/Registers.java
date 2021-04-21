@@ -105,6 +105,7 @@ public class Registers {
         if(value.length == 32){
             this.registers = value.clone();
         }
+        this.registers[0] = Binary.BITS_32_ZERO;
         
     }
 
@@ -130,11 +131,11 @@ public class Registers {
 
     /**
      * Function that determines the address of the third input of the registers
-     * @param address_5_bits address of register to be write
+     * @param address address of register to be write
      */
-    public void setAddressOfWriteRegister(String address_5_bits){
-        if(address_5_bits.length() == 5){
-            this.addressOfWriteRegister = address_5_bits;
+    public void setAddressOfWriteRegister(String address){
+        if(address.length() == 5 && address.compareTo("00000") != 0){
+            this.addressOfWriteRegister = address;
         }
     }
 
@@ -156,11 +157,11 @@ public class Registers {
 
     /**
      * Function tha read an value from register given this address
-     * @param address_5_bits address of register to be read
+     * @param address address of register to be read
      * @return value of the register
      */
-    public String readRegister(String address_5_bits){
-        return this.registers[Integer.parseInt(address_5_bits, 2)];
+    public String readRegister(String address){
+        return this.registers[Integer.parseInt(address, 2)];
     }
 
     /**
