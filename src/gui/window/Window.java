@@ -42,9 +42,11 @@ public class Window extends JFrame {
 
   private JScrollPane SPRegister;
   private JScrollPane SPMemory;
+  private JScrollPane SPInstruction;
 
   private JList<String> ListRegister;
   private JList<String> ListMemory;
+  private JList<String> ListInstructions;
 
   private JButton NextButton;
   private JButton BackButton;
@@ -84,6 +86,8 @@ public class Window extends JFrame {
     this.signalsPanel.add(this.MemWrite);
     this.signalsPanel.add(this.RegWrite);
     this.signalsPanel.add(this.PC);
+    this.handlerListInstructions();
+    this.signalsPanel.add(this.ListInstructions);
     this.add(this.signalsPanel);
 
     this.RegisterPanel.add(this.Registradores);
@@ -126,12 +130,15 @@ public class Window extends JFrame {
    */
   public void selectFile() {
     StringBuilder message = new StringBuilder();
+    String[] fileContent;
     try {
       JFileChooser jFileChooser = new JFileChooser();
       int filePickerResponse = jFileChooser.showOpenDialog(LoadFile);
       if (filePickerResponse == JFileChooser.APPROVE_OPTION) {
         File selectFile = jFileChooser.getSelectedFile();
-        this.flux.setInstructions(this.loadFile.loadFile(selectFile.getPath()));
+        fileContent = this.loadFile.loadFile(selectFile.getPath());
+        this.flux.setInstructions(fileContent);
+        this.handlerListInstructions(fileContent);
         message.append("Arquivo aberto com sucesso!");
         JOptionPane.showMessageDialog(null, message);
 
@@ -140,7 +147,7 @@ public class Window extends JFrame {
         this.handlerListMemories(this.data.getModelMemory());
         this.handlerListRegisters(this.data.getModelRegister());
         this.handlerPC(this.data.getPc().toString());
-        
+
       } else {
         message.append("Nenhum arquivo selecionado.");
         JOptionPane.showMessageDialog(null, message);
@@ -149,6 +156,29 @@ public class Window extends JFrame {
       message.append("Cold not open file.\n" + e.getMessage());
       JOptionPane.showMessageDialog(null, message);
     }
+  }
+
+  /**
+   * Responsible for set JList of Instructions.
+   * 
+   * @param list String array object.
+   * @throws Exception Error set JList
+   */
+  public void handlerListInstructions(String[] list) throws Exception {
+    DefaultListModel<String> model = new DefaultListModel<String>();
+    Integer pc = 0;
+    model.addElement("PC   Instrução");
+    for (String string : list) {
+      model.addElement(pc.toString()+"    "+ string);
+      pc = pc + 4;
+    }
+    this.ListInstructions.setModel(model);
+  }
+  public void handlerListInstructions(){
+    DefaultListModel<String> model = new DefaultListModel<String>();
+    Integer pc = 0;
+    model.addElement("PC   Instrução");
+    this.ListInstructions.setModel(model);
   }
 
   /**
@@ -341,6 +371,7 @@ public class Window extends JFrame {
     try {
       this.ListMemory = new JList<String>();
       this.ListRegister = new JList<String>();
+      this.ListInstructions = new JList<String>();
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
       message.append("Can't instantiate the JList.\n" + e.getMessage());
