@@ -99,7 +99,12 @@ public class Flux {
      * Return the actual state of the processor.
      */
     public Data getState() {
-        
+        Data d = new Data();
+        d.setMemory(this.dataMemory.toString());
+        d.setRegister(this.registers.toString());
+        d.setPc(this.pc.getValue());
+        d.setSignals(this.getSignals());
+        return d;
     }
 
     /**
