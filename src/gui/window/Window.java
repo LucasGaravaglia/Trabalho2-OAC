@@ -266,7 +266,6 @@ public class Window extends JFrame {
         this.flux.doClock();
         this.data = null;
         this.data = this.flux.getState();
-        // System.out.println(this.data.getPc());
         this.handlerSignals(this.data.getSignals());
         this.handlerMemories(this.data.getMemory());
         this.handlerRegisters(this.data.getRegister());
@@ -274,9 +273,6 @@ public class Window extends JFrame {
       } catch (Exception e) {
         if (e.getMessage() == "End of instruction memory") {
           message.append("Fim das instruções.");
-          JOptionPane.showMessageDialog(null, message);
-        } else if (e.getMessage() == "States list is empty") {
-          message.append("Não é possível voltar mais.");
           JOptionPane.showMessageDialog(null, message);
         } else
           System.out.println("Erro ao obter o estado atual do processador." + e);
