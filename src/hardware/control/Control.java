@@ -16,6 +16,20 @@ public class Control {
     private String branch0;
     private String branch1;
 
+    /**
+     * Constructor
+     */
+    public Control() {
+        this.input = "0000000";
+        this.MemRead = "0";
+        this.MemToReg = "0";
+        this.ALUOp = "00";
+        this.MemWrite = "0";
+        this.ALUSrc = "0";
+        this.RegWrite = "0";
+        this.branch0 = "0";
+        this.branch1 = "0";
+    }
 
     /**
      * Function that determines the input of the control, bits 0-6 of the instruction
