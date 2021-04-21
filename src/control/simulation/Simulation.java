@@ -31,7 +31,7 @@ public class Simulation {
      * @throws Exception States list empty.
      */
     public State pop() throws Exception{
-        if(this.list.isEmpty())
+        if(this.list.size() <= 1)
             throw new Exception("States list is empty");
         State s = this.list.get(this.list.size()-1);
         this.list.remove(this.list.size()-1);
