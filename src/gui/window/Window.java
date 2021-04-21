@@ -141,12 +141,7 @@ public class Window extends JFrame {
       if (filePickerResponse == JFileChooser.APPROVE_OPTION) {
         File selectFile = jFileChooser.getSelectedFile();
         fileContent = this.loadFile.loadFile(selectFile.getPath());
-        try {
-          this.flux.setInstructions(fileContent);
-
-        } catch (Exception e) {
-          System.out.println("FOI");
-        }
+        this.flux.setInstructions(fileContent);
         this.handlerListInstructions(fileContent);
         this.data = null;
         this.data = this.flux.getState();
