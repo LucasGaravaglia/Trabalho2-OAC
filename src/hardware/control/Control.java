@@ -1,7 +1,7 @@
 package src.hardware.control;
 
 import src.utils.*;
-
+import src.log.Log;
 /**
  * @author Levi
  */
@@ -24,7 +24,6 @@ public class Control {
     public void setInput(String value){
         if(value.length() == 8){
             this.input = value;
-            this.execute();
         }else{
             this.input = "0000000";
             this.MemRead = "0";
@@ -37,6 +36,7 @@ public class Control {
             this.branch1 = "0";
             
         }
+        this.execute();
     }
 
     /**
@@ -138,6 +138,20 @@ public class Control {
         return this.RegWrite;
     }
     
-    
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(){
+        Log.doLog("********* Control *******");        
+        Log.doLog("input: " + this.input);    
+        Log.doLog("MemRead: " + this.MemRead);
+        Log.doLog("MemToReg: " + this.MemToReg);
+        Log.doLog("ALUOp: " + this.ALUOp);
+        Log.doLog("MemWrite: " + this.MemWrite);
+        Log.doLog("ALUSrc: " + this.ALUSrc);
+        Log.doLog("RegWrite: " + this.RegWrite);
+        Log.doLog("branch0: " + this.branch0);
+        Log.doLog("branch1: " + this.branch1);
+    }
 
 }

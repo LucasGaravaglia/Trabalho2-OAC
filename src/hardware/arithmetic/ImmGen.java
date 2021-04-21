@@ -1,6 +1,6 @@
 package src.hardware.arithmetic;
 import src.utils.Binary;
-
+import src.log.Log;
 /**
  * @author Levi
  */
@@ -26,6 +26,7 @@ public class ImmGen {
         }else{
             this.input = value;
         }
+        this.execute();
     }
 
     /**
@@ -61,7 +62,16 @@ public class ImmGen {
      * @return String with 32 of length
      */
     public String getOutput(){
-        this.execute();
         return this.immediate;
+    }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(){
+        Log.doLog("********* ImmGen *******");        
+        Log.doLog("input: " + input);
+        Log.doLog("immediate(bin): " + immediate);
+        Log.doLog("immediate(dec): " + (int) Long.parseLong(immediate));
     }
 }

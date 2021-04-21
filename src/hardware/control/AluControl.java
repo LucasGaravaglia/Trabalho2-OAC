@@ -1,7 +1,7 @@
 package src.hardware.control;
 
 import src.utils.*;
-
+import src.log.Log;
 /**
  * @author Levi
  */
@@ -20,6 +20,7 @@ public class AluControl {
         }else{
             this.ALUOp = value;
         }
+        this.execute();
     }
 
     /**
@@ -49,13 +50,11 @@ public class AluControl {
     public String getCurrentInstruction(){
         return this.instruction;
     }
-    
 
     /**
-     * Function that determines the output of ALUControl unit
-     * @return String of length of 4
+     * Function that determines the output of tue aluControl
      */
-    public String getControl(){
+    private void execute(){
         Boolean f12, f13, f14, f30, ALUop0, ALUop1;
         Boolean r0, r1, r2, r3;
         f30 = TypesConversion.getLogicValueFromChar(this.instruction.charAt(0));
@@ -74,6 +73,25 @@ public class AluControl {
 
         this.control = TypesConversion.boolToString(r3) + TypesConversion.boolToString(r2) + TypesConversion.boolToString(r1) + TypesConversion.boolToString(r0);
 
+    }
+    
+
+    /**
+     * Function that returns the output of ALUControl unit
+     * @return String of length of 4
+     */
+    public String getControl(){        
         return this.control;
+    }
+
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(){
+        Log.doLog("********* AluControl *******");        
+        Log.doLog("ALUOp: " + this.ALUOp);
+        Log.doLog("instruction: " + this.instruction);
+        Log.doLog("control: " + this.control);
     }
 }
