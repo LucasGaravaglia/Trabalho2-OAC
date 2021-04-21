@@ -84,7 +84,6 @@ public class InstructionMemory {
      */
     public boolean setReadAddress(String readAddress){
         int length = (int)Long.parseLong(readAddress, 2)/4;
-        System.out.println(length);
         if(this.instructions.length > length){
             this.readAddress = readAddress;  
             return true;                    
@@ -102,7 +101,7 @@ public class InstructionMemory {
      * @return
      */ 
     public String get12and6to0(){
-        String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
+        String value = this.getInstruction(this.readAddress);
         return value.substring(19, 20) + value.substring(25);
     }
 
@@ -111,7 +110,7 @@ public class InstructionMemory {
      * @return
      */
     public String get11to7(){
-        String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
+        String value = this.getInstruction(this.readAddress);
         return value.substring(20, 25);
     }
 
@@ -120,7 +119,7 @@ public class InstructionMemory {
      * @return
      */
     public String get14to12(){
-        String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
+        String value = this.getInstruction(this.readAddress);
         return value.substring(17, 20);
     }
 
@@ -129,7 +128,7 @@ public class InstructionMemory {
      * @return
      */
     public String get19to15(){
-        String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
+        String value = this.getInstruction(this.readAddress);
         return value.substring(12, 17);
     }
 
@@ -138,7 +137,7 @@ public class InstructionMemory {
      * @return
      */
     public String get24to20(){
-        String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
+        String value = this.getInstruction(this.readAddress);
         return value.substring(7, 12);
     }
 
@@ -147,7 +146,7 @@ public class InstructionMemory {
      * @return
      */
     public String get30and14to12(){
-        String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
+        String value = this.getInstruction(this.readAddress);
         return value.substring(1, 2)+value.substring(17, 20);
     }
 
@@ -156,7 +155,7 @@ public class InstructionMemory {
      * @return
      */
     public String get31to0(){
-        String value = this.instructions[Integer.parseInt(this.readAddress, 2)];
+        String value = this.getInstruction(this.readAddress);
         return value;
     }
 
