@@ -1,59 +1,56 @@
 package src.control.simulation;
 
 import java.util.ArrayList;
-import src.gui.data.Data;
 
 public class Simulation {
-    private ArrayList<Data> list;
+    private ArrayList<State> list;
 
     /**
      * Constructor.
      */
     public Simulation() {
-        this.list = new ArrayList<Data>();
+        this.list = new ArrayList<State>();
     }
 
     /**
-     * Store a new state in the states list.
+     * Store a new state in the states stack.
      * @param memory System primary memory.
      * @param registers CPU Registers.
      * @param signals CPU Signals.
      * @param pc CPU Program Counter.
      */
-    public void pushState(String memory, String registers, 
+    public void push(String[] memory, String[] registers, 
             String[] signals, String pc) {
-        Data state = new Data();
-
-        state.setModelMemory(memory);
-        state.setModelRegister(registers);
-        
-        state.setSignals(signals);
-        state.setPc(pc);
+        State state = new State(memory,registers,signals,pc);
         this.list.add(state);
     }
 
     /**
-     * Remove the last state of the states list.
-     */
-    public void popState() {
-        if(!this.list.isEmpty()) this.list.remove(this.list.size()-1);
-    }
-
-    /**
-     * Return the actual processor state.
-     * @return Current processor state(PC + Registers + Memory + Signals).
+     * Remove and return the last element of the states stack.
+     * @return Removed state.
      * @throws Exception States list empty.
      */
-    public Data getCurrentState() throws Exception {
+    public State pop() throws Exception{
         if(this.list.isEmpty())
-            throw new Exception("The states list is empty");
-        return this.list.get(this.list.size()-1);
+            throw new Exception("States list is empty");
+        State s = this.list.get(this.list.size()-1);
+        this.list.remove(this.list.size()-1);
+        return s;
     }
 
     /**
-     * Clear the list of states.
+     * Clear the states stack.
      */
-    public void clearStates() {
+    public void clearList() {
         this.list.clear();
+    }
+
+    /**
+     * Get the top element of the states stack.
+     * @return
+     */
+    public State top() {
+        State s = this.list.get(this.list.size()-1);
+        return s;
     }
 }
