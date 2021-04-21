@@ -61,33 +61,13 @@ public class Flux {
     }
 
     /**
-     * Clear all the values of cpu components.
-     */
-    private void cleanCpu() {
-        this.simulation = new Simulation();
-        this.alu = new Alu();
-        this.firstAuxAlu = new Alu();
-        this.secondAuxAlu = new Alu();
-        this.immGen = new ImmGen();
-        this.aluControl = new AluControl();
-        this.branchControl = new BranchControl();
-        this.control = new Control();
-        this.registersAluMux = new Mux2X();
-        this.dataMemoryRegistersMux = new Mux2X();
-        this.addrAluPcMux = new Mux2X();
-        this.dataMemory = new DataMemory();
-        this.pc = new Pc();
-        this.registers = new Registers();
-    }
-
-    /**
      * Set pc to 0, insert new instructions in the instruction memory and store
      * the new state of the cpu in the simulation.
      * @param instructions
      */
     public void setInstructions(String[] instructions) {
         this.pc.setValue("0");
-        this.instructionMemory.setInstructionMemory(instructions);
+        this.instructionMemory = new InstructionMemory(instructions);
         this.simulation.clearList();
         this.simulation.push(this.dataMemory.getMemory(), 
             this.registers.cloneRegisters(), 
