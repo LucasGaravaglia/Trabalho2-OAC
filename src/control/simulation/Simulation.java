@@ -49,4 +49,11 @@ public class Simulation {
             throw new Exception("The states list is empty");
         return this.list.get(this.list.size()-1);
     }
+
+    /**
+     * Clear the list of states.
+     */
+    public void clearStates() {
+        this.list.clear();
+    }
 }

@@ -52,6 +52,7 @@ public class Flux {
      * @param instructions Instructions to be loaded to the instruction memory.
      */
     public void setInstructions(String[] instructions) {
+        this.simulation.clearStates();
         this.instructionMemory = new InstructionMemory(instructions);
     }
 
