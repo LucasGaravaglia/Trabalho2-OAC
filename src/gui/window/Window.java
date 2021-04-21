@@ -9,7 +9,6 @@ import java.io.File;
 import java.awt.*;
 
 import src.control.flux.*;
-import src.control.simulation.*;
 import src.gui.data.*;
 import src.file.*;
 
@@ -132,8 +131,6 @@ public class Window extends JFrame {
 
   /**
    * Method responsible for select and send path file for flux processor
-   * 
-   * @exception Exception Error when to obtain file path
    */
   public void selectFile() {
     StringBuilder message = new StringBuilder();
@@ -167,52 +164,11 @@ public class Window extends JFrame {
     }
   }
 
-  public void initJTableInstruction() {
-    this.modelInstruction = new DefaultTableModel();
-    this.tableInstructions = new JTable(this.modelInstruction);
-    this.modelInstruction.addColumn("CI");
-    this.modelInstruction.addColumn("Address");
-    this.modelInstruction.addColumn("Instruction");
-    this.tableInstructions.getColumnModel().getColumn(0).setPreferredWidth(1);
-    this.tableInstructions.getColumnModel().getColumn(1).setPreferredWidth(30);
-    this.tableInstructions.getColumnModel().getColumn(2).setPreferredWidth(250);
-    this.tableInstructions.setEnabled(false);
-    this.SPInstructions.setViewportView(this.tableInstructions);
-  }
-
-  public void initJTableTableMemory() {
-    this.modelMemory = new DefaultTableModel();
-    this.tableMemory = new JTable(this.modelMemory);
-    this.modelMemory.addColumn("Address");
-    this.modelMemory.addColumn("Dc");
-    this.modelMemory.addColumn("Content");
-    this.tableMemory.getColumnModel().getColumn(0).setPreferredWidth(20);
-    this.tableMemory.getColumnModel().getColumn(1).setPreferredWidth(1);
-    this.tableMemory.getColumnModel().getColumn(2).setPreferredWidth(200);
-    this.tableMemory.setEnabled(false);
-    this.SPMemory.setViewportView(this.tableMemory);
-
-  }
-
-  public void initJTableRegister() {
-    this.modelRegister = new DefaultTableModel();
-    this.tableRegister = new JTable(this.modelRegister);
-    this.modelRegister.addColumn("Rg");
-    this.modelRegister.addColumn("Dc");
-    this.modelRegister.addColumn("Content");
-    this.tableRegister.getColumnModel().getColumn(0).setPreferredWidth(1);
-    this.tableRegister.getColumnModel().getColumn(1).setPreferredWidth(1);
-    this.tableRegister.getColumnModel().getColumn(2).setPreferredWidth(200);
-    this.tableRegister.setEnabled(false);
-    this.SPRegister.setViewportView(this.tableRegister);
-  }
-
-
   /**
-   * Responsible for set JList of Instructions.
+   * Responsible for set JTable of Instructions.
    * 
-   * @param list String array object.
-   * @throws Exception Error set JList
+   * @param list String array of Instructions.
+   * @throws Exception Error set JTable
    */
   public void handlerListInstructions(String[] list) throws Exception {
     this.modelInstruction.setRowCount(0);
@@ -221,14 +177,19 @@ public class Window extends JFrame {
     }
   }
 
+  /**
+   * Responsible for set pointer JTable of instructions.
+   * 
+   * @param address Address of actually instruction.
+   * @throws Exception Error set JTable
+   */
   public void handlerListInstructions(Integer address) throws Exception {
     int n = this.modelInstruction.getRowCount();
     for (int i = 0; i < n; i++) {
       this.modelInstruction.setValueAt("", i, 0);
     }
-      this.modelInstruction.setValueAt("*",address/4,0);
+    this.modelInstruction.setValueAt("*", address / 4, 0);
   }
-  
 
   /**
    * Responsible for set JList of Register.
@@ -240,7 +201,7 @@ public class Window extends JFrame {
     this.modelRegister.setRowCount(0);
     int n = register.length;
     for (Integer i = 0; i < n; i++) {
-      this.modelMemory.addRow(new Object[] {"X"+i.toString(), src.utils.Binary.getInt(register[i]), register[i] });
+      this.modelMemory.addRow(new Object[] { "X" + i.toString(), src.utils.Binary.getInt(register[i]), register[i] });
     }
   }
 
@@ -254,7 +215,7 @@ public class Window extends JFrame {
     this.modelMemory.setRowCount(0);
     int n = memories.length;
     for (int i = 0; i < n; i++) {
-      this.modelMemory.addRow(new Object[] {i*4, src.utils.Binary.getInt(memories[i]), memories[i] });
+      this.modelMemory.addRow(new Object[] { i * 4, src.utils.Binary.getInt(memories[i]), memories[i] });
     }
   }
 
@@ -302,7 +263,7 @@ public class Window extends JFrame {
         this.handlerRegisters(this.data.getRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
-        System.out.println("Erro ao obter o estado atual do processador."+e.getMessage());
+        System.out.println("Erro ao obter o estado atual do processador." + e.getMessage());
       }
     } else {
       try {
@@ -314,10 +275,50 @@ public class Window extends JFrame {
         this.handlerRegisters(this.data.getRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
-        System.out.println("Erro ao obter o estado atual do processador."+e.getMessage());
+        System.out.println("Erro ao obter o estado atual do processador." + e.getMessage());
       }
     }
 
+  }
+
+  public void initJTableInstruction() {
+    this.modelInstruction = new DefaultTableModel();
+    this.tableInstructions = new JTable(this.modelInstruction);
+    this.modelInstruction.addColumn("CI");
+    this.modelInstruction.addColumn("Address");
+    this.modelInstruction.addColumn("Instruction");
+    this.tableInstructions.getColumnModel().getColumn(0).setPreferredWidth(1);
+    this.tableInstructions.getColumnModel().getColumn(1).setPreferredWidth(30);
+    this.tableInstructions.getColumnModel().getColumn(2).setPreferredWidth(250);
+    this.tableInstructions.setEnabled(false);
+    this.SPInstructions.setViewportView(this.tableInstructions);
+  }
+
+  public void initJTableTableMemory() {
+    this.modelMemory = new DefaultTableModel();
+    this.tableMemory = new JTable(this.modelMemory);
+    this.modelMemory.addColumn("Address");
+    this.modelMemory.addColumn("Dc");
+    this.modelMemory.addColumn("Content");
+    this.tableMemory.getColumnModel().getColumn(0).setPreferredWidth(20);
+    this.tableMemory.getColumnModel().getColumn(1).setPreferredWidth(1);
+    this.tableMemory.getColumnModel().getColumn(2).setPreferredWidth(200);
+    this.tableMemory.setEnabled(false);
+    this.SPMemory.setViewportView(this.tableMemory);
+
+  }
+
+  public void initJTableRegister() {
+    this.modelRegister = new DefaultTableModel();
+    this.tableRegister = new JTable(this.modelRegister);
+    this.modelRegister.addColumn("Rg");
+    this.modelRegister.addColumn("Dc");
+    this.modelRegister.addColumn("Content");
+    this.tableRegister.getColumnModel().getColumn(0).setPreferredWidth(1);
+    this.tableRegister.getColumnModel().getColumn(1).setPreferredWidth(1);
+    this.tableRegister.getColumnModel().getColumn(2).setPreferredWidth(200);
+    this.tableRegister.setEnabled(false);
+    this.SPRegister.setViewportView(this.tableRegister);
   }
 
   /**
@@ -435,7 +436,7 @@ public class Window extends JFrame {
       this.RegisterPanel.setLayout(new BoxLayout(RegisterPanel, BoxLayout.Y_AXIS));
       this.MemoryPanel.setLayout(new BoxLayout(MemoryPanel, BoxLayout.Y_AXIS));
 
-      this.signalsPanel.setPreferredSize(new Dimension(widthPanel+50, heightPanel));
+      this.signalsPanel.setPreferredSize(new Dimension(widthPanel + 50, heightPanel));
       this.RegisterPanel.setPreferredSize(new Dimension(widthPanel, heightPanel));
       this.MemoryPanel.setPreferredSize(new Dimension(widthPanel, heightPanel));
       this.buttonsPanel.setPreferredSize(new Dimension(this.width, 100));

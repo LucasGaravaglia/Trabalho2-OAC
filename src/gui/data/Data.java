@@ -1,7 +1,5 @@
 package src.gui.data;
 
-import javax.swing.DefaultListModel;
-
 /**
  * Class responsible for data type the interface graphic.
  * 
@@ -51,7 +49,7 @@ public class Data {
   public void setMemory(String line) {
     String[] strings = line.split("\n");
     this.Memory = new String[strings.length];
-    int i=0;
+    int i = 0;
     for (String string : strings) {
       this.Memory[i++] = string;
     }
@@ -66,7 +64,7 @@ public class Data {
   public void setRegister(String line) {
     String[] strings = line.split("\n");
     this.Register = new String[strings.length];
-    int i=0;
+    int i = 0;
     for (String string : strings) {
       this.Register[i++] = string;
     }
