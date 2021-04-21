@@ -207,7 +207,6 @@ public class Main {
 		System.out.print("opcode: " + opcode + "\n----------------------\n\n");
 	}
 
-
 	public static void main(String[] args) {
 		Flux f = new Flux();
 		// "00000000110001011000011100110011",//add

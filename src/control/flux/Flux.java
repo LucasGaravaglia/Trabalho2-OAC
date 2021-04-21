@@ -41,13 +41,14 @@ public class Flux {
         this.dataMemory = new DataMemory();
         this.pc = new Pc();
         this.registers = new Registers();
+        // Store current state with all components zeroed.
         this.simulation.pushState(this.dataMemory.toString(),
             this.registers.toString(), this.getSignals(),
             this.pc.getValue());
     }
 
     /**
-     * 
+     * Set all the instructions in the instruction memory.
      * @param instructions Instructions to be loaded to the instruction memory.
      */
     public void setInstructions(String[] instructions) {
@@ -55,7 +56,7 @@ public class Flux {
     }
 
     /**
-     * 
+     * Create a string array with all cpu signals.
      * @return Array of strings containing all the cpu signals.
      */
     private String[] getSignals() {
@@ -72,8 +73,6 @@ public class Flux {
 
     /**
      * Steps of execution for first auxiliary alu.
-     * Set data 1, data 2 and ALUControl.
-     * Set value 1 to addrAluPcMux.
      */
     private void executeFirstAuxAlu() {
         this.firstAuxAlu.setData1(this.pc.getValue());
@@ -120,7 +119,8 @@ public class Flux {
     }
 
     /**
-     * Send all cpu flag signals to their respective components.
+     * Send some cpu flag signals to their respective components.
+     * Write and Read flags from registers and memory are not sent here.
      */
     private void executeControl() {
         this.branchControl.setBranch(this.control.getBranch());
@@ -130,9 +130,7 @@ public class Flux {
     }
 
     /**
-     * Set data 1 in alu. 
-     * set value 1 in registersAluMux. 
-     * set valueToWrite in data memory.
+     * Set data in Alu and Data Memory.
      */
     private void executeRegisters() {
         this.alu.setData1(this.registers.getData1());
@@ -158,6 +156,7 @@ public class Flux {
 
     /**
      * Set AluControl in alu.
+     * Execute Alu.
      */
     private void executeAluControl() {
         this.alu.setALUControl(this.aluControl.getControl());
@@ -176,8 +175,9 @@ public class Flux {
 
     /**
      * Set zero flag in branch control from alu.
-     * Set adress in data memory from alu.
+     * Set address in data memory from alu.
      * Set value 2 in data memory registers mux from alu.
+     * Set MemRead and MemWrite in data memory.
      */
     @Deprecated
     private void executeAlu() {
