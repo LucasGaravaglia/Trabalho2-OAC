@@ -185,6 +185,22 @@ public class Registers {
     /**
      * Function that print all information of the component in the log file
      */
+    public void doLog(String message){
+        Log.doLog("********* Register *******");
+        Log.doLog(message);
+        Log.doLog("addressOfReadRegisterA: " + this.addressOfReadRegisterA);
+        Log.doLog("addressOfReadRegisterB: " + this.addressOfReadRegisterB);
+        Log.doLog("addressOfWriteRegister: " + this.addressOfWriteRegister);
+        Log.doLog("writeValue: " + this.writeValue);
+        for(int i = 0;i < this.registers.length;i++){
+            Log.doLog("Registers: (" + i + "):" + this.registers[i]);
+        }        
+        Log.doLog("RegWrite: " + this.RegWrite);
+    }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
     public void doLog(){
         Log.doLog("********* Register *******");
         Log.doLog("addressOfReadRegisterA: " + this.addressOfReadRegisterA);

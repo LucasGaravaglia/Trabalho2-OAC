@@ -180,4 +180,20 @@ public class DataMemory {
         }        
     }
 
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(String m){
+        Log.doLog("********* DataMemory *******");
+        Log.doLog(m);
+        Log.doLog("address: " + address);
+        Log.doLog("valueToWrite: " + valueToWrite);
+        Log.doLog("MemWrite: " + MemWrite);
+        Log.doLog("MemRead: " + MemRead);
+        Log.doLog("dataRead: " + dataRead);
+        for(int i = 0;i < this.memory.length;i++){
+            Log.doLog("(" + i + "): " + this.memory[i]);
+        }        
+    }
+
 }

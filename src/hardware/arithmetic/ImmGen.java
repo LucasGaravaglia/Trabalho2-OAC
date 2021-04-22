@@ -72,6 +72,19 @@ public class ImmGen {
         Log.doLog("********* ImmGen *******");        
         Log.doLog("input: " + input);
         Log.doLog("immediate(bin): " + immediate);
-        Log.doLog("immediate(dec): " + (int) Long.parseLong(immediate));
+        Integer dec = (int) Long.parseLong(immediate);
+        Log.doLog("immediate(dec): " + dec.toString());
+    }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(String m){
+        Log.doLog("********* ImmGen *******");   
+        Log.doLog(m);     
+        Log.doLog("input: " + input);
+        Log.doLog("immediate(bin): " + immediate);
+        Integer dec = (int) Long.parseLong(immediate);
+        Log.doLog("immediate(dec): " + dec.toString());
     }
 }

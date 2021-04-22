@@ -93,4 +93,15 @@ public class BranchControl {
         Log.doLog("zero: " + this.zero);
         Log.doLog("output: " + this.output);
     }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(String m){
+        Log.doLog("********* BranchControl *******");  
+        Log.doLog(m);      
+        Log.doLog("branch: " + this.branch);
+        Log.doLog("zero: " + this.zero);
+        Log.doLog("output: " + this.output);
+    }
 }
