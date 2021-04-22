@@ -124,4 +124,17 @@ public class Alu {
         Log.doLog("zeroFlag: " + this.zeroFlag);
         Log.doLog("control: " + this.control);
     }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(String m){
+        Log.doLog("********* Alu *******"); 
+        Log.doLog(m);       
+        Log.doLog("data1: " + this.data1);
+        Log.doLog("data2: " + this.data2);
+        Log.doLog("result: " + this.result);
+        Log.doLog("zeroFlag: " + this.zeroFlag);
+        Log.doLog("control: " + this.control);
+    }
 }

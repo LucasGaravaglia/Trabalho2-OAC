@@ -96,4 +96,16 @@ public class Mux2X {
           
     }
 
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(String m){
+        Log.doLog("********* MUX *******");
+        Log.doLog(m);
+        Log.doLog("value1: " + this.value1);
+        Log.doLog("value2: " + this.value2);
+        Log.doLog("bit: " + this.bit);
+          
+    }
+
 }

@@ -94,4 +94,15 @@ public class AluControl {
         Log.doLog("instruction: " + this.instruction);
         Log.doLog("control: " + this.control);
     }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(String m){
+        Log.doLog("********* AluControl *******");   
+        Log.doLog(m);     
+        Log.doLog("ALUOp: " + this.ALUOp);
+        Log.doLog("instruction: " + this.instruction);
+        Log.doLog("control: " + this.control);
+    }
 }

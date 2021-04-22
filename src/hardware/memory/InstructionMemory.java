@@ -176,4 +176,23 @@ public class InstructionMemory {
             Log.doLog("(" + i + "): " + this.instructions[i]);
         }
     }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(String value){
+        Log.doLog("********* InstructionMemory *******");
+        Log.doLog(value);
+        Log.doLog("ReadAddress: "+ this.readAddress);
+        Log.doLog("get11to7: " + get11to7());
+        Log.doLog("get12and6to0: " + get12and6to0());
+        Log.doLog("get14to12: " + get14to12());
+        Log.doLog("get19to15: " + get19to15());
+        Log.doLog("get24to20: " + get24to20());
+        Log.doLog("get30and14to12: " + get30and14to12());
+        Log.doLog("get31to0: " + get31to0());
+        for(int i = 0;i < this.instructions.length;i++){
+            Log.doLog("(" + i + "): " + this.instructions[i]);
+        }
+    }
 }

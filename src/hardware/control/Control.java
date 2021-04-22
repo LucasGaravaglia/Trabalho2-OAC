@@ -168,4 +168,21 @@ public class Control {
         Log.doLog("branch1: " + this.branch1);
     }
 
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(String m){
+        Log.doLog("********* Control *******"); 
+        Log.doLog(m);       
+        Log.doLog("input: " + this.input);    
+        Log.doLog("MemRead: " + this.MemRead);
+        Log.doLog("MemToReg: " + this.MemToReg);
+        Log.doLog("ALUOp: " + this.ALUOp);
+        Log.doLog("MemWrite: " + this.MemWrite);
+        Log.doLog("ALUSrc: " + this.ALUSrc);
+        Log.doLog("RegWrite: " + this.RegWrite);
+        Log.doLog("branch0: " + this.branch0);
+        Log.doLog("branch1: " + this.branch1);
+    }
+
 }

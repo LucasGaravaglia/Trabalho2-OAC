@@ -43,4 +43,13 @@ public class Pc {
         Log.doLog("********* PC *******");
         Log.doLog("value input: "+ this.value);
     }
+
+    /**
+     * Function that print all information of the component in the log file
+     */
+    public void doLog(String m){
+        Log.doLog("********* PC *******");
+        Log.doLog(m);
+        Log.doLog("value input: "+ this.value);
+    }
 }
