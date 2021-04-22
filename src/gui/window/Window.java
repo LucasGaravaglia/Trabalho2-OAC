@@ -264,7 +264,6 @@ public class Window extends JFrame {
    */
   public void handlerAllComponents(Boolean b) {
     StringBuilder message = new StringBuilder();
-
     if (b) {
       try {
         this.flux.doClock();
@@ -468,8 +467,8 @@ public class Window extends JFrame {
       this.MemoryPanel.setLayout(new BoxLayout(MemoryPanel, BoxLayout.Y_AXIS));
 
       this.signalsPanel.setPreferredSize(new Dimension(widthPanel + 50, heightPanel));
-      this.RegisterPanel.setPreferredSize(new Dimension(widthPanel+100, heightPanel));
-      this.MemoryPanel.setPreferredSize(new Dimension(widthPanel+100, heightPanel));
+      this.RegisterPanel.setPreferredSize(new Dimension(widthPanel + 100, heightPanel));
+      this.MemoryPanel.setPreferredSize(new Dimension(widthPanel + 100, heightPanel));
       this.buttonsPanel.setPreferredSize(new Dimension(this.width, 100));
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
