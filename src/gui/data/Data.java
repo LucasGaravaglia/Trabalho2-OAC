@@ -1,7 +1,5 @@
 package src.gui.data;
 
-import javax.swing.DefaultListModel;
-
 /**
  * Class responsible for data type the interface graphic.
  * 
@@ -17,7 +15,7 @@ public class Data {
    * Constructor of class
    */
   public Data() {
-    this.signals = new Boolean[7];
+    this.signals = new Boolean[10];
     this.Pc = 0;
   }
 
@@ -38,7 +36,7 @@ public class Data {
   public void setSignals(String[] signals) {
     int i = 0;
     for (String boolean1 : signals) {
-      this.signals[i] = Boolean.parseBoolean(boolean1);
+      this.signals[i] = src.utils.TypesConversion.getLogicValueFromString(boolean1);
       i++;
     }
   }
@@ -51,7 +49,7 @@ public class Data {
   public void setMemory(String line) {
     String[] strings = line.split("\n");
     this.Memory = new String[strings.length];
-    int i=0;
+    int i = 0;
     for (String string : strings) {
       this.Memory[i++] = string;
     }
@@ -66,7 +64,7 @@ public class Data {
   public void setRegister(String line) {
     String[] strings = line.split("\n");
     this.Register = new String[strings.length];
-    int i=0;
+    int i = 0;
     for (String string : strings) {
       this.Register[i++] = string;
     }
