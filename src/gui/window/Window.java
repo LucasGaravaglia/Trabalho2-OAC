@@ -162,13 +162,9 @@ public class Window extends JFrame {
         JOptionPane.showMessageDialog(null, message);
       }
     } catch (EOFException e) {
-      message.append("Erro ao abrir o arquivo.\n" + e);
-      JOptionPane.showMessageDialog(null, message);
-      e.printStackTrace();
+      showException(e, "Erro ao abrir o arquivo.\n");
     } catch (Exception e1) {
-      message.append("Erro ao carregar os dados para a memória.\n" + e1);
-      JOptionPane.showMessageDialog(null, message);
-      e1.printStackTrace();
+      showException(e1, "Erro ao carregar os dados para a memória.\n");
     }
   }
 
@@ -259,7 +255,8 @@ public class Window extends JFrame {
   }
 
   /**
-   * Method responsible for set all components.
+   * Method responsible for move forward and back one state and set all
+   * components.
    * 
    * @param b Variable responsible for saying whether to go to the next
    *          instruction or back.
@@ -310,6 +307,10 @@ public class Window extends JFrame {
 
   }
 
+  /**
+   * Method responsible for instantiate the JTable of instructions
+   * 
+   */
   public void initJTableInstruction() {
     this.modelInstruction = new DefaultTableModel();
     this.tableInstructions = new JTable(this.modelInstruction);
@@ -323,6 +324,10 @@ public class Window extends JFrame {
     this.SPInstructions.setViewportView(this.tableInstructions);
   }
 
+  /**
+   * Method responsible for instantiate the JTable of Memory
+   * 
+   */
   public void initJTableTableMemory() {
     this.modelMemory = new DefaultTableModel();
     this.tableMemory = new JTable(this.modelMemory);
@@ -336,6 +341,10 @@ public class Window extends JFrame {
     this.SPMemory.setViewportView(this.tableMemory);
   }
 
+  /**
+   * Method responsible for instantiate the JTable of Register
+   * 
+   */
   public void initJTableRegister() {
     this.modelRegister = new DefaultTableModel();
     this.tableRegister = new JTable(this.modelRegister);
@@ -360,10 +369,7 @@ public class Window extends JFrame {
       this.BackButton = new JButton("Voltar");
       this.LoadFile = new JButton("Carregar arquivo");
     } catch (Exception e) {
-      StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JButton.\n" + e);
-      JOptionPane.showMessageDialog(null, message);
-      e.printStackTrace();
+      showException(e, "Can't instantiate the JButton.\n");
     }
   }
 
@@ -383,10 +389,7 @@ public class Window extends JFrame {
       this.setLayout(this.layout);
       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     } catch (Exception e) {
-      StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JFrames.\n" + e);
-      JOptionPane.showMessageDialog(null, message);
-      e.printStackTrace();
+      showException(e, "Can't instantiate the JFrames.\n");
     }
   }
 
@@ -402,10 +405,7 @@ public class Window extends JFrame {
       this.Memoria = new JLabel("Memoria:");
       this.PC = new JLabel("PC: ");
     } catch (Exception e) {
-      StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JLabel.\n" + e);
-      JOptionPane.showMessageDialog(null, message);
-      e.printStackTrace();
+      showException(e, "Can't instantiate the JLabel.\n");
     }
   }
 
@@ -437,10 +437,7 @@ public class Window extends JFrame {
       this.flagZero = new JCheckBox("AluZero", false);
       this.flagZero.setEnabled(false);
     } catch (Exception e) {
-      StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JCheckBox.\n" + e);
-      JOptionPane.showMessageDialog(null, message);
-      e.printStackTrace();
+      showException(e, "Can't instantiate the JCheckBox.\n");
     }
   }
 
@@ -478,10 +475,20 @@ public class Window extends JFrame {
       this.MemoryPanel.setPreferredSize(new Dimension(widthPanel + 100, heightPanel));
       this.buttonsPanel.setPreferredSize(new Dimension(this.width, 100));
     } catch (Exception e) {
-      StringBuilder message = new StringBuilder();
-      message.append("Can't instantiate the JPanel.\n" + e);
-      JOptionPane.showMessageDialog(null, message);
-      e.printStackTrace();
+      showException(e, "Can't instantiate the JPanel.\n");
     }
+  }
+
+  /**
+   * Method responsible for create a pop up on the screen and show the exception
+   * 
+   * @param e       Exception to be show
+   * @param message Message to be show screen
+   */
+  private static void showException(Exception e, String message) {
+    StringBuilder SBMessage = new StringBuilder();
+    SBMessage.append(message + e);
+    JOptionPane.showMessageDialog(null, SBMessage);
+    e.printStackTrace();
   }
 }
