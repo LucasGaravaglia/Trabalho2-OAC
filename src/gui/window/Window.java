@@ -275,8 +275,11 @@ public class Window extends JFrame {
         if (e.getMessage() == "End of instruction memory") {
           message.append("Fim das instruções.");
           JOptionPane.showMessageDialog(null, message);
-        } else
+        } else {
+          message.append("Erro ao obter o estado atual do processador." + e);
+          JOptionPane.showMessageDialog(null, message);
           System.out.println("Erro ao obter o estado atual do processador." + e);
+        }
       }
     } else {
       try {
@@ -318,7 +321,6 @@ public class Window extends JFrame {
     this.tableMemory.getColumnModel().getColumn(2).setPreferredWidth(200);
     this.tableMemory.setEnabled(false);
     this.SPMemory.setViewportView(this.tableMemory);
-
   }
 
   public void initJTableRegister() {
