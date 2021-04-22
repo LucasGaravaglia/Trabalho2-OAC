@@ -3,6 +3,10 @@ package src.test;
 import src.hardware.memory.*;
 import src.utils.Binary;
 import src.hardware.control.Control;
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner; // Import the Scanner class to read text files
+import java.util.ArrayList;
 
 public class TestInstructions {
 
@@ -84,7 +88,7 @@ public class TestInstructions {
         return typeB(rs1, rs2, imm, opcode, funct3);
     }
 
-    public static String translateToBinary(String asmInst) {
+    public static String translateToBinary(String asmInst) throws Exception{
         String operation;
         Integer rd,rs1,rs2,imm;
         String[] values;
@@ -138,8 +142,38 @@ public class TestInstructions {
                 imm = Integer.parseInt(values[2]);
                 return bne(rs1, rs2, imm);
             default:
-                return "";
+                throw new Exception("Not supported operation");
         }
     }
 
+    public static String[] loadFile(String path) {
+        ArrayList<String> content = new ArrayList<String>();
+        try {
+            File myObj = new File(path);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+              String data = myReader.nextLine();
+              content.add(data);
+            }
+            myReader.close();
+          } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }
+        String[] arrayContent = new String[content.size()];
+        for(int i = 0; i < content.size();i++) {
+            arrayContent[i] = content.get(i);
+        } 
+        return arrayContent;
+      }
+
+    public static String[] generateBinaryFromAsmFile(String filePath) throws Exception{
+        String[] fileContent;
+        fileContent = loadFile(filePath);
+        String[] inst = new String[fileContent.length];
+        for(int i = 0; i < fileContent.length; i++) {
+           inst[i] = translateToBinary(fileContent[i]);
+        }
+        return inst;
+    }
 }
