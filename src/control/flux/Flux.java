@@ -99,7 +99,7 @@ public class Flux {
         this.firstAuxAlu.setALUControl("0010"); // add
         this.addrAluPcMux.setValue1(this.firstAuxAlu.getResult());
 
-        this.firstAuxAlu.doLog();
+        this.firstAuxAlu.doLog("First Aux Alu");
     }
 
     /**
@@ -184,7 +184,7 @@ public class Flux {
     private void executeRegistersAluMux() {
         this.alu.setData2(this.registersAluMux.getResult());
 
-        this.registersAluMux.doLog();
+        this.registersAluMux.doLog("Registers Alu Mux");
     }
 
     /**
@@ -207,7 +207,7 @@ public class Flux {
         this.secondAuxAlu.setALUControl("0010"); // add
         this.addrAluPcMux.setValue2(this.secondAuxAlu.getResult());
 
-        this.secondAuxAlu.doLog();
+        this.secondAuxAlu.doLog("Second Aux Alu");
     }
 
     /**
@@ -252,7 +252,7 @@ public class Flux {
         this.registers.setWriteValue(this.dataMemoryRegistersMux.getResult());
         this.registers.setRegWrite(this.control.getRegWrite());
 
-        this.dataMemoryRegistersMux.doLog();
+        this.dataMemoryRegistersMux.doLog("Data Memory Registers Mux");
     }
 
     /**
@@ -261,7 +261,7 @@ public class Flux {
     private void executeAddrAluPcMux() {
         this.pc.setValue(this.addrAluPcMux.getResult());
 
-        this.addrAluPcMux.doLog();
+        this.addrAluPcMux.doLog("Addr Alu Pc Mux");
     }
 
     private void testFirstAuxAlu() {
