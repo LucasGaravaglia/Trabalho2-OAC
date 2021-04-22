@@ -72,8 +72,7 @@ public class ImmGen {
         Log.doLog("********* ImmGen *******");        
         Log.doLog("input: " + input);
         Log.doLog("immediate(bin): " + immediate);
-        Integer dec = (int) Long.parseLong(immediate);
-        Log.doLog("immediate(dec): " + dec.toString());
+        Log.doLog("immediate(dec): " + (int) Long.parseLong(immediate,2));
     }
 
     /**
@@ -84,7 +83,6 @@ public class ImmGen {
         Log.doLog(m);     
         Log.doLog("input: " + input);
         Log.doLog("immediate(bin): " + immediate);
-        Integer dec = (int) Long.parseLong(immediate);
-        Log.doLog("immediate(dec): " + dec.toString());
+        Log.doLog("immediate(dec): " + (int) Long.parseLong(immediate,2));
     }
 }

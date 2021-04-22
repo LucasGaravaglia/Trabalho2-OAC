@@ -49,7 +49,7 @@ public class Flux {
      * @return Array of strings containing all the cpu signals.
      */
     private String[] getSignals() {
-        String[] sig = new String[9];
+        String[] sig = new String[10];
         sig[0] = String.valueOf(this.control.getALUOp().charAt(0));
         sig[1] = String.valueOf(this.control.getALUOp().charAt(1));
         sig[2] = this.control.getALUSrc();
@@ -59,6 +59,7 @@ public class Flux {
         sig[6] = this.control.getMemToReg();
         sig[7] = this.control.getMemWrite();
         sig[8] = this.control.getRegWrite();
+        sig[9] = String.valueOf(this.alu.getZeroFlag());
         return sig;
     }
 
