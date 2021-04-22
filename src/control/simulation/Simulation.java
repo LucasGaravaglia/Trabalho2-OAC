@@ -27,6 +27,7 @@ public class Simulation {
 
     /**
      * Remove and return the last element of the states stack.
+     * The first element is never removed.
      * @return Removed state.
      * @throws Exception States list empty.
      */
@@ -47,7 +48,7 @@ public class Simulation {
 
     /**
      * Get the top element of the states stack.
-     * @return
+     * @return Top element at states stack.
      */
     public State top() {
         State s = this.list.get(this.list.size()-1);
