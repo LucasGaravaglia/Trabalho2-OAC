@@ -164,9 +164,11 @@ public class Window extends JFrame {
     } catch (EOFException e) {
       message.append("Erro ao abrir o arquivo.\n" + e);
       JOptionPane.showMessageDialog(null, message);
+      e.printStackTrace();
     } catch (Exception e1) {
       message.append("Erro ao carregar os dados para a memória.\n" + e1);
       JOptionPane.showMessageDialog(null, message);
+      e1.printStackTrace();
     }
   }
 
@@ -194,7 +196,7 @@ public class Window extends JFrame {
     for (int i = 0; i < n; i++) {
       this.modelInstruction.setValueAt("", i, 0);
     }
-    if (n > address / 4)
+    if (n > address / 4 && address / 4 > 0)
       this.modelInstruction.setValueAt("*", address / 4, 0);
   }
 
@@ -282,6 +284,7 @@ public class Window extends JFrame {
           JOptionPane.showMessageDialog(null, message);
           System.out.println("Erro ao obter o estado atual do processador." + e);
         }
+        e.printStackTrace();
       }
     } else {
       try {
@@ -301,6 +304,7 @@ public class Window extends JFrame {
           JOptionPane.showMessageDialog(null, message);
           System.out.println("Erro ao obter o estado atual do processador." + e);
         }
+        e.printStackTrace();
       }
     }
 
@@ -359,6 +363,7 @@ public class Window extends JFrame {
       StringBuilder message = new StringBuilder();
       message.append("Can't instantiate the JButton.\n" + e);
       JOptionPane.showMessageDialog(null, message);
+      e.printStackTrace();
     }
   }
 
@@ -381,6 +386,7 @@ public class Window extends JFrame {
       StringBuilder message = new StringBuilder();
       message.append("Can't instantiate the JFrames.\n" + e);
       JOptionPane.showMessageDialog(null, message);
+      e.printStackTrace();
     }
   }
 
@@ -399,6 +405,7 @@ public class Window extends JFrame {
       StringBuilder message = new StringBuilder();
       message.append("Can't instantiate the JLabel.\n" + e);
       JOptionPane.showMessageDialog(null, message);
+      e.printStackTrace();
     }
   }
 
@@ -433,13 +440,13 @@ public class Window extends JFrame {
       StringBuilder message = new StringBuilder();
       message.append("Can't instantiate the JCheckBox.\n" + e);
       JOptionPane.showMessageDialog(null, message);
+      e.printStackTrace();
     }
   }
 
   /**
    * Method responsible for instantiate the JScrollPane
    * 
-   * @exception Exception Error when instantiating some JScrollPane
    */
   private void initJScrollPane() {
     this.SPRegister = new JScrollPane();
@@ -474,6 +481,7 @@ public class Window extends JFrame {
       StringBuilder message = new StringBuilder();
       message.append("Can't instantiate the JPanel.\n" + e);
       JOptionPane.showMessageDialog(null, message);
+      e.printStackTrace();
     }
   }
 }
