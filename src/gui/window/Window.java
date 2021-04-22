@@ -43,6 +43,7 @@ public class Window extends JFrame {
   private JCheckBox MemToReg;
   private JCheckBox MemWrite;
   private JCheckBox RegWrite;
+  private JCheckBox flagZero;
 
   private JButton NextButton;
   private JButton BackButton;
@@ -96,6 +97,7 @@ public class Window extends JFrame {
     this.signalsPanel.add(this.MemToReg);
     this.signalsPanel.add(this.MemWrite);
     this.signalsPanel.add(this.RegWrite);
+    this.signalsPanel.add(this.flagZero);
     this.signalsPanel.add(this.PC);
     this.signalsPanel.add(this.SPInstructions);
     this.add(this.signalsPanel);
@@ -251,6 +253,7 @@ public class Window extends JFrame {
     this.MemToReg.setSelected(signals[6]);
     this.MemWrite.setSelected(signals[7]);
     this.RegWrite.setSelected(signals[8]);
+    this.flagZero.setSelected(signals[9]);
   }
 
   /**
@@ -291,7 +294,14 @@ public class Window extends JFrame {
         this.handlerRegisters(this.data.getRegister());
         this.handlerPC(this.data.getPc().toString());
       } catch (Exception e) {
-        System.out.println("Erro ao obter o estado atual do processador." + e);
+        if (e.getMessage() == "States list is empty") {
+          message.append("Não é possível voltar mais uma instrução.");
+          JOptionPane.showMessageDialog(null, message);
+        } else {
+          message.append("Erro ao obter o estado atual do processador." + e);
+          JOptionPane.showMessageDialog(null, message);
+          System.out.println("Erro ao obter o estado atual do processador." + e);
+        }
       }
     }
 
@@ -402,7 +412,7 @@ public class Window extends JFrame {
     try {
       this.Branch0 = new JCheckBox("Branch0", false);
       this.Branch0.setEnabled(false);
-      this.Branch1 = new JCheckBox("Branch0", false);
+      this.Branch1 = new JCheckBox("Branch1", false);
       this.Branch1.setEnabled(false);
       this.MemRead = new JCheckBox("MemRead", false);
       this.MemRead.setEnabled(false);
@@ -410,7 +420,7 @@ public class Window extends JFrame {
       this.MemToReg.setEnabled(false);
       this.AluOp0 = new JCheckBox("AluOp0", false);
       this.AluOp0.setEnabled(false);
-      this.AluOp1 = new JCheckBox("AluOp0", false);
+      this.AluOp1 = new JCheckBox("AluOp1", false);
       this.AluOp1.setEnabled(false);
       this.MemWrite = new JCheckBox("MemWrite", false);
       this.MemWrite.setEnabled(false);
@@ -418,6 +428,8 @@ public class Window extends JFrame {
       this.AluSrc.setEnabled(false);
       this.RegWrite = new JCheckBox("RegWrite", false);
       this.RegWrite.setEnabled(false);
+      this.flagZero = new JCheckBox("AluZero", false);
+      this.flagZero.setEnabled(false);
     } catch (Exception e) {
       StringBuilder message = new StringBuilder();
       message.append("Can't instantiate the JCheckBox.\n" + e);

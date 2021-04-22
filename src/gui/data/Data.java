@@ -15,7 +15,7 @@ public class Data {
    * Constructor of class
    */
   public Data() {
-    this.signals = new Boolean[9];
+    this.signals = new Boolean[10];
     this.Pc = 0;
   }
 
