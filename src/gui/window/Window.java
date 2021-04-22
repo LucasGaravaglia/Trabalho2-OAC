@@ -196,7 +196,7 @@ public class Window extends JFrame {
     for (int i = 0; i < n; i++) {
       this.modelInstruction.setValueAt("", i, 0);
     }
-    if (n > address / 4 && address / 4 > 0)
+    if (n > address / 4 && address / 4 >= 0)
       this.modelInstruction.setValueAt("*", address / 4, 0);
   }
 
