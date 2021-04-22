@@ -14,7 +14,7 @@ public class Binary {
      * @return
      */
     public static Integer getDecimalValue(String bits){
-        return Integer.parseInt(bits, 2);
+        return (int)Long.parseLong(bits, 2);
     }
     
     /**

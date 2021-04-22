@@ -44,7 +44,7 @@ public class Data {
   /**
    * Setter ModelRegister
    * 
-   * @param line Line that will be added to the modelMemory
+   * @param line Line that will be added to the Memory
    */
   public void setMemory(String line) {
     String[] strings = line.split("\n");
@@ -58,7 +58,7 @@ public class Data {
   /**
    * Setter ModelRegister
    * 
-   * @param line Line that will be added to the modelRegister
+   * @param line Line that will be added to the Registers
    */
 
   public void setRegister(String line) {
