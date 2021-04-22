@@ -68,7 +68,7 @@ public class Control {
         Boolean o0, o1, o2, o3, o4, o5, o6, o7;
         Boolean rFormat, lw, sw, bFormat, iFormat;
         
-        o7 = !TypesConversion.getLogicValueFromString(this.input.substring(0, 1));
+        o7 = TypesConversion.getLogicValueFromString(this.input.substring(0, 1));
         o6 = !TypesConversion.getLogicValueFromString(this.input.substring(1, 2));
         o5 = !TypesConversion.getLogicValueFromString(this.input.substring(2, 3));
         o4 = !TypesConversion.getLogicValueFromString(this.input.substring(3, 4));
@@ -83,8 +83,8 @@ public class Control {
         bFormat = (!o6) && (!o5) && o4 && o3 && o2 && (!o1) && (!o0);
         iFormat = o6 && o5 && (!o4) && o3 && o2 && (!o1) && (!o0);
 
-        this.branch0 = TypesConversion.boolToString(bFormat);
-        this.branch1 = TypesConversion.boolToString(bFormat && o7);
+        this.branch1 = TypesConversion.boolToString(bFormat);
+        this.branch0 = TypesConversion.boolToString(bFormat && o7);
         this.MemRead = TypesConversion.boolToString(lw);
         this.MemToReg = TypesConversion.boolToString(lw);
         this.MemWrite = TypesConversion.boolToString(sw);
