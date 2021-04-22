@@ -192,7 +192,9 @@ public class DataMemory {
         Log.doLog("MemRead: " + MemRead);
         Log.doLog("dataRead: " + dataRead);
         for(int i = 0;i < this.memory.length;i++){
-            Log.doLog("(" + i + "): " + this.memory[i]);
+            if(this.memory[i].compareTo(Binary.BITS_32_ZERO) != 0){
+                Log.doLog("(" + i + "): " + this.memory[i]);
+            }            
         }        
     }
 

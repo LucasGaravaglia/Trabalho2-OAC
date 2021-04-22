@@ -68,10 +68,10 @@ public class BranchControl {
     private void execute(){
         boolean zero, b1, b0, result;
         zero = TypesConversion.getLogicValueFromString(this.zero);
-        b1 = TypesConversion.getLogicValueFromChar(this.branch.charAt(1));
-        b0 = TypesConversion.getLogicValueFromChar(this.branch.charAt(0));
+        b0 = TypesConversion.getLogicValueFromChar(this.branch.charAt(1));
+        b1 = TypesConversion.getLogicValueFromChar(this.branch.charAt(0));
 
-        result = (zero && b0 && !b1) || (!zero && b0 && b1);
+        result = (zero && b1 && !b0) || (!zero && b1 && b0);
         this.output = TypesConversion.boolToString(result);        
     }
 
