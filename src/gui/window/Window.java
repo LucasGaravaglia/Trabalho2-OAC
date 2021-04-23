@@ -281,7 +281,7 @@ public class Window extends JFrame {
           JOptionPane.showMessageDialog(null, message);
           System.out.println("Erro ao obter o estado atual do processador." + e);
         }
-        e.printStackTrace();
+        // e.printStackTrace();
       }
     } else {
       try {
@@ -301,7 +301,7 @@ public class Window extends JFrame {
           JOptionPane.showMessageDialog(null, message);
           System.out.println("Erro ao obter o estado atual do processador." + e);
         }
-        e.printStackTrace();
+        // e.printStackTrace();
       }
     }
 
