@@ -148,7 +148,7 @@ public class Window extends JFrame {
         File selectFile = jFileChooser.getSelectedFile();
         fileContent = this.loadFile.loadFile(selectFile.getPath());
         this.flux.setInstructions(fileContent);
-        this.handlerListInstructions(fileContent);
+        this.handlerListInstructions(src.utils.Decompiler.decompiler(fileContent));
         this.data = null;
         this.data = this.flux.getState();
         this.handlerSignals(this.data.getSignals());
