@@ -1,15 +1,22 @@
-package src.test;
+package src.utils;
 
-import src.hardware.memory.*;
 import src.utils.Binary;
-import src.hardware.control.Control;
-import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.util.Scanner; // Import the Scanner class to read text files
+import java.io.File; 
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.ArrayList;
 
-public class TestInstructions {
+public class Instructions {
 
+    /**
+     * Return a type I binary instruction.
+     * @param rd Destine register.
+     * @param rs1 Source register 1.
+     * @param imm Immediate.
+     * @param opcode Instruction opcode - 7 bits.
+     * @param funct3 Instruction funct3 - 3 bits.
+     * @return Binary instruction 32 bits.
+     */
     private static String typeI(Integer rd, Integer rs1, Integer imm, String opcode, String funct3) {
         String sRd = src.utils.Binary.get32BitsStringValue(rd).substring(27, 32),
                 sRs1 = src.utils.Binary.get32BitsStringValue(rs1).substring(27, 32),
@@ -17,6 +24,16 @@ public class TestInstructions {
         return sImm + sRs1 + funct3 + sRd + opcode;
     }
 
+    /**
+     * Return a type R binary instruction.
+     * @param rd Destine register.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @param funct7 Instruction funct7 - 7 bits.
+     * @param opcode Instruction opcode - 7 bits.
+     * @param funct3 Instruction funct3 - 3 bits.
+     * @return Binary instruction 32 bits.
+     */
     private static String typeR(Integer rd, Integer rs1, Integer rs2, String funct7, String opcode, String funct3) {
         String sRd = src.utils.Binary.get32BitsStringValue(rd).substring(27, 32),
                 sRs1 = src.utils.Binary.get32BitsStringValue(rs1).substring(27, 32),
@@ -24,6 +41,15 @@ public class TestInstructions {
         return funct7 + sRs2 + sRs1 + funct3 + sRd + opcode;
     }
 
+    /**
+     * Return a type S binary instruction.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @param imm Immediate.
+     * @param opcode Instruction opcode - 7 bits.
+     * @param funct3 Instruction funct3 - 3 bits.
+     * @return
+     */
     private static String typeS(Integer rs1, Integer rs2, Integer imm, String opcode, String funct3) {
         String sRs1 = src.utils.Binary.get32BitsStringValue(rs1).substring(27, 32),
                 sImm = src.utils.Binary.get32BitsStringValue(imm).substring(20, 32),
@@ -31,6 +57,15 @@ public class TestInstructions {
         return sImm.substring(0, 7) + sRs2 + sRs1 + funct3 + sImm.substring(7, 12) + opcode; 
     }
 
+    /**
+     * Return a type B binary instruction.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @param imm Immediate.
+     * @param opcode Instruction opcode - 7 bits.
+     * @param funct3 Instruction funct3 - 3 bits.
+     * @return
+     */
     private static String typeB(Integer rs1, Integer rs2, Integer imm, String opcode, String funct3) {
         String sRs1 = src.utils.Binary.get32BitsStringValue(rs1).substring(27, 32),
                 sImm = src.utils.Binary.get32BitsStringValue(imm).substring(20, 32),
@@ -39,55 +74,120 @@ public class TestInstructions {
                 + sImm.substring(1, 2) + opcode;
     }
 
-    // TYPE R
+    /**
+     * Add assembly instruction.
+     * @param rd Destine register.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @return Binary instruction for add 32 bits.
+     */
     public static String add(Integer rd, Integer rs1, Integer rs2) {
         String opcode = "0110011", funct3 = "000", funct7 = "0000000";
         return typeR(rd, rs1, rs2, funct7, opcode, funct3);
     }
 
+    /**
+     * Sub assembly instruction.
+     * @param rd Destine register.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @return Binary instruction for sub 32 bits.
+     */
     public static String sub(Integer rd, Integer rs1, Integer rs2) {
         String opcode = "0110011", funct3 = "000", funct7 = "0100000";
         return typeR(rd, rs1, rs2, funct7, opcode, funct3);
     }
 
+    /**
+     * And assembly instruction.
+     * @param rd Destine register.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @return Binary instruction for and 32 bits.
+     */
     public static String and(Integer rd, Integer rs1, Integer rs2) {
         String opcode = "0110011", funct3 = "111", funct7 = "0000000";
         return typeR(rd, rs1, rs2, funct7, opcode, funct3);
     }
 
+    /**
+     * Or assembly instruction.
+     * @param rd Destine register.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @return Binary instruction for or 32 bits.
+     */
     public static String or(Integer rd, Integer rs1, Integer rs2) {
         String opcode = "0110011", funct3 = "110", funct7 = "0000000";
         return typeR(rd, rs1, rs2, funct7, opcode, funct3);
     }
 
-    // TYPE I
+    /**
+     * Addi assembly instruction.
+     * @param rd Destine register.
+     * @param rs1 Source register 1.
+     * @param imm Immediate.
+     * @return Binary instruction for addi 32 bits.
+     */
     public static String addi(Integer rd, Integer rs1, Integer imm) {
         String opcode = "0010011", funct3 = "000";
         return typeI(rd, rs1, imm, opcode, funct3);
     }
 
+    /**
+     * Lw assembly instruction.
+     * @param rd Destine register.
+     * @param rs1 Source register 1.
+     * @param imm Immediate.
+     * @return Binary instruction for lw 32 bits.
+     */
     public static String lw(Integer rd, Integer rs1, Integer imm) {
         String opcode = "0000011", funct3 = "010";
         return typeI(rd, rs1, imm, opcode, funct3);
     }
 
-    // TYPE S
+    /**
+     * Sw assembly instruction.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @param imm Immediate.
+     * @return Binary instruction for sw 32 bits.
+     */
     public static String sw(Integer rs1, Integer rs2, Integer imm) {
         String opcode = "0100011", funct3 = "010";
         return typeS(rs1, rs2, imm, opcode, funct3);
     }
 
-    // TYPE B
+    /**
+     * Beq assembly instruction.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @param imm Immediate.
+     * @return Binary instruction for beq 32 bits.
+     */
     public static String beq(Integer rs1, Integer rs2, Integer imm) {
         String opcode = "1100011", funct3 = "000";
         return typeB(rs1, rs2, imm, opcode, funct3);
     }
 
+    /**
+     * Bne assembly instruction.
+     * @param rs1 Source register 1.
+     * @param rs2 Source register 2.
+     * @param imm Immediate.
+     * @return Binary instruction for bne 32 bits.
+     */
     public static String bne(Integer rs1, Integer rs2, Integer imm) {
         String opcode = "1100011", funct3 = "001";
         return typeB(rs1, rs2, imm, opcode, funct3);
     }
 
+    /**
+     * Translate a assembly instruction to a binary 32 bits instruction.
+     * @param asmInst Instruction in assembly format.
+     * @return Binary instruction 32 bits.
+     * @throws Exception Not supported operation.
+     */
     public static String translateToBinary(String asmInst) throws Exception{
         String operation;
         Integer rd,rs1,rs2,imm;
@@ -146,7 +246,12 @@ public class TestInstructions {
         }
     }
 
-    public static String[] loadFile(String path) {
+    /**
+     * Load a assembly file.
+     * @param path File path.
+     * @return Array with file lines.
+     */
+    private static String[] loadFile(String path) {
         ArrayList<String> content = new ArrayList<String>();
         try {
             File myObj = new File(path);
@@ -167,6 +272,12 @@ public class TestInstructions {
         return arrayContent;
       }
 
+    /**
+     * Generate a array with binary instructions from a assembly file.
+     * @param filePath Assembly file path.
+     * @return Array with binary instructions.
+     * @throws Exception Not supported operation.
+     */
     public static String[] generateBinaryFromAsmFile(String filePath) throws Exception{
         String[] fileContent;
         fileContent = loadFile(filePath);
