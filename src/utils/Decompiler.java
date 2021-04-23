@@ -8,7 +8,7 @@ public class Decompiler {
    * 
    * @param instructions Binary of instructions
    */
-  public static void decompiler(String[] instructions) {
+  public static String[] decompiler(String[] instructions) {
     String[] instructionAssembly = new String[instructions.length];
     int n = 0;
     String opcode = new String();
@@ -20,9 +20,8 @@ public class Decompiler {
     String imm = new String();
     for (String string : instructions) {
       opcode = getOpcode(string);
-      funct3 = getFunct3(string);
-      switch (opcode) {
-      case "0110011":// tipo R
+      if (opcode.compareTo("0110011") == 0) {// tipo R
+        funct3 = getFunct3(string);
         funct7 = getFunct7(string);
         rd = getRd(string);
         rs1 = getRs1(string);
@@ -38,22 +37,22 @@ public class Decompiler {
         } else if (funct3.compareTo("110") == 0) {// or
           instructionAssembly[n] = "OR X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", X" + getDecimal(rs2);
         }
-      case "0010011":// tipo I/addi
+      } else if (opcode.compareTo("0010011") == 0) {// tipo I/addi
         imm = getImmTypeI(string);
         rd = getRd(string);
         rs1 = getRs1(string);
         instructionAssembly[n] = "ADDI X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", " + getDecimal(imm);
-      case "0000011":// tipo I/lw
+      } else if (opcode.compareTo("0000011") == 0) {// tipo I/lw
         imm = getImmTypeI(string);
         rd = getRd(string);
         rs1 = getRs1(string);
-        instructionAssembly[n] = "LW X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", " + getDecimal(imm);
-      case "0100011":// tipo S/sw
+        instructionAssembly[n] = "LW X" + getDecimal(rd) + ", " + getDecimal(imm) + "(X" + getDecimal(rs1) + ")";
+      } else if (opcode.compareTo("0100011") == 0) {// tipo S/sw
         imm = getImmTypeS(string);
         rs1 = getRs1(string);
         rs2 = getRs2(string);
-        instructionAssembly[n] = "SW X" + getDecimal(rs1) + ", X" + getDecimal(rs2) + ", " + getDecimal(imm);
-      case "1100011":// tipo B
+        instructionAssembly[n] = "SW X" + getDecimal(rs2) + ", " + getDecimal(imm) + "(X" + getDecimal(rs1) + ")";
+      } else if (opcode.compareTo("1100011") == 0) {// tipo B
         imm = getImmTypeB(string);
         rs1 = getRs1(string);
         rs2 = getRs2(string);
@@ -62,11 +61,12 @@ public class Decompiler {
         } else if (funct3.compareTo("001") == 0) {// bne
           instructionAssembly[n] = "BEQ X" + getDecimal(rs1) + ", X" + getDecimal(rs2) + ", " + getDecimal(imm);
         }
-      default:
-        System.out.println("Erro.");
+      } else {
+        System.out.println("ERRO");
       }
       n++;
     }
+    return instructionAssembly;
   }
 
   /**
@@ -77,6 +77,7 @@ public class Decompiler {
    */
   public static Integer getDecimal(String binary) {
     return Binary.getInt(Binary.normalizeSize(binary));
+    // return binary;
   }
 
   /**
@@ -106,7 +107,7 @@ public class Decompiler {
    * @return funct7
    */
   public static String getFunct7(String instruction) {
-    return instruction.substring(0, 8);
+    return instruction.substring(0, 7);
   }
 
   /**
@@ -126,7 +127,7 @@ public class Decompiler {
    * @return rs1
    */
   public static String getRs1(String instruction) {
-    return instruction.substring(13, 18);
+    return instruction.substring(12, 17);
   }
 
   /**
@@ -136,7 +137,7 @@ public class Decompiler {
    * @return rs2
    */
   public static String getRs2(String instruction) {
-    return instruction.substring(8, 13);
+    return instruction.substring(7, 12);
   }
 
   /**
@@ -146,7 +147,7 @@ public class Decompiler {
    * @return imm
    */
   public static String getImmTypeI(String instruction) {
-    return instruction.substring(0, 13);
+    return instruction.substring(0, 12);
   }
 
   /**
