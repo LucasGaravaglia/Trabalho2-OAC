@@ -61,7 +61,7 @@ public class Decompiler {
           instructionAssembly[n] = "beq X" + getDecimal(rs1) + ", X" + getDecimal(rs2) + ", "
               + getDecimalWithSignal(imm);
         } else if (funct3.compareTo("001") == 0) {// bne
-          instructionAssembly[n] = "beq X" + getDecimal(rs1) + ", X" + getDecimal(rs2) + ", "
+          instructionAssembly[n] = "bne X" + getDecimal(rs1) + ", X" + getDecimal(rs2) + ", "
               + getDecimalWithSignal(imm);
         }
       } else {
