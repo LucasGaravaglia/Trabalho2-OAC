@@ -3,7 +3,6 @@ package src.gui.data;
 /**
  * Class responsible for data type the interface graphic.
  * 
- * @author Lucas Garavaglia
  */
 public class Data {
   private String[] Memory;

@@ -1,7 +1,5 @@
 package src.utils;
 
-import src.utils.Binary;
-
 public class Decompiler {
   /**
    * Receives instructions in binary and returns to instructions in assembly.
@@ -28,38 +26,43 @@ public class Decompiler {
         rs2 = getRs2(string);
         if (funct3.compareTo("000") == 0) {// sub,add
           if (funct7.compareTo("0100000") == 0) {// sub
-            instructionAssembly[n] = "SUB X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", X" + getDecimal(rs2);
+            instructionAssembly[n] = "sub X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", X" + getDecimal(rs2);
           } else if (funct7.compareTo("0000000") == 0) {// add
-            instructionAssembly[n] = "ADD X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", X" + getDecimal(rs2);
+            instructionAssembly[n] = "add X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", X" + getDecimal(rs2);
           }
         } else if (funct3.compareTo("111") == 0) {// and
-          instructionAssembly[n] = "AND X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", X" + getDecimal(rs2);
+          instructionAssembly[n] = "and X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", X" + getDecimal(rs2);
         } else if (funct3.compareTo("110") == 0) {// or
-          instructionAssembly[n] = "OR X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", X" + getDecimal(rs2);
+          instructionAssembly[n] = "or X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", X" + getDecimal(rs2);
         }
       } else if (opcode.compareTo("0010011") == 0) {// tipo I/addi
         imm = getImmTypeI(string);
         rd = getRd(string);
         rs1 = getRs1(string);
-        instructionAssembly[n] = "ADDI X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", " + getDecimal(imm);
+        instructionAssembly[n] = "addi X" + getDecimal(rd) + ", X" + getDecimal(rs1) + ", " + getDecimalWithSignal(imm);
       } else if (opcode.compareTo("0000011") == 0) {// tipo I/lw
         imm = getImmTypeI(string);
         rd = getRd(string);
         rs1 = getRs1(string);
-        instructionAssembly[n] = "LW X" + getDecimal(rd) + ", " + getDecimal(imm) + "(X" + getDecimal(rs1) + ")";
+        instructionAssembly[n] = "lw X" + getDecimal(rd) + ", " + getDecimalWithSignal(imm) + "(X" + getDecimal(rs1)
+            + ")";
       } else if (opcode.compareTo("0100011") == 0) {// tipo S/sw
         imm = getImmTypeS(string);
         rs1 = getRs1(string);
         rs2 = getRs2(string);
-        instructionAssembly[n] = "SW X" + getDecimal(rs2) + ", " + getDecimal(imm) + "(X" + getDecimal(rs1) + ")";
+        instructionAssembly[n] = "sw X" + getDecimal(rs2) + ", " + getDecimalWithSignal(imm) + "(X" + getDecimal(rs1)
+            + ")";
       } else if (opcode.compareTo("1100011") == 0) {// tipo B
         imm = getImmTypeB(string);
         rs1 = getRs1(string);
         rs2 = getRs2(string);
+        funct3 = getFunct3(string);
         if (funct3.compareTo("000") == 0) {// beq
-          instructionAssembly[n] = "BEQ X" + getDecimal(rs1) + ", X" + getDecimal(rs2) + ", " + getDecimal(imm);
+          instructionAssembly[n] = "beq X" + getDecimal(rs1) + ", X" + getDecimal(rs2) + ", "
+              + getDecimalWithSignal(imm);
         } else if (funct3.compareTo("001") == 0) {// bne
-          instructionAssembly[n] = "BEQ X" + getDecimal(rs1) + ", X" + getDecimal(rs2) + ", " + getDecimal(imm);
+          instructionAssembly[n] = "beq X" + getDecimal(rs1) + ", X" + getDecimal(rs2) + ", "
+              + getDecimalWithSignal(imm);
         }
       } else {
         System.out.println("ERRO");
@@ -77,7 +80,16 @@ public class Decompiler {
    */
   public static Integer getDecimal(String binary) {
     return Binary.getInt(Binary.normalizeSize(binary));
-    // return binary;
+  }
+
+  /**
+   * Convert to Binary in Decimal with signal.
+   * 
+   * @param binary Binary
+   * @return Decimal
+   */
+  public static Integer getDecimalWithSignal(String binary) {
+    return Binary.getInt(Binary.normalizeSizeWithSignal(binary));
   }
 
   /**

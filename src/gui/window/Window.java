@@ -15,7 +15,6 @@ import src.file.*;
 /**
  * Class responsible for creating the graphical interface.
  * 
- * @author Lucas Garavaglia
  */
 public class Window extends JFrame {
 
