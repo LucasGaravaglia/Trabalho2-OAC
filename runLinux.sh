@@ -1,2 +1,2 @@
 #!/bin/sh
-java -jar ./bin/SimuladorRisc.jar
+java -jar SimuladorRisc.jar
