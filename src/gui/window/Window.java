@@ -87,11 +87,11 @@ public class Window extends JFrame {
     this.initJTableTableMemory();
 
     this.signalsPanel.add(this.Sinais);
-    this.signalsPanel.add(this.AluOp0);
     this.signalsPanel.add(this.AluOp1);
+    this.signalsPanel.add(this.AluOp0);
     this.signalsPanel.add(this.AluSrc);
-    this.signalsPanel.add(this.Branch0);
     this.signalsPanel.add(this.Branch1);
+    this.signalsPanel.add(this.Branch0);
     this.signalsPanel.add(this.MemRead);
     this.signalsPanel.add(this.MemToReg);
     this.signalsPanel.add(this.MemWrite);
@@ -241,11 +241,11 @@ public class Window extends JFrame {
    * @throws Exception Error set JCheckBox of signals.
    */
   public void handlerSignals(Boolean[] signals) throws Exception {
-    this.AluOp0.setSelected(signals[0]);
-    this.AluOp1.setSelected(signals[1]);
+    this.AluOp1.setSelected(signals[0]);
+    this.AluOp0.setSelected(signals[1]);
     this.AluSrc.setSelected(signals[2]);
-    this.Branch0.setSelected(signals[3]);
-    this.Branch1.setSelected(signals[4]);
+    this.Branch1.setSelected(signals[3]);
+    this.Branch0.setSelected(signals[4]);
     this.MemRead.setSelected(signals[5]);
     this.MemToReg.setSelected(signals[6]);
     this.MemWrite.setSelected(signals[7]);
