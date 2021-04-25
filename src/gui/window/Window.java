@@ -276,11 +276,10 @@ public class Window extends JFrame {
           message.append("Fim das instruções.");
           JOptionPane.showMessageDialog(null, message);
         } else {
-          message.append("Erro ao obter o estado atual do processador." + e);
+          message.append("Erro ao obter o estado atual do processador.");
           JOptionPane.showMessageDialog(null, message);
-          System.out.println("Erro ao obter o estado atual do processador." + e);
         }
-        // e.printStackTrace();
+        e.printStackTrace();
       }
     } else {
       try {
@@ -296,11 +295,10 @@ public class Window extends JFrame {
           message.append("Não é possível voltar mais uma instrução.");
           JOptionPane.showMessageDialog(null, message);
         } else {
-          message.append("Erro ao obter o estado atual do processador." + e);
+          message.append("Erro ao obter o estado atual do processador.");
           JOptionPane.showMessageDialog(null, message);
-          System.out.println("Erro ao obter o estado atual do processador." + e);
         }
-        // e.printStackTrace();
+        e.printStackTrace();
       }
     }
 
@@ -365,7 +363,9 @@ public class Window extends JFrame {
   private void initJButton() {
     try {
       this.NextButton = new JButton("Executar");
-      this.BackButton = new JButton("Voltar");
+      this.NextButton.setToolTipText("Executa a instrução marcada no campo ci (valor do pc).");
+      this.BackButton = new JButton("Estado anterior");
+      this.BackButton.setToolTipText("Volta os estados da memória, registrador e pc.");
       this.LoadFile = new JButton("Carregar arquivo");
     } catch (Exception e) {
       showException(e, "Can't instantiate the JButton.\n");
