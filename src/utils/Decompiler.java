@@ -180,7 +180,7 @@ public class Decompiler {
    */
   public static String getImmTypeB(String instruction) {
     return instruction.substring(0, 1) + instruction.substring(24, 25) + instruction.substring(1, 7)
-        + instruction.substring(20, 24);
+        + instruction.substring(20, 24) + "0";
   }
 
 }

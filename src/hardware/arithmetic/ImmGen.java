@@ -45,7 +45,7 @@ public class ImmGen {
     private void execute(){
         String opcode = this.input.substring(25);
         if(opcode.compareTo("1100011") == 0){//bFormat
-            this.immediate = Binary.normalizeSizeWithSignal(this.input.substring(0, 1) + this.input.substring(24, 25) + this.input.substring(1,7) + this.input.substring(20, 24));
+            this.immediate = Binary.normalizeSizeWithSignal(this.input.substring(0, 1) + this.input.substring(24, 25) + this.input.substring(1,7) + this.input.substring(20, 24) + "0");
         }else if(opcode.compareTo("0000011") == 0){//lw
             this.immediate = Binary.normalizeSizeWithSignal(this.input.substring(0, 12));
         }else if(opcode.compareTo("0100011") == 0){//sw
